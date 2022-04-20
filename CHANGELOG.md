@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Inital version of the brand new 1inch plugin for Ethereum application.
+- Inital version of the brand new apwine plugin for Ethereum application.

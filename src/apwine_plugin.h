@@ -10,30 +10,29 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_ONE_INCH_SELECTORS 2
+#define NUM_APWINE_SELECTORS 1
 #define SELECTOR_SIZE          4
 
-#define PLUGIN_NAME "1inch"
+#define PLUGIN_NAME "Apwine"
 
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND 1 << 1
 
-// 1inch uses `0xeeeee` as a dummy address to represent ETH in Swap.
-extern const uint8_t ONE_INCH_ETH_ADDRESS[ADDRESS_LENGTH];
+// apwine uses `0xeeeee` as a dummy address to represent ETH in Swap.
+extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
-// 1inch uses 0x00000 as a dummy address to reprecent ETH in Unmoswap.
+// apwine uses 0x00000 as a dummy address to reprecent ETH in Unmoswap.
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
-// Returns 1 if corresponding address is the 1inch address for the chain token (ETH, BNB, MATIC,
+// Returns 1 if corresponding address is the apwine address for the chain token (ETH, BNB, MATIC,
 // etc.. are 0xeeeee...).
 #define ADDRESS_IS_NETWORK_TOKEN(_addr)                      \
-    (!memcmp(_addr, ONE_INCH_ETH_ADDRESS, ADDRESS_LENGTH) || \
+    (!memcmp(_addr, APWINE_ETH_ADDRESS, ADDRESS_LENGTH) || \
      !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
 typedef enum {
-    SWAP,
-    UNOSWAP,
-} oneInchSelector_t;
+    SWAP_EXACT_AMOUNT_IN,
+} apwineSelector_t;
 
 #define PARTIAL_FILL 1
 
@@ -71,7 +70,7 @@ typedef enum {
 #define DEFAULT_TICKER ""
 
 // Shared global memory with Ethereum app. Must be at most 5 * 32 bytes.
-typedef struct one_inch_parameters_t {
+typedef struct apwine_parameters_t {
     uint8_t amount_sent[INT256_LENGTH];
     uint8_t amount_received[INT256_LENGTH];
     uint8_t beneficiary[ADDRESS_LENGTH];
@@ -94,11 +93,11 @@ typedef struct one_inch_parameters_t {
     uint8_t flags;
     uint8_t skip;
     // 4 * 1 + 2 * 2 + 7 * 1 == 8 + 7 == 15 bytes. There are 16 - 15 == 1 byte left.
-} one_inch_parameters_t;
+} apwine_parameters_t;
 
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
-void one_inch_plugin_call(int message, void *parameters);
+void apwine_plugin_call(int message, void *parameters);
 
 static inline void printf_hex_array(const char *title __attribute__((unused)),
                                     size_t len __attribute__((unused)),

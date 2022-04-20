@@ -19,7 +19,7 @@ const Resolve = require('path').resolve;
 
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 
-const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
+const PLUGIN_LIB_NANOS = { 'apwine': Resolve('elfs/apwine_nanos.elf') };
 
 export function zemu(func) {
     return async () => {

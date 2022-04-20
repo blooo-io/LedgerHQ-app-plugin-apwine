@@ -1,10 +1,9 @@
-#include "one_inch_plugin.h"
+#include "apwine_plugin.h"
 
 // Set UI for the "Send" screen.
-static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static void set_send_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
-        case SWAP:
-        case UNOSWAP:
+        case SWAP_EXACT_AMOUNT_IN:
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
         default:
@@ -34,10 +33,9 @@ static void set_send_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *contex
 }
 
 // Set UI for "Receive" screen.
-static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static void set_receive_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
-        case SWAP:
-        case UNOSWAP:
+        case SWAP_EXACT_AMOUNT_IN:
             strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         default:
@@ -67,7 +65,7 @@ static void set_receive_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *con
 }
 
 // Set UI for "Beneficiary" screen.
-static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t *context) {
+static void set_beneficiary_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     strlcpy(msg->title, "Beneficiary", msg->titleLength);
 
     msg->msg[0] = '0';
@@ -81,14 +79,14 @@ static void set_beneficiary_ui(ethQueryContractUI_t *msg, one_inch_parameters_t 
 
 // Set UI for "Partial fill" screen.
 static void set_partial_fill_ui(ethQueryContractUI_t *msg,
-                                one_inch_parameters_t *context __attribute__((unused))) {
+                                apwine_parameters_t *context __attribute__((unused))) {
     strlcpy(msg->title, "Partial fill", msg->titleLength);
     strlcpy(msg->msg, "Enabled", msg->msgLength);
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
 static screens_t get_screen(ethQueryContractUI_t *msg,
-                            one_inch_parameters_t *context __attribute__((unused))) {
+                            apwine_parameters_t *context __attribute__((unused))) {
     uint8_t index = msg->screenIndex;
 
     if (index == 0) {
@@ -106,7 +104,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
-    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
+    apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
 
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
@@ -114,7 +112,7 @@ void handle_query_contract_ui(void *parameters) {
 
     screens_t screen = get_screen(msg, context);
     switch (screen) {
-        case SEND_SCREEN:
+        case SEND_SCREEN: // à revoir
             set_send_ui(msg, context);
             break;
         case RECEIVE_SCREEN:

@@ -29,13 +29,13 @@ APPVERSION_N     = 0
 APPVERSION_P     = 3
 APPVERSION       = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 
-APPNAME = "1inch"
+APPNAME = "apwine"
 
 #prepare hsm generation
 ifeq ($(TARGET_NAME), TARGET_NANOS)
-ICONNAME=icons/nanos_app_1inch.gif
+ICONNAME=icons/nanos_app_apwine.gif
 else
-ICONNAME=icons/nanox_app_1inch.gif
+ICONNAME=icons/nanox_app_apwine.gif
 endif
 
 ################
@@ -161,4 +161,4 @@ include $(BOLOS_SDK)/Makefile.rules
 dep/%.d: %.c Makefile
 
 listvariants:
-	@echo VARIANTS NONE 1inch
+	@echo VARIANTS NONE apwine

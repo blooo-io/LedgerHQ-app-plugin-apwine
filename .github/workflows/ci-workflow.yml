@@ -22,14 +22,14 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build 1inch plugin
+      - name: Build apwine plugin
         run: |
           make DEBUG=1
 
-      - name: Upload 1inch binary
+      - name: Upload apwine binary
         uses: actions/upload-artifact@v2
         with:
-          name: 1inch-app-debug
+          name: apwine-app-debug
           path: bin
 
   job_scan_build:
@@ -76,8 +76,8 @@ jobs:
             --form email=$EMAIL \
             --form file=@cov-int.tar.gz \
             --form version=master \
-            --form description="1inch Plugin" \
-            https://scan.coverity.com/builds?project=LedgerHQ%2Fapp-plugin-1inch
+            --form description="apwine Plugin" \
+            https://scan.coverity.com/builds?project=LedgerHQ%2Fapp-plugin-apwine
         env:
           EMAIL: ${{ secrets.COVERITY_SCAN_EMAIL }}
           TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}

@@ -1,24 +1,21 @@
-#include "one_inch_plugin.h"
+#include "apwine_plugin.h"
 #include <string.h>
 
 // Need more information about the interface for plugins? Please read the README.md!
 
-// You can check 1inch swap methods here
-// https://etherscan.io/address/0x11111112542d85b3ef69ae05771c2dccff4faa26#writeContract
+// You can check apwine swapExactAmountIn methods here
+// https://etherscan.io/address/0xb6e370D83A180EA3667dB41a2aCFAf605fa03788#code
 //
-// swap 0x7c025200
-static const uint8_t ONE_INCH_SWAP_SELECTOR[SELECTOR_SIZE] = {0x7c, 0x02, 0x52, 0x00};
-// unoswap 0x2e95b6c8
-static const uint8_t ONE_INCH_UNOSWAP_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x95, 0xb6, 0xc8};
+// swapExactAmountIn 0x2e948b7b
+static const uint8_t APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x94, 0x8b, 0x7b};
 
-// Array of all the different 1inch selectors.
-const uint8_t *const ONE_INCH_SELECTORS[NUM_ONE_INCH_SELECTORS] = {
-    ONE_INCH_SWAP_SELECTOR,
-    ONE_INCH_UNOSWAP_SELECTOR,
+// Array of all the different apwine selectors.
+const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
+    APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
 };
 
-// 1inch uses `0xeeeee` as a dummy address to represent ETH.
-const uint8_t ONE_INCH_ETH_ADDRESS[ADDRESS_LENGTH] = {0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
+// apwine uses `0xeeeee` as a dummy address to represent ETH.
+const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH] = {0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
                                                       0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,
                                                       0xee, 0xee, 0xee, 0xee, 0xee, 0xee};
 
@@ -36,25 +33,25 @@ static void handle_init_contract(void *parameters) {
         return;
     }
 
-    if (msg->pluginContextLength < sizeof(one_inch_parameters_t)) {
+    if (msg->pluginContextLength < sizeof(apwine_parameters_t)) {
         msg->result = ETH_PLUGIN_RESULT_ERROR;
         return;
     }
 
-    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
+    apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
     memset(context, 0, sizeof(*context));
     context->valid = 1;
 
     // Determine a function to call
     size_t i;
-    for (i = 0; i < NUM_ONE_INCH_SELECTORS; i++) {
-        if (memcmp((uint8_t *) PIC(ONE_INCH_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
+    for (i = 0; i < NUM_APWINE_SELECTORS; i++) {
+        if (memcmp((uint8_t *) PIC(APWINE_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
             context->selectorIndex = i;
             break;
         }
     }
 
-    if (i == NUM_ONE_INCH_SELECTORS) {
+    if (i == NUM_APWINE_SELECTORS) {
         // Selector was not found
         msg->result = ETH_PLUGIN_RESULT_ERROR;
         return;
@@ -62,12 +59,8 @@ static void handle_init_contract(void *parameters) {
 
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
-        case SWAP:
+        case SWAP_EXACT_AMOUNT_IN:
             // Skip caller, structure offset and data offset
-            context->skip = 3;
-            context->next_param = TOKEN_SENT;
-            break;
-        case UNOSWAP:
             context->next_param = TOKEN_SENT;
             break;
         default:
@@ -79,22 +72,22 @@ static void handle_init_contract(void *parameters) {
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
 
-static void sent_network_token(one_inch_parameters_t *context) {
+static void sent_network_token(apwine_parameters_t *context) {
     context->decimals_sent = WEI_TO_ETHER;
     context->tokens_found |= TOKEN_SENT_FOUND;
 }
 
-static void received_network_token(one_inch_parameters_t *context) {
+static void received_network_token(apwine_parameters_t *context) {
     context->decimals_received = WEI_TO_ETHER;
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
 
 static void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
-    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
+    apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
     if (context->valid) {
         msg->numScreens = 1;
-        if (context->selectorIndex == SWAP) {
+        if (context->selectorIndex == SWAP_EXACT_AMOUNT_IN) {
             // An addiitonal screen is required to display the receive and beneficiary field.
             msg->numScreens += 2;
             if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
@@ -133,8 +126,8 @@ static void handle_finalize(void *parameters) {
 
 static void handle_provide_token(void *parameters) {
     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
-    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
-    PRINTF("1INCH plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
+    apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
+    PRINTF("APWINE plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
 
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
         sent_network_token(context);
@@ -173,16 +166,13 @@ static void handle_provide_token(void *parameters) {
 
 static void handle_query_contract_id(void *parameters) {
     ethQueryContractID_t *msg = (ethQueryContractID_t *) parameters;
-    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
+    apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
 
     strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
     switch (context->selectorIndex) {
-        case SWAP:
-            strlcpy(msg->version, "Swap", msg->versionLength);
-            break;
-        case UNOSWAP:
-            strlcpy(msg->version, "Unoswap", msg->versionLength);
+        case SWAP_EXACT_AMOUNT_IN:
+            strlcpy(msg->version, "swapExactAmountIn", msg->versionLength);
             break;
         default:
             PRINTF("Selector Index :%d not supported\n", context->selectorIndex);
@@ -193,7 +183,7 @@ static void handle_query_contract_id(void *parameters) {
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
 
-void one_inch_plugin_call(int message, void *parameters) {
+void apwine_plugin_call(int message, void *parameters) {
     PRINTF("Handling message %d\n", message);
     switch (message) {
         case ETH_PLUGIN_INIT_CONTRACT:

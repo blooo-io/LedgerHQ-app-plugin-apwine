@@ -1,6 +1,6 @@
-# Ledger 1inch Plugin
+# Ledger apwine Plugin
 
-This is a plugin for the Ethereum application which helps parsing and displaying relevant information when signing a 1inch transaction.
+This is a plugin for the Ethereum application which helps parsing and displaying relevant information when signing a apwine transaction.
 
 ## Prerequisite
 
@@ -50,7 +50,7 @@ How to Make:
 4) Launch ledger-app-builder container
 
     ```shell
-    docker run --rm -it -v ~/path-to/app-plugin-1inch:/app ledger-app-builder
+    docker run --rm -it -v ~/path-to/app-plugin-apwine:/app ledger-app-builder
     ```
 
 5) Call `make SPECULOS=1` with in container
