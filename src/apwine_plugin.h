@@ -11,7 +11,7 @@
 #define RUN_APPLICATION 1
 
 #define NUM_APWINE_SELECTORS 1
-#define SELECTOR_SIZE          4
+#define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "Apwine"
 
@@ -26,7 +26,7 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
 // Returns 1 if corresponding address is the apwine address for the chain token (ETH, BNB, MATIC,
 // etc.. are 0xeeeee...).
-#define ADDRESS_IS_NETWORK_TOKEN(_addr)                      \
+#define ADDRESS_IS_NETWORK_TOKEN(_addr)                    \
     (!memcmp(_addr, APWINE_ETH_ADDRESS, ADDRESS_LENGTH) || \
      !memcmp(_addr, NULL_ETH_ADDRESS, ADDRESS_LENGTH))
 
@@ -34,22 +34,19 @@ typedef enum {
     SWAP_EXACT_AMOUNT_IN,
 } apwineSelector_t;
 
-#define PARTIAL_FILL 1
-
 typedef enum {
     SEND_SCREEN,
     RECEIVE_SCREEN,
-    BENEFICIARY_SCREEN,
-    PARTIAL_FILL_SCREEN,
     ERROR,
 } screens_t;
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
-#define AMOUNT_SENT 0
-#define AMOUNT_RECEIVED 1
-#define DST_RECEIVER  2
-#define NONE 3
+#define TOKEN_SENT      0
+#define AMOUNT_SENT     1
+#define AMOUNT_RECEIVED 2
+#define TOKEN_RECEIVED  3
+#define NONE            4
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
@@ -61,7 +58,6 @@ typedef enum {
 typedef struct apwine_parameters_t {
     uint8_t amount_sent[INT256_LENGTH];
     uint8_t amount_received[INT256_LENGTH];
-    uint8_t beneficiary[ADDRESS_LENGTH];
     uint8_t contract_address_sent[ADDRESS_LENGTH];
     uint8_t contract_address_received[ADDRESS_LENGTH];
     char ticker_sent[MAX_TICKER_LEN];
@@ -78,7 +74,6 @@ typedef struct apwine_parameters_t {
     uint8_t decimals_sent;
     uint8_t decimals_received;
     uint8_t selectorIndex;
-    uint8_t flags;
     uint8_t skip;
     // 4 * 1 + 2 * 2 + 7 * 1 == 8 + 7 == 15 bytes. There are 16 - 15 == 1 byte left.
 } apwine_parameters_t;

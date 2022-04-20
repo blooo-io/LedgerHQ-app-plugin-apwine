@@ -6,7 +6,10 @@
             "contractName": "AdminUpgradeabilityProxy",
             "selectors": {
                 "0x2e948b7b": {
-                    "erc20OfInterest": [],
+                    "erc20OfInterest": [
+                        "_amm",
+                        "_to"
+                    ],
                     "method": "swapExactAmountIn",
                     "plugin": "Apwine"
                 }
