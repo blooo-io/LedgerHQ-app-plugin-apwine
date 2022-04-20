@@ -17,16 +17,16 @@ static void set_send_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context)
         return;
     }
 
-    // set network ticker (ETH, BNB, etc) if needed
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-        strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
-    }
+    // // set network ticker (ETH, BNB, etc) if needed
+    // if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+    //     strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
+    // }
 
     // Convert to string.
     amountToString(context->amount_sent,
                    INT256_LENGTH,
-                   context->decimals_sent,
-                   context->ticker_sent,
+                   0,
+                   "",
                    msg->msg,
                    msg->msgLength);
     PRINTF("AMOUNT SENT: %s\n", msg->msg);
@@ -49,16 +49,16 @@ static void set_receive_ui(ethQueryContractUI_t *msg, apwine_parameters_t *conte
         return;
     }
 
-    // set network ticker (ETH, BNB, etc) if needed
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-        strlcpy(context->ticker_received, msg->network_ticker, sizeof(context->ticker_received));
-    }
+    // // set network ticker (ETH, BNB, etc) if needed
+    // if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+    //     strlcpy(context->ticker_received, msg->network_ticker, sizeof(context->ticker_received));
+    // }
 
     // Convert to string.
     amountToString(context->amount_received,
                    INT256_LENGTH,
-                   context->decimals_received,
-                   context->ticker_received,
+                   0,
+                   "",
                    msg->msg,
                    msg->msgLength);
     PRINTF("AMOUNT RECEIVED: %s\n", msg->msg);
@@ -112,7 +112,7 @@ void handle_query_contract_ui(void *parameters) {
 
     screens_t screen = get_screen(msg, context);
     switch (screen) {
-        case SEND_SCREEN: // à revoir
+        case SEND_SCREEN:
             set_send_ui(msg, context);
             break;
         case RECEIVE_SCREEN:

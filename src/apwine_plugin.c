@@ -61,7 +61,9 @@ static void handle_init_contract(void *parameters) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
             // Skip caller, structure offset and data offset
-            context->next_param = TOKEN_SENT;
+            PRINTF("LOU: %d\n", context->selectorIndex);
+            context->skip = 3;
+            context->next_param = AMOUNT_SENT;
             break;
         default:
             PRINTF("Missing selectorIndex\n");
@@ -87,34 +89,34 @@ static void handle_finalize(void *parameters) {
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
     if (context->valid) {
         msg->numScreens = 1;
-        if (context->selectorIndex == SWAP_EXACT_AMOUNT_IN) {
-            // An addiitonal screen is required to display the receive and beneficiary field.
-            msg->numScreens += 2;
-            if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
-        }
+        // if (context->selectorIndex == SWAP_EXACT_AMOUNT_IN) {
+        //     // An addiitonal screen is required to display the receive and beneficiary field.
+        //     msg->numScreens += 2;
+        //     if (context->flags & PARTIAL_FILL) msg->numScreens += 1;
+        // }
 
-        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-            // Address is not network token (0xeee...) so we will need to look up the token in the
-            // CAL.
-            printf_hex_array("Setting address sent to: ",
-                             ADDRESS_LENGTH,
-                             context->contract_address_sent);
-            msg->tokenLookup1 = context->contract_address_sent;
-        } else {
-            sent_network_token(context);
-            msg->tokenLookup1 = NULL;
-        }
-        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-            // Address is not network token (0xeee...) so we will need to look up the token in the
-            // CAL.
-            printf_hex_array("Setting address received to: ",
-                             ADDRESS_LENGTH,
-                             context->contract_address_received);
-            msg->tokenLookup2 = context->contract_address_received;
-        } else {
-            received_network_token(context);
-            msg->tokenLookup2 = NULL;
-        }
+        // if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+        //     // Address is not network token (0xeee...) so we will need to look up the token in the
+        //     // CAL.
+        //     printf_hex_array("Setting address sent to: ",
+        //                      ADDRESS_LENGTH,
+        //                      context->contract_address_sent);
+        //     msg->tokenLookup1 = context->contract_address_sent;
+        // } else {
+        //     sent_network_token(context);
+        //     msg->tokenLookup1 = NULL;
+        // }
+        // if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+        //     // Address is not network token (0xeee...) so we will need to look up the token in the
+        //     // CAL.
+        //     printf_hex_array("Setting address received to: ",
+        //                      ADDRESS_LENGTH,
+        //                      context->contract_address_received);
+        //     msg->tokenLookup2 = context->contract_address_received;
+        // } else {
+        //     received_network_token(context);
+        //     msg->tokenLookup2 = NULL;
+        // }
 
         msg->uiType = ETH_UI_TYPE_GENERIC;
         msg->result = ETH_PLUGIN_RESULT_OK;
@@ -124,45 +126,45 @@ static void handle_finalize(void *parameters) {
     }
 }
 
-static void handle_provide_token(void *parameters) {
-    ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
-    apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
-    PRINTF("APWINE plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
+// static void handle_provide_token(void *parameters) {
+//     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
+//     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
+//     PRINTF("APWINE plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
 
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-        sent_network_token(context);
-    } else if (msg->item1 != NULL) {
-        context->decimals_sent = msg->item1->token.decimals;
-        strlcpy(context->ticker_sent,
-                (char *) msg->item1->token.ticker,
-                sizeof(context->ticker_sent));
-        context->tokens_found |= TOKEN_SENT_FOUND;
-    } else {
-        // CAL did not find the token and token is not ETH.
-        context->decimals_sent = DEFAULT_DECIMAL;
-        strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
-        // // We will need an additional screen to display a warning message.
-        // msg->additionalScreens++;
-    }
+//     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
+//         sent_network_token(context);
+//     } else if (msg->item1 != NULL) {
+//         context->decimals_sent = msg->item1->token.decimals;
+//         strlcpy(context->ticker_sent,
+//                 (char *) msg->item1->token.ticker,
+//                 sizeof(context->ticker_sent));
+//         context->tokens_found |= TOKEN_SENT_FOUND;
+//     } else {
+//         // CAL did not find the token and token is not ETH.
+//         context->decimals_sent = DEFAULT_DECIMAL;
+//         strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
+//         // // We will need an additional screen to display a warning message.
+//         // msg->additionalScreens++;
+//     }
 
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-        received_network_token(context);
-    } else if (msg->item2 != NULL) {
-        context->decimals_received = msg->item2->token.decimals;
-        strlcpy(context->ticker_received,
-                (char *) msg->item2->token.ticker,
-                sizeof(context->ticker_received));
-        context->tokens_found |= TOKEN_RECEIVED_FOUND;
-    } else {
-        // CAL did not find the token and token is not ETH.
-        context->decimals_received = DEFAULT_DECIMAL;
-        strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_sent));
-        // // We will need an additional screen to display a warning message.
-        // msg->additionalScreens++;
-    }
+//     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
+//         received_network_token(context);
+//     } else if (msg->item2 != NULL) {
+//         context->decimals_received = msg->item2->token.decimals;
+//         strlcpy(context->ticker_received,
+//                 (char *) msg->item2->token.ticker,
+//                 sizeof(context->ticker_received));
+//         context->tokens_found |= TOKEN_RECEIVED_FOUND;
+//     } else {
+//         // CAL did not find the token and token is not ETH.
+//         context->decimals_received = DEFAULT_DECIMAL;
+//         strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_sent));
+//         // // We will need an additional screen to display a warning message.
+//         // msg->additionalScreens++;
+//     }
 
-    msg->result = ETH_PLUGIN_RESULT_OK;
-}
+//     msg->result = ETH_PLUGIN_RESULT_OK;
+// }
 
 static void handle_query_contract_id(void *parameters) {
     ethQueryContractID_t *msg = (ethQueryContractID_t *) parameters;
@@ -196,7 +198,7 @@ void apwine_plugin_call(int message, void *parameters) {
             handle_finalize(parameters);
             break;
         case ETH_PLUGIN_PROVIDE_INFO:
-            handle_provide_token(parameters);
+            // handle_provide_token(parameters);
             break;
         case ETH_PLUGIN_QUERY_CONTRACT_ID:
             handle_query_contract_id(parameters);

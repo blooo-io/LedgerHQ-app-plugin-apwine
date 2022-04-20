@@ -46,22 +46,10 @@ typedef enum {
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
-#define AMOUNT_SENT     0  // Amount sent by the user to the contract.
-#define AMOUNT_RECEIVED 1  // Amount sent by the contract to the user.
-#define TOKEN_SENT      2  // Address of the token the user is sending.
-#define TOKEN_RECEIVED  3  // Address of the token sent to the user.
-// #define PATH \
-//     4  // Path of the different asseths that will get swapped during the trade. First and last
-//        // tokens are the ones we care about.
-#define SRC_RECEIVER 5  // Address to which the contract will send the tokens.
-#define DST_RECEIVER 6
-#define FLAGS_PARAM  7
-// #define PATHS_LEN             8
-// #define MEGA_PATHS_OFFSET     9
-// #define MEGA_PATHS_LEN        10
-// #define FIRST_MEGAPATH_OFFSET 11
-// #define FIRST_MEGAPATH        12
-#define NONE 13  // Placeholder variant to be set when parsing is done but data is still being sent.
+#define AMOUNT_SENT 0
+#define AMOUNT_RECEIVED 1
+#define DST_RECEIVER  2
+#define NONE 3
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
