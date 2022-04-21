@@ -11,10 +11,10 @@
                         "_to"
                     ],
                     "method": "swapExactAmountIn",
-                    "plugin": "Apwine"
+                    "plugin": "apwine"
                 }
             }
         }
     ],
-    "name": "Apwine"
+    "name": "apwine"
 }

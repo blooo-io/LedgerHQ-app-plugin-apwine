@@ -3,7 +3,6 @@
 #include <string.h>
 #include "eth_internals.h"
 #include "eth_plugin_interface.h"
-#include "debug_write.h"
 
 #define PARAMETER_LENGTH 32
 #define SELECTOR_SIZE    4
@@ -13,7 +12,7 @@
 #define NUM_APWINE_SELECTORS 1
 #define SELECTOR_SIZE        4
 
-#define PLUGIN_NAME "Apwine"
+#define PLUGIN_NAME "apwine"
 
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND 1 << 1
@@ -23,6 +22,8 @@ extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
 // apwine uses 0x00000 as a dummy address to reprecent ETH in Unmoswap.
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
+
+extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
 // Returns 1 if corresponding address is the apwine address for the chain token (ETH, BNB, MATIC,
 // etc.. are 0xeeeee...).
@@ -39,6 +40,16 @@ typedef enum {
     RECEIVE_SCREEN,
     ERROR,
 } screens_t;
+
+#define NUM_CONTRACT_ADDRESS_COLLECTION 2
+
+typedef struct contract_address_ticker {
+    uint8_t _amm[ADDRESS_LENGTH];
+    char ticker_sent[MAX_TICKER_LEN];
+    char ticker_received[MAX_TICKER_LEN];
+    uint8_t decimal;
+} contract_address_ticker_t;
+extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION];
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
@@ -81,6 +92,10 @@ typedef struct apwine_parameters_t {
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);
 void apwine_plugin_call(int message, void *parameters);
+void handle_finalize(void *parameters);
+void handle_init_contract(void *parameters);
+void handle_provide_token(void *parameters);
+void handle_query_contract_id(void *parameters);
 
 static inline void printf_hex_array(const char *title __attribute__((unused)),
                                     size_t len __attribute__((unused)),

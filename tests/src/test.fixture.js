@@ -136,11 +136,11 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     else
       serializedTx = srlTx;
     
-    const resolution = await ledgerService.resolveTransaction(serializedTx, config, {
-      externalPlugins: true,
-      erc20: true,
-    });
-    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx, resolution);
+    // const resolution = await ledgerService.resolveTransaction(serializedTx, config, {
+    //   externalPlugins: true,
+    //   erc20: true,
+    // });
+    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx); //, resolution);
 
     await sim.waitUntilScreenIsNot(
       sim.getMainMenuSnapshot(),

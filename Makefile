@@ -29,7 +29,7 @@ APPVERSION_N     = 0
 APPVERSION_P     = 3
 APPVERSION       = "$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)"
 
-APPNAME = "Apwine"
+APPNAME = "apwine"
 
 #prepare hsm generation
 ifeq ($(TARGET_NAME), TARGET_NANOS)
