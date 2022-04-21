@@ -41,7 +41,7 @@ typedef enum {
     ERROR,
 } screens_t;
 
-#define NUM_CONTRACT_ADDRESS_COLLECTION 2
+#define NUM_CONTRACT_ADDRESS_COLLECTION 14
 
 typedef struct contract_address_ticker {
     uint8_t _amm[ADDRESS_LENGTH];
