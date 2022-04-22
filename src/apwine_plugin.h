@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_APWINE_SELECTORS 1
+#define NUM_APWINE_SELECTORS 2
 #define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "APWine"
@@ -36,6 +36,7 @@ extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
 typedef enum {
     SWAP_EXACT_AMOUNT_IN,
+    SWAP_EXACT_AMOUNT_OUT,
 } apwineSelector_t;
 
 typedef enum {

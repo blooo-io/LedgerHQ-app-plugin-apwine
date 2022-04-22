@@ -3,6 +3,7 @@
 static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
+        case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->title, "Token Send", msg->titleLength);
             break;
         default:
@@ -14,8 +15,18 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
-            break;
+            switch (context->selectorIndex) {
+                case SWAP_EXACT_AMOUNT_IN:
+                    strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
+                    break;
+                case SWAP_EXACT_AMOUNT_OUT:
+                    strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
+                    break;
+                default:
+                    PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
         }
     }
 }
@@ -23,6 +34,7 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
 static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
+        case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->title, "Token Receive", msg->titleLength);
             break;
         default:
@@ -34,8 +46,18 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
-            break;
+            switch (context->selectorIndex) {
+                case SWAP_EXACT_AMOUNT_IN:
+                    strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
+                    break;
+                case SWAP_EXACT_AMOUNT_OUT:
+                    strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
+                    break;
+                default:
+                    PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
         }
     }
 }
@@ -44,6 +66,7 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
 static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
+        case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->title, "Amount In", msg->titleLength);
             break;
         default:
@@ -65,6 +88,7 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
 static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
+        case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->title, "Amount Out", msg->titleLength);
             break;
         default:

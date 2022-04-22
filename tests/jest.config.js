@@ -29,7 +29,7 @@ module.exports = {
         // '**/__tests__/**/*.[jt]s?(x)',
         // '**/?(*.)+(spec|test).[tj]s?(x)',
         // '**/?(*.)+(ispec|test).[tj]s?(x)',
-        '**/swap_exact_amount_in.test*',
+        '**/swap_exact_amount_out.test*',
     ],
 
     // Stop immediatly when a test fails

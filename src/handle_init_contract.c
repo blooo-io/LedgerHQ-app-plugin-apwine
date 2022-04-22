@@ -36,7 +36,9 @@ void handle_init_contract(void *parameters) {
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
-            PRINTF("LOU: %d\n", context->selectorIndex);
+            context->next_param = TOKEN_SENT;
+            break;
+        case SWAP_EXACT_AMOUNT_OUT:
             context->next_param = TOKEN_SENT;
             break;
         default:

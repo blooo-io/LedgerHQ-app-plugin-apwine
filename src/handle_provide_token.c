@@ -1,6 +1,6 @@
 #include "apwine_plugin.h"
 
-void handle_exact_tokens(apwine_parameters_t *context) {
+void handle_swap_exact_tokens(apwine_parameters_t *context) {
     contract_address_ticker_t *currentToken = NULL;
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
@@ -22,7 +22,8 @@ void handle_provide_token(void *parameters) {
 
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
-            handle_exact_tokens(context);
+        case SWAP_EXACT_AMOUNT_OUT:
+            handle_swap_exact_tokens(context);
             break;
         default:
             break;

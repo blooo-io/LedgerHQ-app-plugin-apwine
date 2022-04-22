@@ -3,15 +3,24 @@
 // Need more information about the interface for plugins? Please read the README.md!
 
 // You can check apwine swapExactAmountIn methods here
-// https://etherscan.io/tx/0x40831891ac2a584f63e691a4179d129fc0fc39bca6fd74ef80eaf3eb2d133479
+// https://etherscan.io/tx/0x3f996e272be8792272df456c4c7ba4a6a3bbafc101172f6fb43f5d3c6c690fc9
 
 // swapExactAmountIn 0x2e948b7b
 static const uint8_t APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x94, 0x8b, 0x7b};
 
+// You can check apwine swapExactAmountOut methods here
+// https://etherscan.io/tx/0x975ec4126dd425ba520432c9b381b5c51529c14f7ef1f17bd4d57f6139c2f96b
+
+// swapExactAmountOut 0x8b9c185a
+static const uint8_t APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR[SELECTOR_SIZE] = {0x8b,
+                                                                             0x9c,
+                                                                             0x18,
+                                                                             0x5a};
+
 // Array of all the different apwine selectors.
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
     APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
-};
+    APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR};
 
 // apwine uses `0xeeeee` as a dummy address to represent ETH.
 const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH] = {0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee,

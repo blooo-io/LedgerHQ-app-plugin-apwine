@@ -10,6 +10,9 @@ void handle_query_contract_id(void *parameters) {
         case SWAP_EXACT_AMOUNT_IN:
             strlcpy(msg->version, "swapExactAmountIn", msg->versionLength);
             break;
+        case SWAP_EXACT_AMOUNT_OUT:
+            strlcpy(msg->version, "swapExactAmountOut", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported!\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

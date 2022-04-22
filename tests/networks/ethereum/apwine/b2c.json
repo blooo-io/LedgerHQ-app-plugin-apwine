@@ -12,6 +12,14 @@
                     ],
                     "method": "swapExactAmountIn",
                     "plugin": "APWine"
+                },
+                "0x8b9c185a": {
+                    "erc20OfInterest": [
+                        "_amm",
+                        "_to"
+                    ],
+                    "method": "swapExactAmountOut",
+                    "plugin": "APWine"
                 }
             }
         }

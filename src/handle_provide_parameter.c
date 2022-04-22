@@ -28,8 +28,8 @@ static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_param
     printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
 }
 
-static void handle_swap_exact_amount_in(ethPluginProvideParameter_t *msg,
-                                        apwine_parameters_t *context) {
+static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
+                                     apwine_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:  // _amm
             handle_token_sent(msg, context);
@@ -78,11 +78,10 @@ void handle_provide_parameter(void *parameters) {
 
         context->offset = 0;  // Reset offset
         switch (context->selectorIndex) {
-            case SWAP_EXACT_AMOUNT_IN: {
-                handle_swap_exact_amount_in(msg, context);
+            case SWAP_EXACT_AMOUNT_IN:
+            case SWAP_EXACT_AMOUNT_OUT:
+                handle_swap_exact_amount(msg, context);
                 break;
-            }
-
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
