@@ -1,42 +1,71 @@
 #include "apwine_plugin.h"
 
-// Set UI for the "Send" screen.
-static void set_send_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
-            strlcpy(msg->title, "Send", msg->titleLength);
+            strlcpy(msg->title, "Token Send", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+    contract_address_ticker_t *currentToken = NULL;
+    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
+        currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
+        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
+            break;
+        }
+    }
+}
 
-    // if (!(context->tokens_found & TOKEN_SENT_FOUND)) {
-    //     strlcpy(msg->msg, "Unknown token", msg->msgLength);
-    //     return;
-    // }
+static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+    switch (context->selectorIndex) {
+        case SWAP_EXACT_AMOUNT_IN:
+            strlcpy(msg->title, "Token Receive", msg->titleLength);
+            break;
+        default:
+            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
+    contract_address_ticker_t *currentToken = NULL;
+    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
+        currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
+        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
+            break;
+        }
+    }
+}
 
-    // // // set network ticker (ETH, BNB, etc) if needed
-    // if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-    //     strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
-    // }
+// Set UI for "Send" screen.
+static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+    switch (context->selectorIndex) {
+        case SWAP_EXACT_AMOUNT_IN:
+            strlcpy(msg->title, "Amount In", msg->titleLength);
+            break;
+        default:
+            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
 
     // Convert to string.
     amountToString(context->amount_sent,
                    INT256_LENGTH,
                    context->decimals_sent,
-                   context->ticker_sent,
+                   "",
                    msg->msg,
                    msg->msgLength);
-    PRINTF("AMOUNT SENT: %s\n", msg->msg);
 }
 
 // Set UI for "Receive" screen.
-static void set_receive_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
-            strlcpy(msg->title, "Receive Min", msg->titleLength);
+            strlcpy(msg->title, "Amount Out", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
@@ -44,24 +73,13 @@ static void set_receive_ui(ethQueryContractUI_t *msg, apwine_parameters_t *conte
             return;
     }
 
-    // if (!(context->tokens_found & TOKEN_RECEIVED_FOUND)) {
-    //     strlcpy(msg->msg, "Unknown token", msg->msgLength);
-    //     return;
-    // }
-
-    // // // set network ticker (ETH, BNB, etc) if needed
-    // if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-    //     strlcpy(context->ticker_received, msg->network_ticker, sizeof(context->ticker_received));
-    // }
-
     // Convert to string.
     amountToString(context->amount_received,
                    INT256_LENGTH,
                    context->decimals_received,
-                   context->ticker_received,
+                   "",
                    msg->msg,
                    msg->msgLength);
-    PRINTF("AMOUNT RECEIVED: %s\n", msg->msg);
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
@@ -70,9 +88,13 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
     uint8_t index = msg->screenIndex;
 
     if (index == 0) {
-        return SEND_SCREEN;
+        return SEND_TICKER_SCREEN;
     } else if (index == 1) {
-        return RECEIVE_SCREEN;
+        return SEND_AMOUNT_SCREEN;
+    } else if (index == 2) {
+        return RECEIVE_TICKER_SCREEN;
+    } else if (index == 3) {
+        return RECEIVE_AMOUNT_SCREEN;
     }
     return ERROR;
 }
@@ -87,11 +109,17 @@ void handle_query_contract_ui(void *parameters) {
 
     screens_t screen = get_screen(msg, context);
     switch (screen) {
-        case SEND_SCREEN:
-            set_send_ui(msg, context);
+        case SEND_TICKER_SCREEN:
+            set_send_ticker_ui(msg, context);
             break;
-        case RECEIVE_SCREEN:
-            set_receive_ui(msg, context);
+        case SEND_AMOUNT_SCREEN:
+            set_send_amount_ui(msg, context);
+            break;
+        case RECEIVE_TICKER_SCREEN:
+            set_receive_ticker_ui(msg, context);
+            break;
+        case RECEIVE_AMOUNT_SCREEN:
+            set_receive_amount_ui(msg, context);
             break;
         default:
             PRINTF("Received an invalid screenIndex\n");

@@ -5,19 +5,12 @@ void handle_exact_tokens(apwine_parameters_t *context) {
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            strlcpy(context->ticker_sent,
-                    (char *) currentToken->ticker_sent,
-                    sizeof(context->ticker_sent));
             context->decimals_sent = currentToken->decimal;
-            strlcpy(context->ticker_received,
-                    (char *) currentToken->ticker_received,
-                    sizeof(context->ticker_received));
+            context->decimals_received = currentToken->decimal;
             break;
         } else {
             context->decimals_sent = WEI_TO_ETHER;
             context->decimals_received = WEI_TO_ETHER;
-            strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_sent));
-            strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
         }
     }
 }

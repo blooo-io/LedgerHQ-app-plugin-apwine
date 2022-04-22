@@ -17,6 +17,9 @@
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND 1 << 1
 
+// Ticker needed for APWine plugin
+#define APWINE_MAX_TICKER_LEN 30
+
 // apwine uses `0xeeeee` as a dummy address to represent ETH in Swap.
 extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
@@ -36,8 +39,10 @@ typedef enum {
 } apwineSelector_t;
 
 typedef enum {
-    SEND_SCREEN,
-    RECEIVE_SCREEN,
+    SEND_TICKER_SCREEN,
+    SEND_AMOUNT_SCREEN,
+    RECEIVE_TICKER_SCREEN,
+    RECEIVE_AMOUNT_SCREEN,
     ERROR,
 } screens_t;
 
@@ -45,8 +50,8 @@ typedef enum {
 
 typedef struct contract_address_ticker {
     uint8_t _amm[ADDRESS_LENGTH];
-    char ticker_sent[MAX_TICKER_LEN];
-    char ticker_received[MAX_TICKER_LEN];
+    char ticker_sent[APWINE_MAX_TICKER_LEN];
+    char ticker_received[APWINE_MAX_TICKER_LEN];
     uint8_t decimal;
 } contract_address_ticker_t;
 extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION];
@@ -71,8 +76,6 @@ typedef struct apwine_parameters_t {
     uint8_t amount_received[INT256_LENGTH];
     uint8_t contract_address_sent[ADDRESS_LENGTH];
     uint8_t contract_address_received[ADDRESS_LENGTH];
-    char ticker_sent[MAX_TICKER_LEN];
-    char ticker_received[MAX_TICKER_LEN];
 
     // 32 * 2 + 20 * 3 + 12 * 2 == 64 + 60 + 24 == 144
     // 32 * 5 == 160 bytes so there are 160 - 144 == 16 bytes left.

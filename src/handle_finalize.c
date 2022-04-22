@@ -14,10 +14,9 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
     if (context->valid) {
-        msg->numScreens = 2;
+        msg->numScreens = 4;
 
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-            PRINTF("LOU: ICI_FINALIZE 1: %.*H\n", ADDRESS_LENGTH, context->contract_address_sent);
             // Address is not network token (0xeee...) so we will need to look up the token in the
             // CAL.
             printf_hex_array("Setting address sent to: ",
@@ -25,12 +24,10 @@ void handle_finalize(void *parameters) {
                              context->contract_address_sent);
             msg->tokenLookup1 = context->contract_address_sent;
         } else {
-            PRINTF("LOU: ICI_FINALIZE 2: %.*H\n", ADDRESS_LENGTH, context->contract_address_sent);
             sent_network_token(context);
             msg->tokenLookup1 = NULL;
         }
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-            PRINTF("LOU: ICI_FINALIZE 3: %.*H\n", ADDRESS_LENGTH, context->contract_address_sent);
             // Address is not network token (0xeee...) so we will need to look up the token in the
             // CAL.
             printf_hex_array("Setting address received to: ",
@@ -38,7 +35,6 @@ void handle_finalize(void *parameters) {
                              context->contract_address_received);
             msg->tokenLookup2 = context->contract_address_received;
         } else {
-            PRINTF("LOU: ICI_FINALIZE 4: %.*H\n", ADDRESS_LENGTH, context->contract_address_sent);
             received_network_token(context);
             msg->tokenLookup2 = NULL;
         }
