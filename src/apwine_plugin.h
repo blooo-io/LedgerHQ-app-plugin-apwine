@@ -12,7 +12,7 @@
 #define NUM_APWINE_SELECTORS 1
 #define SELECTOR_SIZE        4
 
-#define PLUGIN_NAME "apwine"
+#define PLUGIN_NAME "APWine"
 
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND 1 << 1

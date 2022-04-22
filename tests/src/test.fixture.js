@@ -24,8 +24,8 @@ const Resolve = require('path').resolve;
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
 
-const PLUGIN_LIB_NANOS = { 'apwine': Resolve('elfs/apwine_nanos.elf') };
-const PLUGIN_LIB_NANOX = { 'apwine': Resolve('elfs/apwine_nanox.elf') };
+const PLUGIN_LIB_NANOS = { 'APWine': Resolve('elfs/apwine_nanos.elf') };
+const PLUGIN_LIB_NANOX = { 'APWine': Resolve('elfs/apwine_nanox.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
