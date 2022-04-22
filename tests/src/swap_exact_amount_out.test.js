@@ -70,11 +70,11 @@ var rawTxs = {
 
 for (var token in rawTxs) {
     const devices = [
-        // {
-        //     name: "nanos",
-        //     label: "Nano S",
-        //     steps: rawTxs[token]["nanos_steps"], // <= Define the number of steps for this test case and this device
-        // },
+        {
+            name: "nanos",
+            label: "Nano S",
+            steps: rawTxs[token]["nanos_steps"], // <= Define the number of steps for this test case and this device
+        },
         {
             name: "nanox",
             label: "Nano X",
