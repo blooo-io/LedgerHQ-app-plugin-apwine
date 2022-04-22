@@ -168,7 +168,7 @@ function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, s
           eth,
           sim,
           device.steps,
-          testDirSuffix,
+          device.name+"_"+testDirSuffix,
           rawTxHex,
           serializedTx
         );
