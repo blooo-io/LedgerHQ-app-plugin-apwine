@@ -1,0 +1,20 @@
+{
+    "chainId": 1,
+    "contracts": [
+        {
+            "address": "0xb6e370d83a180ea3667db41a2acfaf605fa03788",
+            "contractName": "AdminUpgradeabilityProxy",
+            "selectors": {
+                "0x2e948b7b": {
+                    "erc20OfInterest": [
+                        "_amm",
+                        "_to"
+                    ],
+                    "method": "swapExactAmountIn",
+                    "plugin": "APWine"
+                }
+            }
+        }
+    ],
+    "name": "APWine"
+}

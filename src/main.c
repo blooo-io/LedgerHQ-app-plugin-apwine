@@ -24,7 +24,33 @@
 
 #include "glyphs.h"
 
-#include "one_inch_plugin.h"
+#include "apwine_plugin.h"
+
+void apwine_plugin_call(int message, void *parameters) {
+    switch (message) {
+        case ETH_PLUGIN_INIT_CONTRACT:
+            handle_init_contract(parameters);
+            break;
+        case ETH_PLUGIN_PROVIDE_PARAMETER:
+            handle_provide_parameter(parameters);
+            break;
+        case ETH_PLUGIN_FINALIZE:
+            handle_finalize(parameters);
+            break;
+        case ETH_PLUGIN_PROVIDE_INFO:
+            handle_provide_token(parameters);
+            break;
+        case ETH_PLUGIN_QUERY_CONTRACT_ID:
+            handle_query_contract_id(parameters);
+            break;
+        case ETH_PLUGIN_QUERY_CONTRACT_UI:
+            handle_query_contract_ui(parameters);
+            break;
+        default:
+            PRINTF("Unhandled message %d\n", message);
+            break;
+    }
+}
 
 void call_app_ethereum() {
     unsigned int libcall_params[3];
@@ -54,7 +80,7 @@ __attribute__((section(".boot"))) int main(int arg0) {
                 unsigned int *args = (unsigned int *) arg0;
 
                 if (args[0] != ETH_PLUGIN_CHECK_PRESENCE) {
-                    one_inch_plugin_call(args[0], (void *) args[1]);
+                    apwine_plugin_call(args[0], (void *) args[1]);
                 }
                 os_lib_end();
             }
