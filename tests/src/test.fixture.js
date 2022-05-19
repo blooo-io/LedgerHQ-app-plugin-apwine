@@ -172,7 +172,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = '') 
  * @param {string} rawTxHex RawTx Hex to test
  * @param {boolean} signed The plugin is already signed and existing in Ledger database
  */
-function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, signed, serializedTx, testNetwork) {
+export const processTest = (device, contractName, testLabel, testDirSuffix, rawTxHex, signed, serializedTx, testNetwork) => {
     test(
         `[${contractName}] - ${device.label} - ${testLabel}`,
         zemu(device.name, async (sim, eth) => {
@@ -180,15 +180,15 @@ function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, s
                 eth,
                 sim,
                 device.steps,
-                `${device.name}_${testDirSuffix}`,
+                `${testNetwork}_${device.name}_${testDirSuffix}`,
                 rawTxHex,
                 serializedTx,
             );
         }, testNetwork, signed),
     );
-}
+};
 
-function populateTransaction(contractAddr, inputData, chainId, value = '0.0') {
+export const populateTransaction = (contractAddr, inputData, chainId, value = '0.0') => {
     // Get the generic transaction template
     const unsignedTx = genericTx;
     // adapt to the appropriate network
@@ -201,10 +201,4 @@ function populateTransaction(contractAddr, inputData, chainId, value = '0.0') {
     unsignedTx.value = parseEther(value);
     // Create serializedTx and remove the "0x" prefix
     return ethers.utils.serializeTransaction(unsignedTx).slice(2);
-}
-
-module.exports = {
-    processTest,
-    genericTx,
-    populateTransaction,
 };

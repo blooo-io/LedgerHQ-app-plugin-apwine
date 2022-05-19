@@ -6,19 +6,29 @@
             "contractName": "AdminUpgradeabilityProxy",
             "selectors": {
                 "0x2e948b7b": {
-                    "erc20OfInterest": [
-                        "_amm",
-                        "_to"
-                    ],
+                    "erc20OfInterest": [],
                     "method": "swapExactAmountIn",
                     "plugin": "APWine"
                 },
                 "0x8b9c185a": {
-                    "erc20OfInterest": [
-                        "_amm",
-                        "_to"
-                    ],
+                    "erc20OfInterest": [],
                     "method": "swapExactAmountOut",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x8a362aa1c81ed0ee2ae677a8b59e0f563dd290ba",
+            "contractName": "AdminUpgradeabilityProxy",
+            "selectors": {
+                "0xe7ffb5f7": {
+                    "erc20OfInterest": [],
+                    "method": "addLiquidity",
+                    "plugin": "APWine"
+                },
+                "0xafc3083c": {
+                    "erc20OfInterest": [],
+                    "method": "removeLiquidity",
                     "plugin": "APWine"
                 }
             }
