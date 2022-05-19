@@ -27,7 +27,7 @@
             "address": "0x8a362aa1c81ed0ee2ae677a8b59e0f563dd290ba",
             "contractName": "AdminUpgradeabilityProxy",
             "selectors": {
-                "0xe7ffb5f7": {
+                "0x2d8918d7": {
                     "erc20OfInterest": [],
                     "method": "addLiquidity",
                     "plugin": "APWine"

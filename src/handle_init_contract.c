@@ -41,6 +41,10 @@ void handle_init_contract(void *parameters) {
         case SWAP_EXACT_AMOUNT_OUT:
             context->next_param = TOKEN_SENT;
             break;
+        case ADD_LIQUIDITY:
+            context->skip = 2;
+            context->next_param = AMOUNT_SENT;
+            break;
         case REMOVE_LIQUIDITY:
             context->skip = 2;
             context->next_param = AMOUNT_SENT;

@@ -13,6 +13,9 @@ void handle_query_contract_id(void *parameters) {
         case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->version, "Swap Exact Amount Out", msg->versionLength);
             break;
+        case ADD_LIQUIDITY:
+            strlcpy(msg->version, "Add Liquidity", msg->versionLength);
+            break;
         case REMOVE_LIQUIDITY:
             strlcpy(msg->version, "Remove Liquidity", msg->versionLength);
             break;
