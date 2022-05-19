@@ -26,9 +26,11 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     testMatch: [
-        '**/__tests__/**/*.[jt]s?(x)',
-        '**/?(*.)+(spec|test).[tj]s?(x)',
-        '**/?(*.)+(ispec|test).[tj]s?(x)',
+        // '**/__tests__/**/*.[jt]s?(x)',
+        // '**/?(*.)+(spec|test).[tj]s?(x)',
+        // '**/?(*.)+(ispec|test).[tj]s?(x)',
+        '**/remove_liquidity_polygon.test*',
+        '**/remove_liquidity_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails
