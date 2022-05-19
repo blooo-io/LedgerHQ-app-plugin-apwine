@@ -11,6 +11,9 @@ static const uint8_t APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR[SELECTOR_SIZE] = {0x1
                                                                              0x3a,
                                                                              0xce};
 
+// addLiquity 0x2d8918d7
+static const uint8_t APWINE_ADD_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0x2d, 0x89, 0x18, 0xd7};
+
 // removeLiquity 0xafc3083c
 static const uint8_t APWINE_REMOVE_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0xaf, 0xc3, 0x08, 0x3c};
 
@@ -18,6 +21,7 @@ static const uint8_t APWINE_REMOVE_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0xaf, 0x
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
     APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
     APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR,
+    APWINE_ADD_LIQUIDITY_SELECTOR,
     APWINE_REMOVE_LIQUIDITY_SELECTOR,
 };
 

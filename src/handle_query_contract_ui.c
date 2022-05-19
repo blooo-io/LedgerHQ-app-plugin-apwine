@@ -61,6 +61,9 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->title, "Amount In", msg->titleLength);
             break;
+        case ADD_LIQUIDITY:
+            strlcpy(msg->title, "Amount In 1", msg->titleLength);
+            break;
         case REMOVE_LIQUIDITY:
             strlcpy(msg->title, "Amount Out 1", msg->titleLength);
             break;
@@ -85,6 +88,9 @@ static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t
         case SWAP_EXACT_AMOUNT_IN:
         case SWAP_EXACT_AMOUNT_OUT:
             strlcpy(msg->title, "Amount Out", msg->titleLength);
+            break;
+        case ADD_LIQUIDITY:
+            strlcpy(msg->title, "Amount In 2", msg->titleLength);
             break;
         case REMOVE_LIQUIDITY:
             strlcpy(msg->title, "Amount Out 2", msg->titleLength);

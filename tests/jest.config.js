@@ -31,6 +31,8 @@ module.exports = {
         // '**/?(*.)+(ispec|test).[tj]s?(x)',
         '**/remove_liquidity_polygon.test*',
         '**/remove_liquidity_ethereum.test*',
+        '**/add_liquidity_polygon.test*',
+        '**/add_liquidity_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails
