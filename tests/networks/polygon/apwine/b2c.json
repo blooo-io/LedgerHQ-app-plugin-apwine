@@ -1,11 +1,11 @@
 {
-    "chainId": 1,
+    "chainId": 137,
     "contracts": [
         {
-            "address": "0xf5ba2e5dded276fc0f7a7637a61157a4be79c626",
+            "address": "0x790a0ca839dc5e4690c8c58cb57fd2beca419afc",
             "contractName": "AdminUpgradeabilityProxy",
             "selectors": {
-                "0xe7ffb5f7": {
+                "0x2e948b7b": {
                     "erc20OfInterest": [
                         "_amm",
                         "_to"
@@ -13,7 +13,7 @@
                     "method": "swapExactAmountIn",
                     "plugin": "APWine"
                 },
-                "0x16dc3ace": {
+                "0x8b9c185a": {
                     "erc20OfInterest": [
                         "_amm",
                         "_to"

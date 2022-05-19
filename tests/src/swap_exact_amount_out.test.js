@@ -84,6 +84,6 @@ for (var token in rawTxs) {
     const testDirSuffix = testLabel+"_"+token; // <= directory to compare device snapshots to
     const rawTx = rawTxs[token]["rawTx"];
     devices.forEach((device) =>
-        processTest(device, contractName, testLabel, testDirSuffix, rawTx, signedPlugin, "", testNetwork)
+        processTest(device, contractName, testLabel+"_"+token, testDirSuffix, rawTx, signedPlugin, "", testNetwork)
     );
 };
