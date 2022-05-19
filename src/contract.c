@@ -12,7 +12,7 @@ static const uint8_t APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR[SELECTOR_SIZE] = {0x1
                                                                              0xce};
 
 // removeLiquity 0xafc3083c
-static const uint8_t APWINE_REMOVE_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0xaf,0xc3,0x08,0x3c};
+static const uint8_t APWINE_REMOVE_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0xaf, 0xc3, 0x08, 0x3c};
 
 // Array of all the different apwine selectors.
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {

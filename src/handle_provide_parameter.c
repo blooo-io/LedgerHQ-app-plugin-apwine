@@ -65,7 +65,6 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
 
 static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
                                     apwine_parameters_t *context) {
-
     switch (context->next_param) {
         case AMOUNT_SENT:  // _minAmountsOut[0] will be copied in AMOUNT_SENT
             handle_amount_sent(msg, context);
