@@ -8,7 +8,13 @@ void handle_query_contract_id(void *parameters) {
 
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
-            strlcpy(msg->version, "swapExactAmountIn", msg->versionLength);
+            strlcpy(msg->version, "Swap Exact Amount In", msg->versionLength);
+            break;
+        case SWAP_EXACT_AMOUNT_OUT:
+            strlcpy(msg->version, "Swap Exact Amount Out", msg->versionLength);
+            break;
+        case REMOVE_LIQUIDITY:
+            strlcpy(msg->version, "Remove Liquidity", msg->versionLength);
             break;
         default:
             PRINTF("Selector Index :%d not supported!\n", context->selectorIndex);

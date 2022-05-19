@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_APWINE_SELECTORS 1
+#define NUM_APWINE_SELECTORS 3
 #define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "APWine"
@@ -20,11 +20,14 @@
 // Ticker needed for APWine plugin
 #define APWINE_MAX_TICKER_LEN 30
 
-// apwine uses `0xeeeee` as a dummy address to represent ETH in Swap.
+// apwine uses `0xeeeee` as a dummy address to represent ETH.
 extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
-// apwine uses 0x00000 as a dummy address to reprecent ETH in Unmoswap.
+// apwine uses 0x00000 as a dummy address to reprecent ETH.
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
+
+// Indicate which token is send and received
+extern const uint8_t CONTRACT_ADDRESS_TOKEN_PATH[ADDRESS_LENGTH];
 
 extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
@@ -36,13 +39,17 @@ extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
 typedef enum {
     SWAP_EXACT_AMOUNT_IN,
+    SWAP_EXACT_AMOUNT_OUT,
+    REMOVE_LIQUIDITY,
 } apwineSelector_t;
 
 typedef enum {
     SEND_TICKER_SCREEN,
-    SEND_AMOUNT_SCREEN,
     RECEIVE_TICKER_SCREEN,
-    RECEIVE_AMOUNT_SCREEN,
+    SEND_SCREEN,
+    RECEIVE_SCREEN,
+    BENEFICIARY_SCREEN,
+    WARN_SCREEN,
     ERROR,
 } screens_t;
 
@@ -63,6 +70,7 @@ extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_
 #define AMOUNT_RECEIVED 2
 #define TOKEN_RECEIVED  3
 #define NONE            4
+#define TOKEN_PATH      5
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
@@ -74,8 +82,11 @@ extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_
 typedef struct apwine_parameters_t {
     uint8_t amount_sent[INT256_LENGTH];
     uint8_t amount_received[INT256_LENGTH];
+    uint8_t beneficiary[ADDRESS_LENGTH];
     uint8_t contract_address_sent[ADDRESS_LENGTH];
     uint8_t contract_address_received[ADDRESS_LENGTH];
+    char ticker_sent[MAX_TICKER_LEN];
+    char ticker_received[MAX_TICKER_LEN];
 
     // 32 * 2 + 20 * 3 + 12 * 2 == 64 + 60 + 24 == 144
     // 32 * 5 == 160 bytes so there are 160 - 144 == 16 bytes left.

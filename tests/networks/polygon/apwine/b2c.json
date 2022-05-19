@@ -1,0 +1,38 @@
+{
+    "chainId": 137,
+    "contracts": [
+        {
+            "address": "0x790a0ca839dc5e4690c8c58cb57fd2beca419afc",
+            "contractName": "AdminUpgradeabilityProxy",
+            "selectors": {
+                "0x2e948b7b": {
+                    "erc20OfInterest": [],
+                    "method": "swapExactAmountIn",
+                    "plugin": "APWine"
+                },
+                "0x8b9c185a": {
+                    "erc20OfInterest": [],
+                    "method": "swapExactAmountOut",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x8a362aa1c81ed0ee2ae677a8b59e0f563dd290ba",
+            "contractName": "AdminUpgradeabilityProxy",
+            "selectors": {
+                "0xe7ffb5f7": {
+                    "erc20OfInterest": [],
+                    "method": "addLiquidity",
+                    "plugin": "APWine"
+                },
+                "0xafc3083c": {
+                    "erc20OfInterest": [],
+                    "method": "removeLiquidity",
+                    "plugin": "APWine"
+                }
+            }
+        }
+    ],
+    "name": "APWine"
+}

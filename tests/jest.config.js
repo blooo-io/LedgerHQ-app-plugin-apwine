@@ -29,7 +29,8 @@ module.exports = {
         // '**/__tests__/**/*.[jt]s?(x)',
         // '**/?(*.)+(spec|test).[tj]s?(x)',
         // '**/?(*.)+(ispec|test).[tj]s?(x)',
-        '**/swap_exact_amount_in.test*',
+        '**/remove_liquidity_polygon.test*',
+        '**/remove_liquidity_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails
