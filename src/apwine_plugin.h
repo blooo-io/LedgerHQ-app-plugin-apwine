@@ -65,13 +65,12 @@ extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
-#define TOKEN_SENT              0
-#define AMOUNT_SENT             1
-#define AMOUNT_RECEIVED         2
-#define TOKEN_RECEIVED          3
-#define NONE                    4
-#define TOKEN_PATH              5
-
+#define TOKEN_SENT      0
+#define AMOUNT_SENT     1
+#define AMOUNT_RECEIVED 2
+#define TOKEN_RECEIVED  3
+#define NONE            4
+#define TOKEN_PATH      5
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER

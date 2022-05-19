@@ -16,9 +16,9 @@ static const uint8_t APWINE_REMOVE_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0xaf,0xc
 
 // Array of all the different apwine selectors.
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
-  APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
-  APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR,
-  APWINE_REMOVE_LIQUIDITY_SELECTOR,
+    APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
+    APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR,
+    APWINE_REMOVE_LIQUIDITY_SELECTOR,
 };
 
 // apwine uses `0xeeeee` as a dummy address to represent ETH.
@@ -32,8 +32,9 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 // Indicate which token is send and received
-const uint8_t CONTRACT_ADDRESS_TOKEN_PATH[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+const uint8_t CONTRACT_ADDRESS_TOKEN_PATH[ADDRESS_LENGTH] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION] = {
     {{0xc6, 0x1c, 0x0f, 0x49, 0x61, 0xf2, 0x09, 0x3a, 0x08, 0x3f,

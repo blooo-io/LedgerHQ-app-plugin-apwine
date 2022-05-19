@@ -30,7 +30,6 @@ static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_param
 
 static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                                      apwine_parameters_t *context) {
-    
     uint8_t token_path_length;
 
     switch (context->next_param) {
@@ -41,9 +40,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             break;
         case TOKEN_PATH:  // _tokenPath
             context->next_param = AMOUNT_SENT;
-            
             token_path_length = (uint8_t) msg->parameter;
-            PRINTF("GUI: %u\n", token_path_length);
             break;
         case AMOUNT_SENT:  // _tokenAmountIn
             handle_amount_sent(msg, context);
@@ -52,7 +49,8 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
         case AMOUNT_RECEIVED:  // _minAmountOut
             handle_amount_received(msg, context);
             context->next_param = TOKEN_RECEIVED;
-            context->skip = 6;  // skip _to, _deadline, _referralRecipient, _pairPath length, _pairpath data and _tokenPath length
+            context->skip = 6;  // skip _to, _deadline, _referralRecipient, _pairPath length,
+                                // _pairpath data and _tokenPath length
             break;
         case TOKEN_RECEIVED:  // _tokenPath data
             handle_token_received(msg, context);
@@ -67,10 +65,9 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
     }
 }
 
-
 static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
                                     apwine_parameters_t *context) {
-    
+
     switch (context->next_param) {
         case AMOUNT_SENT:  // _minAmountsOut[0] will be copied in AMOUNT_SENT
             handle_amount_sent(msg, context);

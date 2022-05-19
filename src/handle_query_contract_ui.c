@@ -16,16 +16,13 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
 
-            if (memcmp(context->contract_address_received, CONTRACT_ADDRESS_TOKEN_PATH, ADDRESS_LENGTH) == 0)
+            if (memcmp(context->contract_address_received,
+                       CONTRACT_ADDRESS_TOKEN_PATH,
+                       ADDRESS_LENGTH) == 0)
             {
-                printf_hex_array("TOKEN 1 Sent: ", ADDRESS_LENGTH, context->contract_address_received);
-                printf_hex_array("TOKEN 1 Sent: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
                 strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
 
             } else {
-
-                printf_hex_array("TOKEN 1 Received: ", ADDRESS_LENGTH, context->contract_address_received);
-                printf_hex_array("TOKEN 1 Received: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
                 strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
             }
         }
@@ -49,14 +46,12 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
 
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
 
-            if (memcmp(context->contract_address_received, CONTRACT_ADDRESS_TOKEN_PATH, ADDRESS_LENGTH) != 0)
+            if (memcmp(context->contract_address_received,
+                       CONTRACT_ADDRESS_TOKEN_PATH,
+                       ADDRESS_LENGTH) != 0)
             {
                 strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
-                printf_hex_array("TOKEN 2 Sent: ", ADDRESS_LENGTH, context->contract_address_received);
-                printf_hex_array("TOKEN 2 Sent: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
             } else {
-                printf_hex_array("TOKEN 2 Received: ", ADDRESS_LENGTH, context->contract_address_received);
-                printf_hex_array("TOKEN 2 Received: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
                 strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
             }
         }
