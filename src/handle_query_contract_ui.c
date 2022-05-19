@@ -17,7 +17,7 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
             if (memcmp(context->contract_address_received,
                        CONTRACT_ADDRESS_TOKEN_PATH,
-                       ADDRESS_LENGTH) == 0){
+                       ADDRESS_LENGTH) == 0) {
                 strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
 
             } else {
@@ -45,7 +45,7 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
             if (memcmp(context->contract_address_received,
                        CONTRACT_ADDRESS_TOKEN_PATH,
-                       ADDRESS_LENGTH) != 0){
+                       ADDRESS_LENGTH) != 0) {
                 strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
             } else {
                 strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);

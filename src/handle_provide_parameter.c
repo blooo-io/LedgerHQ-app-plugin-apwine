@@ -30,7 +30,6 @@ static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_param
 
 static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                                      apwine_parameters_t *context) {
-
     switch (context->next_param) {
         case TOKEN_SENT:  // _amm
             handle_token_sent(msg, context);
