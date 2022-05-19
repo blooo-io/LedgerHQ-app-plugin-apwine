@@ -22,6 +22,22 @@
                     "plugin": "APWine"
                 }
             }
+        },
+        {
+            "address": "0x8a362aa1c81ed0ee2ae677a8b59e0f563dd290ba",
+            "contractName": "AdminUpgradeabilityProxy",
+            "selectors": {
+                "0xe7ffb5f7": {
+                    "erc20OfInterest": [],
+                    "method": "addLiquidity",
+                    "plugin": "APWine"
+                },
+                "0xafc3083c": {
+                    "erc20OfInterest": [],
+                    "method": "removeLiquidity",
+                    "plugin": "APWine"
+                }
+            }
         }
     ],
     "name": "APWine"

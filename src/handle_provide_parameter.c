@@ -67,6 +67,32 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
     }
 }
 
+
+static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
+                                    apwine_parameters_t *context) {
+    
+    switch (context->next_param) {
+        case AMOUNT_SENT:  // _minAmountsOut[0] will be copied in AMOUNT_SENT
+            handle_amount_sent(msg, context);
+            // We call the handle_token method to print "Unknown Token"
+            handle_token_sent(msg, context);
+            context->next_param = AMOUNT_RECEIVED;
+            break;
+        case AMOUNT_RECEIVED:  // _minAmountsOut[1]
+            handle_amount_received(msg, context);
+            // We call the handle_token method to print "Unknown Token"
+            handle_token_received(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
@@ -91,6 +117,9 @@ void handle_provide_parameter(void *parameters) {
             case SWAP_EXACT_AMOUNT_IN:
             case SWAP_EXACT_AMOUNT_OUT:
                 handle_swap_exact_amount(msg, context);
+                break;
+            case REMOVE_LIQUIDITY:
+                handle_remove_liquidity(msg, context);
                 break;
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);
