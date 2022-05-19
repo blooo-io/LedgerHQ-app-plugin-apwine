@@ -86,8 +86,7 @@ static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
     }
 }
 
-static void handle_add_liquidity(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
+static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     switch (context->next_param) {
         case AMOUNT_SENT:  // _minAmountsIn[0] will be copied in AMOUNT_SENT
             handle_amount_sent(msg, context);
@@ -109,7 +108,6 @@ static void handle_add_liquidity(ethPluginProvideParameter_t *msg,
             break;
     }
 }
-
 
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
