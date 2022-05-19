@@ -20,11 +20,14 @@
 // Ticker needed for APWine plugin
 #define APWINE_MAX_TICKER_LEN 30
 
-// apwine uses `0xeeeee` as a dummy address to represent ETH in Swap.
+// apwine uses `0xeeeee` as a dummy address to represent ETH.
 extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
-// apwine uses 0x00000 as a dummy address to reprecent ETH in Unmoswap.
+// apwine uses 0x00000 as a dummy address to reprecent ETH.
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
+
+// Indicate which token is send and received
+extern const uint8_t CONTRACT_ADDRESS_TOKEN_PATH[ADDRESS_LENGTH];
 
 extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
@@ -59,11 +62,12 @@ extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
-#define TOKEN_SENT      0
-#define AMOUNT_SENT     1
-#define AMOUNT_RECEIVED 2
-#define TOKEN_RECEIVED  3
-#define NONE            4
+#define TOKEN_SENT          0
+#define TOKEN_PATH          1
+#define AMOUNT_SENT         2
+#define AMOUNT_RECEIVED     3
+#define TOKEN_RECEIVED      4
+#define NONE                5
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER

@@ -15,17 +15,18 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            switch (context->selectorIndex) {
-                case SWAP_EXACT_AMOUNT_IN:
-                    strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
-                    break;
-                case SWAP_EXACT_AMOUNT_OUT:
-                    strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
-                    break;
-                default:
-                    PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
-                    msg->result = ETH_PLUGIN_RESULT_ERROR;
-                    return;
+
+            if (memcmp(context->contract_address_received, CONTRACT_ADDRESS_TOKEN_PATH, ADDRESS_LENGTH) == 0)
+            {
+                printf_hex_array("TOKEN 1 Sent: ", ADDRESS_LENGTH, context->contract_address_received);
+                printf_hex_array("TOKEN 1 Sent: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
+                strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
+
+            } else {
+
+                printf_hex_array("TOKEN 1 Received: ", ADDRESS_LENGTH, context->contract_address_received);
+                printf_hex_array("TOKEN 1 Received: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
+                strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
             }
         }
     }
@@ -38,25 +39,25 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             strlcpy(msg->title, "Token Receive", msg->titleLength);
             break;
         default:
-            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+            PRINTF("Unhandled selector Index: %d\n", &context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
     contract_address_ticker_t *currentToken = NULL;
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
+
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            switch (context->selectorIndex) {
-                case SWAP_EXACT_AMOUNT_IN:
-                    strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
-                    break;
-                case SWAP_EXACT_AMOUNT_OUT:
-                    strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
-                    break;
-                default:
-                    PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
-                    msg->result = ETH_PLUGIN_RESULT_ERROR;
-                    return;
+
+            if (memcmp(context->contract_address_received, CONTRACT_ADDRESS_TOKEN_PATH, ADDRESS_LENGTH) != 0)
+            {
+                strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
+                printf_hex_array("TOKEN 2 Sent: ", ADDRESS_LENGTH, context->contract_address_received);
+                printf_hex_array("TOKEN 2 Sent: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
+            } else {
+                printf_hex_array("TOKEN 2 Received: ", ADDRESS_LENGTH, context->contract_address_received);
+                printf_hex_array("TOKEN 2 Received: ", ADDRESS_LENGTH, CONTRACT_ADDRESS_TOKEN_PATH);
+                strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
             }
         }
     }

@@ -5,17 +5,17 @@
 // You can check apwine swapExactAmountIn methods here
 // https://etherscan.io/tx/0x3f996e272be8792272df456c4c7ba4a6a3bbafc101172f6fb43f5d3c6c690fc9
 
-// swapExactAmountIn 0x2e948b7b
-static const uint8_t APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR[SELECTOR_SIZE] = {0x2e, 0x94, 0x8b, 0x7b};
+// swapExactAmountIn 0xe7ffb5f7
+static const uint8_t APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR[SELECTOR_SIZE] = {0xe7, 0xff, 0xb5, 0xf7};
 
 // You can check apwine swapExactAmountOut methods here
 // https://etherscan.io/tx/0x975ec4126dd425ba520432c9b381b5c51529c14f7ef1f17bd4d57f6139c2f96b
 
-// swapExactAmountOut 0x8b9c185a
-static const uint8_t APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR[SELECTOR_SIZE] = {0x8b,
-                                                                             0x9c,
-                                                                             0x18,
-                                                                             0x5a};
+// swapExactAmountOut 0x16dc3ace
+static const uint8_t APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR[SELECTOR_SIZE] = {0x16,
+                                                                             0xdc,
+                                                                             0x3a,
+                                                                             0xce};
 
 // Array of all the different apwine selectors.
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
@@ -32,11 +32,15 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+// Indicate which token is send and received
+const uint8_t CONTRACT_ADDRESS_TOKEN_PATH[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
 const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION] = {
     {{0xc6, 0x1c, 0x0f, 0x49, 0x61, 0xf2, 0x09, 0x3a, 0x08, 0x3f,
       0x47, 0xa4, 0xb7, 0x83, 0xad, 0x26, 0x0d, 0xea, 0xf7, 0xea},
-     "90D-Paladin-palStkAAVE-1",
      "stkAAVE",
+     "90D-Paladin-palStkAAVE-1",
      18},
     {{0x16, 0x04, 0xc5, 0xe9, 0xab, 0x48, 0x8d, 0x66, 0xe9, 0x83,
       0x64, 0x43, 0x55, 0x51, 0x1d, 0xce, 0xf5, 0xc3, 0x2e, 0xdf},
