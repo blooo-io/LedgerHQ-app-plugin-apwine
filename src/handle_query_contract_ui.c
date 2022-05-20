@@ -71,6 +71,9 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         case WITHDRAW:
             strlcpy(msg->title, "Amount", msg->titleLength);
             break;
+        case ZAPINTOPT:
+            strlcpy(msg->title, "Send", msg->titleLength);
+            break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
@@ -98,6 +101,9 @@ static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             break;
         case REMOVE_LIQUIDITY:
             strlcpy(msg->title, "Amount Out 2", msg->titleLength);
+            break;
+        case ZAPINTOPT:
+            strlcpy(msg->title, "Receive Min", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);

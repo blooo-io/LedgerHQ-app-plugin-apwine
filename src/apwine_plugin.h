@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_APWINE_SELECTORS 6
+#define NUM_APWINE_SELECTORS 7
 #define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "APWine"
@@ -44,6 +44,7 @@ typedef enum {
     REMOVE_LIQUIDITY,
     DEPOSIT,
     WITHDRAW,
+    ZAPINTOPT,
 } apwineSelector_t;
 
 typedef enum {

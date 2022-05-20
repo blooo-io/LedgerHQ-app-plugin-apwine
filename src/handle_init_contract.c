@@ -55,6 +55,10 @@ void handle_init_contract(void *parameters) {
         case WITHDRAW:
             context->next_param = TOKEN_SENT;
             break;
+        case ZAPINTOPT:
+            context->skip = 1;
+            context->next_param = AMOUNT_SENT;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;

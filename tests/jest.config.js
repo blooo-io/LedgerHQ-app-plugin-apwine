@@ -37,6 +37,7 @@ module.exports = {
         '**/withdraw_polygon.test*',
         '**/deposit_ethereum.test*',
         '**/deposit_polygon.test*',
+        '**/zapintopt_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails
