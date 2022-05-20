@@ -111,7 +111,8 @@ static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parame
     }
 }
 
-static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg,
+                                    apwine_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:  // _futureVault
             handle_token_sent(msg, context);
