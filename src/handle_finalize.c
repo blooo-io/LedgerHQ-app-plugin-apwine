@@ -16,6 +16,10 @@ void handle_finalize(void *parameters) {
     if (context->valid) {
         msg->numScreens = 2;
 
+        if (context->selectorIndex == DEPOSIT || context->selectorIndex == WITHDRAW) {
+            msg->numScreens -= 1;
+        }
+
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
             // Address is not network token (0xeee...) so we will need to look up the token in the
             // CAL.

@@ -4,12 +4,14 @@
 // added when displaying.
 static void handle_amount_sent(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     memcpy(context->amount_sent, msg->parameter, INT256_LENGTH);
+    printf_hex_array("AMOUNT SENT: ", INT256_LENGTH, context->amount_sent);
 }
 
 // Store the amount received in the form of a string, without any ticker or decimals. These will be
 // added when displaying.
 static void handle_amount_received(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     memcpy(context->amount_received, msg->parameter, PARAMETER_LENGTH);
+    printf_hex_array("AMOUNT RECEIVED: ", PARAMETER_LENGTH, context->amount_received);
 }
 
 static void handle_token_sent(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
@@ -109,6 +111,25 @@ static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parame
     }
 }
 
+static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    switch (context->next_param) {
+        case TOKEN_SENT:  // _futureVault
+            handle_token_sent(msg, context);
+            context->next_param = AMOUNT_SENT;
+            break;
+        case AMOUNT_SENT:  // _amount
+            handle_amount_sent(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
@@ -139,6 +160,10 @@ void handle_provide_parameter(void *parameters) {
                 break;
             case ADD_LIQUIDITY:
                 handle_add_liquidity(msg, context);
+                break;
+            case DEPOSIT:
+            case WITHDRAW:
+                handle_deposit_withdraw(msg, context);
                 break;
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);

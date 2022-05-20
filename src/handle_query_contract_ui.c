@@ -67,6 +67,10 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         case REMOVE_LIQUIDITY:
             strlcpy(msg->title, "Amount Out 1", msg->titleLength);
             break;
+        case DEPOSIT:
+        case WITHDRAW:
+            strlcpy(msg->title, "Amount", msg->titleLength);
+            break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
