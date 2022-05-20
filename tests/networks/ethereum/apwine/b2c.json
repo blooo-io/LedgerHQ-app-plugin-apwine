@@ -54,6 +54,17 @@
                     "plugin": "APWine"
                 }
             }
+        },
+        {
+            "address": "0x588e3c5f6259dd1f903ad8f38168a18f8fb7edd6",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0xff3bf066": {
+                    "erc20OfInterest": [],
+                    "method": "zapInToPT",
+                    "plugin": "APWine"
+                }
+            }
         }
     ],
     "name": "APWine"

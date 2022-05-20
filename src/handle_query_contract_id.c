@@ -25,6 +25,9 @@ void handle_query_contract_id(void *parameters) {
         case WITHDRAW:
             strlcpy(msg->version, "Withdraw", msg->versionLength);
             break;
+        case ZAPINTOPT:
+            strlcpy(msg->version, "ZapInToPT", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported!\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
