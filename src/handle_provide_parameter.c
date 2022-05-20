@@ -131,8 +131,7 @@ static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg,
     }
 }
 
-static void handle_zapintopt(ethPluginProvideParameter_t *msg,
-                             apwine_parameters_t *context) {
+static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     switch (context->next_param) {
         case AMOUNT_SENT:  // _amount
             handle_amount_sent(msg, context);
