@@ -17,12 +17,20 @@ static const uint8_t APWINE_ADD_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0x2d, 0x89,
 // removeLiquity 0xafc3083c
 static const uint8_t APWINE_REMOVE_LIQUIDITY_SELECTOR[SELECTOR_SIZE] = {0xaf, 0xc3, 0x08, 0x3c};
 
+// removeLiquity 0x47e7ef24
+static const uint8_t APWINE_DEPOSIT_SELECTOR[SELECTOR_SIZE] = {0x47, 0xe7, 0xef, 0x24};
+
+// removeLiquity 0xf3fef3a3
+static const uint8_t APWINE_WITHDRAW_SELECTOR[SELECTOR_SIZE] = {0xf3, 0xfe, 0xf3, 0xa3};
+
 // Array of all the different apwine selectors.
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
     APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
     APWINE_SWAP_EXACT_AMOUNT_OUT_SELECTOR,
     APWINE_ADD_LIQUIDITY_SELECTOR,
     APWINE_REMOVE_LIQUIDITY_SELECTOR,
+    APWINE_DEPOSIT_SELECTOR,
+    APWINE_WITHDRAW_SELECTOR,
 };
 
 // apwine uses `0xeeeee` as a dummy address to represent ETH.

@@ -33,6 +33,10 @@ module.exports = {
         '**/remove_liquidity_ethereum.test*',
         '**/add_liquidity_polygon.test*',
         '**/add_liquidity_ethereum.test*',
+        '**/withdraw_ethereum.test*',
+        '**/withdraw_polygon.test*',
+        '**/deposit_ethereum.test*',
+        '**/deposit_polygon.test*',
     ],
 
     // Stop immediatly when a test fails

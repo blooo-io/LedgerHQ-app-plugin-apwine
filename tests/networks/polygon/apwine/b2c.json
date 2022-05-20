@@ -32,6 +32,22 @@
                     "plugin": "APWine"
                 }
             }
+        },
+        {
+            "address": "0x4ba30fa240047c17fc557b8628799068d4396790",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x47e7ef24": {
+                    "erc20OfInterest": ["_futureVault"],
+                    "method": "deposit",
+                    "plugin": "APWine"
+                },
+                "0xf3fef3a3": {
+                    "erc20OfInterest": ["_futureVault"],
+                    "method": "withdraw",
+                    "plugin": "APWine"
+                }
+            }
         }
     ],
     "name": "APWine"
