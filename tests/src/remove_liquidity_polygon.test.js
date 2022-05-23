@@ -3,35 +3,68 @@ import { processTest, populateTransaction } from './test.fixture';
 const contractName = 'AdminUpgradeabilityProxy';
 
 const testLabel = 'removeLiquidity'; // <= Name of the test
-const testDirSuffix = 'remove_liquidity'; // <= directory to compare device snapshots to
 const signedPlugin = false;
 const testNetwork = 'polygon';
 const chainID = 137;
 
-const contractAddr = '0x8a362aa1c81ed0ee2ae677a8b59e0f563dd290ba';
-
-// // From : https://polygonscan.com/tx/0xb64541c90f8ab1921f0cbd326d18f6fdce41be2b629806196ea854f00c331df7
-const inputData = '0xafc3083c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000003d54744685f3b2fdf000000000000000000000000000000000000000000000000000000000407870600000000000000000000000000000000000000000000000000000000de063b10';
-const serializedTx = populateTransaction(contractAddr, inputData, chainID);
-
-const devices = [
+const transactions = [
     {
-        name: 'nanos',
-        label: 'Nano S',
-        steps: 10, // <= Define the number of steps for this test case and this device
+        // From : https://polygonscan.com/tx/0x2c0271006d80c5bb2776742e0eafa7737a7986ec1a2184a95bdd4e2c8320c8ef
+        inputData: '0xafc3083c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008d48ee1424e65d350000000000000000000000000000000000000000000000000000000049b7b37c000000000000000000000000000000000000000000000000000000002f1fb933',
+        contractAddr: '0x8a362aa1c81ed0ee2ae677a8b59e0f563dd290ba',
     },
     {
-        name: 'nanox',
-        label: 'Nano X',
-        steps: 8, // <= Define the number of steps for this test case and this device
+        // From : https://polygonscan.com/tx/0x2625a9d6818b42280d900da18c4efc07cec8ff3391cce1c2b5489e2bedd093ef
+        inputData: '0xafc3083c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000054ae87482abeb060e000000000000000000000000000000000000000000000000cab73aa7cdee74e940000000000000000000000000000000000000000000002344b5f23fcd211e169',
+        contractAddr: '0x91e94e5e3baa054f92bac48a9c05e6228de1fcac',
     },
     {
-        name: 'nanosp',
-        label: 'Nano S+',
-        steps: 8, // <= Define the number of steps for this test case and this device
+        // From : https://polygonscan.com/tx/0xcd8fc6a6b2f739a6d8ccd58ad890cb3352ef4778f00025a68001674b83c5a3e5
+        inputData: '0xafc3083c0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000001192836301bed898812b00000000000000000000000000000000000000000000037e46ca41009e6b37cc000000000000000000000000000000000000000000005876484bbbcf31a7b3ad',
+        contractAddr: '0x7429e160aa4ab7bbec65c101bd2624c8cba8a2f6',
+    },
+    {
+        // From : https://polygonscan.com/tx/0x339be197f9bf98ba1c9c8c777c6eabb1b6e5fc5527a75232dbad985aec7c8bec
+        inputData: '0xafc3083c000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000010cab1347fa6717780000000000000000000000000000000000000000000000000008c76bfde2ea8f9b2350000000000000000000000000000000000000000000020a43cce17ff5eb6f0e4',
+        contractAddr: '0xc68b6987075944f9e8b0a6c2b52e923bc1fb9028',
+    },
+    {
+        // From : https://polygonscan.com/tx/0x2c70974b92fd42d023e7da689c0b3ce303be321e3bb953e48eb2cd0ce71b5e3a
+        inputData: '0xafc3083c00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000004563918244f4000000000000000000000000000000000000000000000000000003468f9f75cb5d4d0000000000000000000000000000000000000000000000003e64dd3a1aa51b8a',
+        contractAddr: '0x1604c5e9ab488d66e983644355511dcef5c32edf',
+    },
+    {
+        // From : https://polygonscan.com/tx/0x68b2576fb8e53e78115c4673f0a0f6debef755bf22152de444799e91f378dfba
+        inputData: '0xafc3083c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000292094e040ab3a24000000000000000000000000000000000000000000000000000146c692c227c20000000000000000000000000000000000000000000000000001380e3ec88639',
+        contractAddr: '0x4bf982f43994033e8c4e2c36d00c776b550e76c3',
+    },
+    {
+        // From : https://polygonscan.com/tx/0x2cb7b342aa17386470cca0243debcd2d6b7548631c3875c6cec6e0c69b083e6a
+        inputData: '0xafc3083c00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000004f6310f42a847220640000000000000000000000000000000000000000000000000001088454afcc6f800000000000000000000000000000000000000000000000004bd9e701db51083',
+        contractAddr: '0x2df9cf57ac79a76a2e8d944b623a9f324af85ab8',
     },
 ];
 
-devices.forEach((device) => {
-    processTest(device, contractName, testLabel, testDirSuffix, '', signedPlugin, serializedTx, testNetwork);
+transactions.forEach((tx) => {
+    const devices = [
+        {
+            name: 'nanos',
+            label: 'Nano S',
+            steps: 10, // <= Define the number of steps for this test case and this device
+        },
+        {
+            name: 'nanox',
+            label: 'Nano X',
+            steps: 8, // <= Define the number of steps for this test case and this device
+        },
+        {
+            name: 'nanosp',
+            label: 'Nano S+',
+            steps: 8, // <= Define the number of steps for this test case and this device
+        },
+    ];
+
+    const testDirSuffix = `${testLabel}_${tx.contractAddr}`; // <= directory to compare device snapshots to
+    const serializedTx = populateTransaction(tx.contractAddr, tx.inputData, chainID);
+    devices.forEach((device) => processTest(device, contractName, `${testLabel}_${tx.contractAddr}`, testDirSuffix, '', signedPlugin, serializedTx, testNetwork));
 });
