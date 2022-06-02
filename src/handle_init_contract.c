@@ -65,6 +65,12 @@ void handle_init_contract(void *parameters) {
         case INCREASE_AMOUNT:
             context->next_param = AMOUNT_SENT;
             break;
+        case CREATE_LOCK:
+            context->next_param = AMOUNT_SENT;
+            break;
+        case INCERASE_UNLOCK_TIME:
+            context->next_param = AMOUNT_SENT;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;

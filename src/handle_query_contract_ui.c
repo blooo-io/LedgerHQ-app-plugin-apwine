@@ -70,10 +70,14 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         case DEPOSIT:
         case WITHDRAW:
         case INCREASE_AMOUNT:
+        case CREATE_LOCK:
             strlcpy(msg->title, "Amount", msg->titleLength);
             break;
         case ZAPINTOPT:
             strlcpy(msg->title, "Send", msg->titleLength);
+            break;
+        case INCERASE_UNLOCK_TIME:
+            strlcpy(msg->title, "Unlock time", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
@@ -117,6 +121,9 @@ static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             break;
         case ZAPINTOPT:
             strlcpy(msg->title, "Receive Min", msg->titleLength);
+            break;
+        case CREATE_LOCK:
+            strlcpy(msg->title, "Unlock time", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);

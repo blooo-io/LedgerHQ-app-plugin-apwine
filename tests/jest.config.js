@@ -42,6 +42,8 @@ module.exports = {
         '**/redeem_yield_ethereum.test*',
         '**/redeem_yield_polygon.test*',
         '**/increase_amount_ethereum.test*',
+        '**/create_lock_ethereum.test*',
+        '**/increase_unlock_time_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails

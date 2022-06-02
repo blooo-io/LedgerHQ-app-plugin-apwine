@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_APWINE_SELECTORS 9
+#define NUM_APWINE_SELECTORS 11
 #define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "APWine"
@@ -47,6 +47,8 @@ typedef enum {
     ZAPINTOPT,
     REDEEM_YIELD,
     INCREASE_AMOUNT,
+    CREATE_LOCK,
+    INCERASE_UNLOCK_TIME,
 } apwineSelector_t;
 
 typedef enum {
