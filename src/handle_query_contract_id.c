@@ -34,6 +34,9 @@ void handle_query_contract_id(void *parameters) {
         case INCREASE_AMOUNT:
             strlcpy(msg->version, "Increase Amount", msg->versionLength);
             break;
+        case CREATE_LOCK:
+            strlcpy(msg->version, "Create Lock", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported!\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
