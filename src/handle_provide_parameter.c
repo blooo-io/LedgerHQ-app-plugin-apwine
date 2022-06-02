@@ -193,6 +193,8 @@ void handle_provide_parameter(void *parameters) {
             case ZAPINTOPT:
                 handle_zapintopt(msg, context);
                 break;
+            case REDEEM_YIELD:
+                break;
             default:
                 PRINTF("Selector Index %d not supported\n", context->selectorIndex);
                 msg->result = ETH_PLUGIN_RESULT_ERROR;

@@ -89,6 +89,19 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
                    msg->msgLength);
 }
 
+// Set UI for "Send" screen.
+static void set_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+
+    strlcpy(msg->title, "Amount", msg->titleLength);
+    // Convert to string.
+   amountToString(msg->pluginSharedRO->txContent->value.value,
+                   msg->pluginSharedRO->txContent->value.length,
+                   WEI_TO_ETHER,
+                   context->ticker_sent,
+                   msg->msg,
+                   msg->msgLength);
+}
+
 // Set UI for "Receive" screen.
 static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
@@ -137,6 +150,10 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
 
     bool both_tokens_found = token_received_found && token_sent_found;
     bool both_tokens_not_found = !token_received_found && !token_sent_found;
+
+    if(context->selectorIndex == REDEEM_YIELD){
+        return AMOUNT_SCREEN;
+    }
 
     switch (index) {
         case 0:
@@ -204,6 +221,9 @@ void handle_query_contract_ui(void *parameters) {
             break;
         case SEND_SCREEN:
             set_send_amount_ui(msg, context);
+            break;
+        case AMOUNT_SCREEN:
+            set_amount_ui(msg, context);
             break;
         case RECEIVE_TICKER_SCREEN:
             set_receive_ticker_ui(msg, context);
