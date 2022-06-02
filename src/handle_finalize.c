@@ -14,10 +14,21 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
     if (context->valid) {
-        msg->numScreens = 2;
+        switch (context->selectorIndex) {
+            case REDEEM_YIELD:
+                msg->numScreens = 0;
+                break;
+            case DEPOSIT:
+            case WITHDRAW:
+            case INCREASE_AMOUNT:
+                msg->numScreens = 1;
+                break;
+            default:
+                msg->numScreens = 2;
+                break;
+        }
 
         if (context->selectorIndex == DEPOSIT || context->selectorIndex == WITHDRAW) {
-            msg->numScreens = 1;
         }
 
         if (context->selectorIndex == REDEEM_YIELD) {

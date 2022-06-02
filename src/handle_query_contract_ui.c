@@ -69,6 +69,7 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
             break;
         case DEPOSIT:
         case WITHDRAW:
+        case INCREASE_AMOUNT:
             strlcpy(msg->title, "Amount", msg->titleLength);
             break;
         case ZAPINTOPT:

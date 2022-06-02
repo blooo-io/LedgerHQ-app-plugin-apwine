@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_APWINE_SELECTORS 8
+#define NUM_APWINE_SELECTORS 9
 #define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "APWine"
@@ -46,6 +46,7 @@ typedef enum {
     WITHDRAW,
     ZAPINTOPT,
     REDEEM_YIELD,
+    INCREASE_AMOUNT,
 } apwineSelector_t;
 
 typedef enum {

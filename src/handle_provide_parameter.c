@@ -155,6 +155,23 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
     }
 }
 
+static void handle_increase_amount(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    switch (context->next_param) {
+        case AMOUNT_SENT:  // _value
+            handle_amount_sent(msg, context);
+            // We call the handle_token method to print "Unknown Token"
+            handle_token_sent(msg, context);
+            context->next_param = NONE;
+            break;
+        case NONE:
+            break;
+        default:
+            PRINTF("Param not supported\n");
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
@@ -192,6 +209,9 @@ void handle_provide_parameter(void *parameters) {
                 break;
             case ZAPINTOPT:
                 handle_zapintopt(msg, context);
+                break;
+            case INCREASE_AMOUNT:
+                handle_increase_amount(msg, context);
                 break;
             case REDEEM_YIELD:
                 break;
