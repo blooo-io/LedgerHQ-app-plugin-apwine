@@ -432,6 +432,27 @@
                     "plugin": "APWine"
                 }
             }
+        },
+        {
+            "address": "0xc5ca1ebf6e912e49a6a70bb0385ea065061a4f09",
+            "contractName": "Vyper_contract",
+            "selectors": {
+                "0x4957677c": {
+                    "erc20OfInterest": [],
+                    "method": "increase_amount",
+                    "plugin": "APWine"
+                },
+                "0x65fc3873": {
+                    "erc20OfInterest": [],
+                    "method": "create_lock",
+                    "plugin": "APWine"
+                },
+                "0xeff7a612": {
+                    "erc20OfInterest": [],
+                    "method": "increase_unlock_time",
+                    "plugin": "APWine"
+                }
+            }
         }
     ],
     "name": "APWine"

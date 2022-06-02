@@ -40,6 +40,7 @@ module.exports = {
         '**/zapintopt_ethereum.test*',
         '**/redeem_yield_ethereum.test*',
         '**/redeem_yield_polygon.test*',
+        '**/increase_amount_ethereum.test*',
     ],
 
     // Stop immediatly when a test fails

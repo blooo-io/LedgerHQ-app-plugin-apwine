@@ -62,6 +62,9 @@ void handle_init_contract(void *parameters) {
         case REDEEM_YIELD:
             context->next_param = AMOUNT_SENT;
             break;
+        case INCREASE_AMOUNT:
+            context->next_param = AMOUNT_SENT;
+            break;
         default:
             PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;
