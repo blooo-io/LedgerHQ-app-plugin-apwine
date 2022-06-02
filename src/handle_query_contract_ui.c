@@ -76,6 +76,9 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
         case ZAPINTOPT:
             strlcpy(msg->title, "Send", msg->titleLength);
             break;
+        case INCERASE_UNLOCK_TIME:
+            strlcpy(msg->title, "Unlock time", msg->titleLength);
+            break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

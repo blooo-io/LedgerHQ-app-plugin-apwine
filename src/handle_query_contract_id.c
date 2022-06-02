@@ -37,6 +37,9 @@ void handle_query_contract_id(void *parameters) {
         case CREATE_LOCK:
             strlcpy(msg->version, "Create Lock", msg->versionLength);
             break;
+        case INCERASE_UNLOCK_TIME:
+            strlcpy(msg->version, "Increase Unlock Time", msg->versionLength);
+            break;
         default:
             PRINTF("Selector Index :%d not supported!\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;

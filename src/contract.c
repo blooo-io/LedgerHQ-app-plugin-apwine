@@ -35,6 +35,9 @@ static const uint8_t APWINE_INCREASE_AMOUNT_SELECTOR[SELECTOR_SIZE] = {0x49, 0x5
 // create_lock 0x65fc3873
 static const uint8_t APWINE_CREATE_LOCK_SELECTOR[SELECTOR_SIZE] = {0x65, 0xfc, 0x38, 0x73};
 
+// increase_unlock_time 0xeff7a612
+static const uint8_t APWINE_INCREASE_UNLOCK_TIME_SELECTOR[SELECTOR_SIZE] = {0xef, 0xf7, 0xa6, 0x12};
+
 // Array of all the different apwine selectors.
 const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
     APWINE_SWAP_EXACT_AMOUNT_IN_SELECTOR,
@@ -47,6 +50,7 @@ const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS] = {
     APWINE_REDEEM_YIELD_SELECTOR,
     APWINE_INCREASE_AMOUNT_SELECTOR,
     APWINE_CREATE_LOCK_SELECTOR,
+    APWINE_INCREASE_UNLOCK_TIME_SELECTOR,
 };
 
 // apwine uses `0xeeeee` as a dummy address to represent ETH.

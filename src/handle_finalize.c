@@ -21,6 +21,7 @@ void handle_finalize(void *parameters) {
             case DEPOSIT:
             case WITHDRAW:
             case INCREASE_AMOUNT:
+            case INCERASE_UNLOCK_TIME:
                 msg->numScreens = 1;
                 break;
             default:
