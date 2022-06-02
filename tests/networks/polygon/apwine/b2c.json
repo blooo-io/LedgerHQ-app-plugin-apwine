@@ -144,6 +144,94 @@
                     "plugin": "APWine"
                 }
             }
+        },
+        {
+            "address": "0x67952e78f2d3d2c38c190c56ebcbc116b70010e6",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x1421cf43731e0e6eb7c5c04d2f715515eca4dabf",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x982375f00f286d14cbe8633a58f0bab710be1449",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x668cdd65aeb2eb4cda2997bd0f86397f7bfc33f1",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x08a8a1bd52fca31d047484b40a7026c8f064066e",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0xb9af29f981b4a69de421f5d8da46c2c7c473c67c",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x33b22e2cc0af29befdcfdd0abfb9b1dae23b4141",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
+            "address": "0x5b7db209194414450be045ea34f25f45f1847bbf",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0x258d3c33": {
+                    "erc20OfInterest": [],
+                    "method": "redeemYield",
+                    "plugin": "APWine"
+                }
+            }
         }
     ],
     "name": "APWine"

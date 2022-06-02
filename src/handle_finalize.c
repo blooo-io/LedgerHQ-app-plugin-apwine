@@ -17,7 +17,11 @@ void handle_finalize(void *parameters) {
         msg->numScreens = 2;
 
         if (context->selectorIndex == DEPOSIT || context->selectorIndex == WITHDRAW) {
-            msg->numScreens -= 1;
+            msg->numScreens = 1;
+        }
+
+        if (context->selectorIndex == REDEEM_YIELD) {
+            msg->numScreens = 0;
         }
 
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {

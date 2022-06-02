@@ -9,7 +9,7 @@
 
 #define RUN_APPLICATION 1
 
-#define NUM_APWINE_SELECTORS 7
+#define NUM_APWINE_SELECTORS 8
 #define SELECTOR_SIZE        4
 
 #define PLUGIN_NAME "APWine"
@@ -45,6 +45,7 @@ typedef enum {
     DEPOSIT,
     WITHDRAW,
     ZAPINTOPT,
+    REDEEM_YIELD,
 } apwineSelector_t;
 
 typedef enum {
@@ -54,6 +55,7 @@ typedef enum {
     RECEIVE_SCREEN,
     BENEFICIARY_SCREEN,
     WARN_SCREEN,
+    AMOUNT_SCREEN,
     ERROR,
 } screens_t;
 
