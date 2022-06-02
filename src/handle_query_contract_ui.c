@@ -91,10 +91,9 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
 
 // Set UI for "Send" screen.
 static void set_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
-
     strlcpy(msg->title, "Amount", msg->titleLength);
     // Convert to string.
-   amountToString(msg->pluginSharedRO->txContent->value.value,
+    amountToString(msg->pluginSharedRO->txContent->value.value,
                    msg->pluginSharedRO->txContent->value.length,
                    WEI_TO_ETHER,
                    context->ticker_sent,
@@ -151,7 +150,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
     bool both_tokens_found = token_received_found && token_sent_found;
     bool both_tokens_not_found = !token_received_found && !token_sent_found;
 
-    if(context->selectorIndex == REDEEM_YIELD){
+    if (context->selectorIndex == REDEEM_YIELD) {
         return AMOUNT_SCREEN;
     }
 
