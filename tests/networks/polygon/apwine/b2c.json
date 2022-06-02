@@ -146,6 +146,17 @@
             }
         },
         {
+            "address": "0x6607377bcd37bb5681c02ef77f514e38d52b7f5e",
+            "contractName": "TransparentUpgradeableProxy",
+            "selectors": {
+                "0xff3bf066": {
+                    "erc20OfInterest": [],
+                    "method": "zapInToPT",
+                    "plugin": "APWine"
+                }
+            }
+        },
+        {
             "address": "0x67952e78f2d3d2c38c190c56ebcbc116b70010e6",
             "contractName": "TransparentUpgradeableProxy",
             "selectors": {
