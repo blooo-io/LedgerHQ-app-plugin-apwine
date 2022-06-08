@@ -30,16 +30,39 @@ static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_param
     printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
 }
 
+static void handle_array_length(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    context->array_len = msg->parameter[PARAMETER_LENGTH - 1];
+    PRINTF("LIST LEN: %d\n", context->array_len);
+}
+
+static void handle_pair_path_first(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    context->pair_path_first = msg->parameter[PARAMETER_LENGTH - 1];
+    PRINTF("FIRST PAIR: %d\n", context->pair_path_first);
+}
+
+static void handle_pair_path_last(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    context->pair_path_last = msg->parameter[PARAMETER_LENGTH - 1];
+    PRINTF("LAST PAIR: %d\n", context->pair_path_last);
+}
+
+static void handle_token_path_sent(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    context->token_path_sent = msg->parameter[PARAMETER_LENGTH - 1];
+    PRINTF("TOKEN PATH SENT: %d\n", context->token_path_sent);
+}
+
+static void handle_token_path_received(ethPluginProvideParameter_t *msg,
+                                       apwine_parameters_t *context) {
+    context->token_path_received = msg->parameter[PARAMETER_LENGTH - 1];
+    PRINTF("TOKEN PATH RECEIVED: %d\n", context->token_path_received);
+}
+
 static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                                      apwine_parameters_t *context) {
     switch (context->next_param) {
         case TOKEN_SENT:  // _amm
             handle_token_sent(msg, context);
-            context->next_param = TOKEN_PATH;
-            context->skip = 1;  // skip _pairPath
-            break;
-        case TOKEN_PATH:  // _tokenPath
             context->next_param = AMOUNT_SENT;
+            context->skip = 2;  // skip _pairPath and _tokenPath offset
             break;
         case AMOUNT_SENT:  // _tokenAmountIn
             handle_amount_sent(msg, context);
@@ -47,12 +70,43 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             break;
         case AMOUNT_RECEIVED:  // _minAmountOut
             handle_amount_received(msg, context);
-            context->next_param = TOKEN_RECEIVED;
-            context->skip = 6;  // skip _to, _deadline, _referralRecipient, _pairPath length,
-                                // _pairpath data and _tokenPath length
+            context->next_param = PAIR_PATH_LENGTH;
+            context->skip = 3;  // skip _to, _deadline and _referralRecipient
             break;
-        case TOKEN_RECEIVED:  // _tokenPath data
-            handle_token_received(msg, context);
+        case PAIR_PATH_LENGTH:  // _pairPath length
+            handle_array_length(msg, context);
+            context->next_param = PAIR_PATH_FIRST;
+            break;
+        case PAIR_PATH_FIRST:  // _pairPath[0]
+            handle_pair_path_first(msg, context);
+
+            if (context->array_len <= 1) {
+                context->skip = 1;  // skip _tokenPath length
+                context->next_param = TOKEN_PATH_SENT;
+            } else if (context->array_len <= 2) {
+                context->next_param = PAIR_PATH_LAST;
+            } else {
+                context->skip = context->array_len - 2;  // go to last pairPath
+                context->next_param = PAIR_PATH_LAST;
+            }
+            break;
+        case PAIR_PATH_LAST:  // _pairPath[length-1]
+            handle_pair_path_last(msg, context);
+            context->skip = 1;  // skip _tokenPath length
+            context->next_param = TOKEN_PATH_SENT;
+            break;
+        case TOKEN_PATH_SENT:  // _tokenPath[0]
+            handle_token_path_sent(msg, context);
+
+            if (context->array_len <= 1) {
+                context->next_param = TOKEN_PATH_RECEIVED;
+            } else {
+                context->skip = (context->array_len - 1) * 2 - 1;  // Before the last tokenPath
+                context->next_param = TOKEN_PATH_RECEIVED;
+            }
+            break;
+        case TOKEN_PATH_RECEIVED:  // _tokenPath[length-2]
+            handle_token_path_received(msg, context);
             context->next_param = NONE;
             break;
         case NONE:
