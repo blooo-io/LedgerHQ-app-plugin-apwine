@@ -255,6 +255,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
         case REDEEM_YIELD:
             return AMOUNT_SCREEN;
         case SWAP_EXACT_AMOUNT_IN:
+        case SWAP_EXACT_AMOUNT_OUT:
             return swap_exact_amount_screen(index);
         default:
             return default_screen(index, context);
