@@ -18,16 +18,13 @@
 #define TOKEN_RECEIVED_FOUND 1 << 1
 
 // Ticker needed for APWine plugin
-#define APWINE_MAX_TICKER_LEN 30
+#define APWINE_MAX_TICKER_LEN 40
 
 // apwine uses `0xeeeee` as a dummy address to represent ETH.
 extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
 // apwine uses 0x00000 as a dummy address to reprecent ETH.
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
-
-// Indicate which token is send and received
-extern const uint8_t CONTRACT_ADDRESS_TOKEN_PATH[ADDRESS_LENGTH];
 
 extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
@@ -62,24 +59,31 @@ typedef enum {
     ERROR,
 } screens_t;
 
-#define NUM_CONTRACT_ADDRESS_COLLECTION 14
+#define NUM_CONTRACT_ADDRESS_COLLECTION 21
 
 typedef struct contract_address_ticker {
     uint8_t _amm[ADDRESS_LENGTH];
-    char ticker_sent[APWINE_MAX_TICKER_LEN];
-    char ticker_received[APWINE_MAX_TICKER_LEN];
+    char ticker_pt[APWINE_MAX_TICKER_LEN];
+    char ticker_fyt[APWINE_MAX_TICKER_LEN];
+    char ticker_underlying[APWINE_MAX_TICKER_LEN];
     uint8_t decimal;
 } contract_address_ticker_t;
 extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION];
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
-#define TOKEN_SENT      0
-#define AMOUNT_SENT     1
-#define AMOUNT_RECEIVED 2
-#define TOKEN_RECEIVED  3
-#define NONE            4
-#define TOKEN_PATH      5
+#define TOKEN_SENT          0
+#define TOKEN_RECEIVED      1
+#define AMOUNT_SENT         2
+#define AMOUNT_RECEIVED     3
+#define SRC_RECEIVER        4
+#define TOKEN_PATH          5
+#define PAIR_PATH_LENGTH    6
+#define PAIR_PATH_FIRST     7
+#define PAIR_PATH_LAST      8
+#define TOKEN_PATH_SENT     9
+#define TOKEN_PATH_RECEIVED 10
+#define NONE                11
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
@@ -91,14 +95,13 @@ extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_
 typedef struct apwine_parameters_t {
     uint8_t amount_sent[INT256_LENGTH];
     uint8_t amount_received[INT256_LENGTH];
-    uint8_t beneficiary[ADDRESS_LENGTH];
     uint8_t contract_address_sent[ADDRESS_LENGTH];
     uint8_t contract_address_received[ADDRESS_LENGTH];
     char ticker_sent[MAX_TICKER_LEN];
     char ticker_received[MAX_TICKER_LEN];
 
-    // 32 * 2 + 20 * 3 + 12 * 2 == 64 + 60 + 24 == 144
-    // 32 * 5 == 160 bytes so there are 160 - 144 == 16 bytes left.
+    // 32 * 2 + 20 * 2 + 12 * 2 == 64 + 40 + 24 == 128
+    // 32 * 5 == 160 bytes so there are 160 - 128 == 32 bytes left.
 
     uint16_t offset;
     uint16_t checkpoint;
@@ -108,8 +111,13 @@ typedef struct apwine_parameters_t {
     uint8_t decimals_sent;
     uint8_t decimals_received;
     uint8_t selectorIndex;
+    uint8_t array_len;
+    uint8_t pair_path_first;
+    uint8_t pair_path_last;
+    uint8_t token_path_sent;
+    uint8_t token_path_received;
     uint8_t skip;
-    // 4 * 1 + 2 * 2 + 7 * 1 == 8 + 7 == 15 bytes. There are 16 - 15 == 1 byte left.
+    // 12 * 1b + 2 * 2b == 12 + 4 == 16 bytes. There are 32 - 16 == 16 byte left.
 } apwine_parameters_t;
 
 void handle_provide_parameter(void *parameters);

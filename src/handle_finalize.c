@@ -24,6 +24,9 @@ void handle_finalize(void *parameters) {
             case INCERASE_UNLOCK_TIME:
                 msg->numScreens = 1;
                 break;
+            case SWAP_EXACT_AMOUNT_IN:
+                msg->numScreens = 4;
+                break;
             default:
                 msg->numScreens = 2;
                 break;

@@ -5,12 +5,12 @@
             "address": "0x790a0ca839dc5e4690c8c58cb57fd2beca419afc",
             "contractName": "AdminUpgradeabilityProxy",
             "selectors": {
-                "0x2e948b7b": {
+                "0xe7ffb5f7": {
                     "erc20OfInterest": [],
                     "method": "swapExactAmountIn",
                     "plugin": "APWine"
                 },
-                "0x8b9c185a": {
+                "0x16dc3ace": {
                     "erc20OfInterest": [],
                     "method": "swapExactAmountOut",
                     "plugin": "APWine"

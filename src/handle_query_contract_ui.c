@@ -15,13 +15,19 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            if (memcmp(context->contract_address_received,
-                       CONTRACT_ADDRESS_TOKEN_PATH,
-                       ADDRESS_LENGTH) == 0) {
-                strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
-
+            if (context->pair_path_first == 0) {
+                if (context->token_path_sent == 0) {
+                    strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
+                } else if (context->token_path_sent == 1) {
+                    strlcpy(msg->msg, currentToken->ticker_underlying, msg->msgLength);
+                }
             } else {
-                strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
+                if (context->token_path_sent == 0) {
+                    strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
+                } else if (context->token_path_sent == 1)
+                {
+                    strlcpy(msg->msg, currentToken->ticker_fyt, msg->msgLength);
+                }
             }
         }
     }
@@ -41,14 +47,37 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
     contract_address_ticker_t *currentToken = NULL;
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
-
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            if (memcmp(context->contract_address_received,
-                       CONTRACT_ADDRESS_TOKEN_PATH,
-                       ADDRESS_LENGTH) != 0) {
-                strlcpy(msg->msg, currentToken->ticker_sent, msg->msgLength);
+            if (context->array_len <= 1) {
+                if (context->pair_path_first == 0) {
+                    if (context->token_path_received == 0) {
+                        strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
+                    } else if (context->token_path_received == 1) {
+                        strlcpy(msg->msg, currentToken->ticker_underlying, msg->msgLength);
+                    }
+                } else {
+                    if (context->token_path_received == 0) {
+                        strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
+                    } else if (context->token_path_received == 1)
+                    {
+                        strlcpy(msg->msg, currentToken->ticker_fyt, msg->msgLength);
+                    }
+                }
             } else {
-                strlcpy(msg->msg, currentToken->ticker_received, msg->msgLength);
+                if (context->pair_path_last == 0) {
+                    if (context->token_path_received == 0) {
+                        strlcpy(msg->msg, currentToken->ticker_underlying, msg->msgLength);
+                    } else if (context->token_path_received == 1) {
+                        strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
+                    }
+                } else {
+                    if (context->token_path_received == 0) {
+                        strlcpy(msg->msg, currentToken->ticker_fyt, msg->msgLength);
+                    } else if (context->token_path_received == 1)
+                    {
+                        strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
+                    }
+                }
             }
         }
     }
@@ -147,20 +176,28 @@ static void set_warning_ui(ethQueryContractUI_t *msg,
     strlcpy(msg->msg, "Unknown token", msg->msgLength);
 }
 
-// Helper function that returns the enum corresponding to the screen that should be displayed.
-static screens_t get_screen(ethQueryContractUI_t *msg,
-                            apwine_parameters_t *context __attribute__((unused))) {
-    uint8_t index = msg->screenIndex;
+uint8_t swap_exact_amount_screen(uint8_t index) {
+    switch (index) {
+        case 0:
+            return SEND_TICKER_SCREEN;
+        case 1:
+            return SEND_SCREEN;
+        case 2:
+            return RECEIVE_TICKER_SCREEN;
+        case 3:
+            return RECEIVE_SCREEN;
+        default:
+            return ERROR;
+    }
+}
+
+uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
 
     bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
     bool token_received_found = context->tokens_found & TOKEN_RECEIVED_FOUND;
 
     bool both_tokens_found = token_received_found && token_sent_found;
     bool both_tokens_not_found = !token_received_found && !token_sent_found;
-
-    if (context->selectorIndex == REDEEM_YIELD) {
-        return AMOUNT_SCREEN;
-    }
 
     switch (index) {
         case 0:
@@ -172,8 +209,9 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                 return SEND_SCREEN;
             } else if (token_received_found) {
                 return WARN_SCREEN;
+            } else {
+                return ERROR;
             }
-            break;
         case 1:
             if (both_tokens_found) {
                 return RECEIVE_SCREEN;
@@ -183,8 +221,9 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
                 return WARN_SCREEN;
             } else if (token_received_found) {
                 return SEND_SCREEN;
+            } else {
+                return ERROR;
             }
-            break;
         case 2:
             if (both_tokens_found) {
                 return BENEFICIARY_SCREEN;
@@ -210,6 +249,21 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
         default:
             return ERROR;
     }
+}
+
+// Helper function that returns the enum corresponding to the screen that should be displayed.
+static screens_t get_screen(ethQueryContractUI_t *msg,
+                            apwine_parameters_t *context __attribute__((unused))) {
+    uint8_t index = msg->screenIndex;
+    switch (context->selectorIndex) {
+        case REDEEM_YIELD:
+            return AMOUNT_SCREEN;
+        case SWAP_EXACT_AMOUNT_IN:
+            return swap_exact_amount_screen(index);
+        default:
+            return default_screen(index, context);
+    }
+    
     return ERROR;
 }
 
