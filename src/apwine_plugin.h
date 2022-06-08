@@ -59,7 +59,7 @@ typedef enum {
     ERROR,
 } screens_t;
 
-#define NUM_CONTRACT_ADDRESS_COLLECTION 21
+#define NUM_CONTRACT_ADDRESS_COLLECTION 20
 
 typedef struct contract_address_ticker {
     uint8_t _amm[ADDRESS_LENGTH];
