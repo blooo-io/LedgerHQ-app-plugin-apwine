@@ -24,8 +24,7 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
             } else {
                 if (context->token_path_sent == 0) {
                     strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
-                } else if (context->token_path_sent == 1)
-                {
+                } else if (context->token_path_sent == 1) {
                     strlcpy(msg->msg, currentToken->ticker_fyt, msg->msgLength);
                 }
             }
@@ -58,8 +57,7 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
                 } else {
                     if (context->token_path_received == 0) {
                         strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
-                    } else if (context->token_path_received == 1)
-                    {
+                    } else if (context->token_path_received == 1) {
                         strlcpy(msg->msg, currentToken->ticker_fyt, msg->msgLength);
                     }
                 }
@@ -73,8 +71,7 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
                 } else {
                     if (context->token_path_received == 0) {
                         strlcpy(msg->msg, currentToken->ticker_fyt, msg->msgLength);
-                    } else if (context->token_path_received == 1)
-                    {
+                    } else if (context->token_path_received == 1) {
                         strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
                     }
                 }
@@ -192,7 +189,6 @@ uint8_t swap_exact_amount_screen(uint8_t index) {
 }
 
 uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
-
     bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
     bool token_received_found = context->tokens_found & TOKEN_RECEIVED_FOUND;
 
@@ -263,7 +259,7 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
         default:
             return default_screen(index, context);
     }
-    
+
     return ERROR;
 }
 

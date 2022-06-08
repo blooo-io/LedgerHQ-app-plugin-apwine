@@ -66,128 +66,128 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
 const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION] = {
     {{0xc6, 0x1c, 0x0f, 0x49, 0x61, 0xf2, 0x09, 0x3a, 0x08, 0x3f,
       0x47, 0xa4, 0xb7, 0x83, 0xad, 0x26, 0x0d, 0xea, 0xf7, 0xea},
-     "90D-Paladin-palStkAAVE",   // PT
-     "90D-Paladin-palStkAAVE-1", // FYT
-     "stkAAVE",                  // Underlying
+     "90D-Paladin-palStkAAVE",    // PT
+     "90D-Paladin-palStkAAVE-1",  // FYT
+     "stkAAVE",                   // Underlying
      18},
     {{0x16, 0x04, 0xc5, 0xe9, 0xab, 0x48, 0x8d, 0x66, 0xe9, 0x83,
       0x64, 0x43, 0x55, 0x51, 0x1d, 0xce, 0xf5, 0xc3, 0x2e, 0xdf},
-     "90D-Lido-stETH",   // PT
-     "90D-Lido-stETH-1", // FYT
-     "WETH",             // Underlying
+     "90D-Lido-stETH",    // PT
+     "90D-Lido-stETH-1",  // FYT
+     "WETH",              // Underlying
      18},
     {{0xa4, 0x08, 0x5c, 0x10, 0x6c, 0x7a, 0x9a, 0x7a, 0xd0, 0x57,
       0x48, 0x65, 0xbb, 0xd7, 0xca, 0xc5, 0xe1, 0x09, 0x81, 0x95},
-     "90D-ParaSwap-SPSP_PP4",   // PT
-     "90D-ParaSwap-SPSP_PP4-1", // FYT
-     "PSP",                     // Underlying
+     "90D-ParaSwap-SPSP_PP4",    // PT
+     "90D-ParaSwap-SPSP_PP4-1",  // FYT
+     "PSP",                      // Underlying
      18},
     {{0x0C, 0xC3, 0x6e, 0x3c, 0xc5, 0xeA, 0xCA, 0x6d, 0x04, 0x6b,
       0x53, 0x77, 0x03, 0xae, 0x94, 0x68, 0x74, 0xd5, 0x72, 0x99},
-     "90D-TrueFi-tfUSDC",   // PT
-     "90D-TrueFi-tfUSDC-1", // FYT
-     "USDC",                // Underlying
+     "90D-TrueFi-tfUSDC",    // PT
+     "90D-TrueFi-tfUSDC-1",  // FYT
+     "USDC",                 // Underlying
      6},
     {{0x83, 0x9b, 0xb0, 0x33, 0x73, 0x85, 0x10, 0xaa, 0x6b, 0x4f,
       0x78, 0xaf, 0x20, 0xf0, 0x66, 0xbd, 0xc8, 0x24, 0xb1, 0x89},
-     "90D-StakeDAO-sdFRAX3CRV-f",   // PT
-     "90D-StakeDAO-sdFRAX3CRV-f-1", // FYT
-     "FRAX3CRV-f",                  // Underlying
+     "90D-StakeDAO-sdFRAX3CRV-f",    // PT
+     "90D-StakeDAO-sdFRAX3CRV-f-1",  // FYT
+     "FRAX3CRV-f",                   // Underlying
      18},
     {{0xb9, 0x32, 0xc4, 0x80, 0x12, 0x40, 0x75, 0x36, 0x04, 0xc7,
       0x68, 0xc9, 0x91, 0xeb, 0x64, 0x0b, 0xcd, 0x7c, 0x06, 0xeb},
-     "90D-Aave-aUSDT",   // PT
-     "90D-Aave-aUSDT-0", // FYT
-     "USDT",             // Underlying
+     "90D-Aave-aUSDT",    // PT
+     "90D-Aave-aUSDT-0",  // FYT
+     "USDT",              // Underlying
      6},
     {{0x49, 0xcb, 0xbf, 0xed, 0xb1, 0x5b, 0x5c, 0x22, 0xca, 0xc5,
       0x3d, 0xaf, 0x10, 0x45, 0x12, 0xa5, 0xde, 0x9c, 0x84, 0x57},
-     "90D-ParaSwap-SPSP_PP3",   // PT
-     "90D-ParaSwap-SPSP_PP3-1", // FYT
-     "PSP",                     // Underlying
+     "90D-ParaSwap-SPSP_PP3",    // PT
+     "90D-ParaSwap-SPSP_PP3-1",  // FYT
+     "PSP",                      // Underlying
      18},
     {{0xcb, 0xa9, 0x60, 0x00, 0x13, 0x07, 0xa1, 0x6c, 0xe8, 0xa9,
       0xe3, 0x26, 0xd7, 0x3e, 0x92, 0xd5, 0x3b, 0x44, 0x6e, 0x81},
-     "90D-Sushi-xSUSHI",   // PT
-     "90D-Sushi-xSUSHI-1", // FYT
-     "SUSHI",              // Underlying
+     "90D-Sushi-xSUSHI",    // PT
+     "90D-Sushi-xSUSHI-1",  // FYT
+     "SUSHI",               // Underlying
      18},
     {{0xbc, 0x35, 0xb7, 0x0c, 0xcc, 0x8e, 0xf4, 0xec, 0x1c, 0xcc,
       0x34, 0xfa, 0xb6, 0x0c, 0xcb, 0xba, 0x16, 0x20, 0x11, 0xe4},
-     "90D-Yearn-yvCurve-ibEUR",   // PT
-     "90D-Yearn-yvCurve-ibEUR-0", // FYT
-     "ibEUR+sEUR-f",              // Underlying
+     "90D-Yearn-yvCurve-ibEUR",    // PT
+     "90D-Yearn-yvCurve-ibEUR-0",  // FYT
+     "ibEUR+sEUR-f",               // Underlying
      18},
     {{0x10, 0x89, 0xf7, 0xbb, 0xf8, 0xc6, 0x80, 0xdb, 0x92, 0x75,
       0x9a, 0x30, 0xd4, 0x2d, 0xdf, 0xba, 0x7c, 0x79, 0x4b, 0xd2},
-     "90D-Olympus-gOHM",   // PT
-     "90D-Olympus-gOHM-0", // FYT
-     "OHM",                // Underlying
+     "90D-Olympus-gOHM",    // PT
+     "90D-Olympus-gOHM-0",  // FYT
+     "OHM",                 // Underlying
      18},
     {{0x4d, 0xf9, 0xbb, 0x88, 0x1e, 0x5e, 0x61, 0x03, 0x40, 0x01,
       0x44, 0x0a, 0xaa, 0xff, 0x2f, 0xb2, 0x93, 0x2e, 0x28, 0x83},
-     "90D-Harvest-iFARM",   // PT
-     "90D-Harvest-iFARM-0", // FYT
-     "FARM",                // Underlying
+     "90D-Harvest-iFARM",    // PT
+     "90D-Harvest-iFARM-0",  // FYT
+     "FARM",                 // Underlying
      18},
     {{0x72, 0x59, 0x11, 0x4d, 0xf3, 0x63, 0xde, 0x5d, 0x42, 0xfd,
       0xf0, 0x0b, 0x70, 0x5f, 0xad, 0x7c, 0x85, 0xf8, 0xf7, 0x95},
-     "90D-Yearn-yvCurve-3Crypto",   // PT
-     "90D-Yearn-yvCurve-3Crypto-0", // FYT
-     "crv3crypto",                  // Underlying
+     "90D-Yearn-yvCurve-3Crypto",    // PT
+     "90D-Yearn-yvCurve-3Crypto-0",  // FYT
+     "crv3crypto",                   // Underlying
      18},
     {{0xea, 0x85, 0x15, 0x03, 0xff, 0x41, 0x6e, 0x34, 0x58, 0x5d,
       0x28, 0xc2, 0x48, 0x91, 0x83, 0x44, 0xc5, 0x69, 0xb2, 0x19},
-     "90D-IDLE Finance-AA_idleCvxFRAX3CRV-f",   // PT
-     "90D-IDLE Finance-AA_idleCvxFRAX3CRV-f-0", // FYT
-     "FRAX3CRV-f",                     // Underlying
+     "90D-IDLE Finance-AA_idleCvxFRAX3CRV-f",    // PT
+     "90D-IDLE Finance-AA_idleCvxFRAX3CRV-f-0",  // FYT
+     "FRAX3CRV-f",                               // Underlying
      18},
     {{0x1a, 0x65, 0x25, 0xe4, 0xa4, 0xab, 0x2e, 0x3a, 0xea, 0x7e,
       0xd3, 0xcf, 0x81, 0x3e, 0x8e, 0xd0, 0x7f, 0xa3, 0x44, 0x6d},
-     "90D-Yearn-yvCurve-IronBank",   // PT
-     "90D-Yearn-yvCurve-IronBank-0", // FYT
-     "ib3CRV",                       // Underlying
+     "90D-Yearn-yvCurve-IronBank",    // PT
+     "90D-Yearn-yvCurve-IronBank-0",  // FYT
+     "ib3CRV",                        // Underlying
      18},
      {{0x16, 0x04, 0xc5, 0xe9, 0xab, 0x48, 0x8d, 0x66, 0xe9, 0x83,
       0x64, 0x43, 0x55, 0x51, 0x1d, 0xce, 0xf5, 0xc3, 0x2e, 0xdf},
-     "90D-Beefy-mooCurveATriCrypto3",   // PT
-     "90D-Beefy-mooCurveATriCrypto3-1", // FYT
-     "Curve USD-BTC-ETH",               // Underlying
+     "90D-Beefy-mooCurveATriCrypto3",    // PT
+     "90D-Beefy-mooCurveATriCrypto3-1",  // FYT
+     "Curve USD-BTC-ETH",                // Underlying
      18},
      {{0x8a, 0x36, 0x2a, 0xa1, 0xc8, 0x1e, 0xd0, 0xee, 0x2a, 0xe6,
        0x77, 0xa8, 0xb5, 0x9e, 0x0f, 0x56, 0x3d, 0xd2, 0x90, 0xba},
-     "90D-Aave-amUSDC",   // PT
-     "90D-Aave-amUSDC-1", // FYT
-     "USD Coin",          // Underlying
+     "90D-Aave-amUSDC",    // PT
+     "90D-Aave-amUSDC-1",  // FYT
+     "USD Coin",           // Underlying
      6},
      {{0x91, 0xe9, 0x4e, 0x5e, 0x3b, 0xaa, 0x05, 0x4f, 0x92, 0xba,
        0xc4, 0x8a, 0x9c, 0x05, 0xe6, 0x22, 0x8d, 0xe1, 0xfc, 0xac},
-     "90D-Beefy-mooJarvis4eur",   // PT
-     "90D-Beefy-mooJarvis4eur-1", // FYT
-     "4eur-f",                    // Underlying
+     "90D-Beefy-mooJarvis4eur",    // PT
+     "90D-Beefy-mooJarvis4eur-1",  // FYT
+     "4eur-f",                     // Underlying
      18},
      {{0xc6, 0x8b, 0x69, 0x87, 0x07, 0x59, 0x44, 0xf9, 0xe8, 0xb0,
        0xa6, 0xc2, 0xb5, 0x2e, 0x92, 0x3b, 0xc1, 0xfb, 0x90, 0x28},
-     "90D-StakeDAO-sdam3CRV",   // PT
-     "90D-StakeDAO-sdam3CRV-1", // FYT
-     "am3CRV",                  // Underlying
+     "90D-StakeDAO-sdam3CRV",    // PT
+     "90D-StakeDAO-sdam3CRV-1",  // FYT
+     "am3CRV",                   // Underlying
      18},
      {{0x2d, 0xf9, 0xcf, 0x57, 0xac, 0x79, 0xa7, 0x6a, 0x2e, 0x8d,
        0x94, 0x4b, 0x62, 0x3a, 0x9f, 0x32, 0x4a, 0xf8, 0x5a, 0xb8},
-     "90D-Harvest-bfBP-BTC-SP",   // PT
-     "90D-Harvest-bfBP-BTC-SP-0", // FYT
-     "BP-BTC-SP",                 // Underlying
+     "90D-Harvest-bfBP-BTC-SP",    // PT
+     "90D-Harvest-bfBP-BTC-SP-0",  // FYT
+     "BP-BTC-SP",                  // Underlying
      18},
      {{0x74, 0x29, 0xe1, 0x60, 0xaa, 0x4a, 0xb7, 0xbb, 0xec, 0x65,
        0xc1, 0x01, 0xbd, 0x26, 0x24, 0xc8, 0xcb, 0xa8, 0xa2, 0xf6},
-     "90D-Beefy-mooJarvis2jpy",   // PT
-     "90D-Beefy-mooJarvis2jpy-1", // FYT
-     "2jpy-f",                    // Underlying
+     "90D-Beefy-mooJarvis2jpy",    // PT
+     "90D-Beefy-mooJarvis2jpy-1",  // FYT
+     "2jpy-f",                     // Underlying
      18},
      {{0x4b, 0xf9, 0x82, 0xf4, 0x39, 0x94, 0x03, 0x3e, 0x8c, 0x4e,
        0x2c, 0x36, 0xd0, 0x0c, 0x77, 0x6b, 0x55, 0x0e, 0x76, 0xc3},
-     "90D-Beefy-mooMaiUSDC-miMATIC",   // PT
-     "90D-Beefy-mooMaiUSDC-miMATIC-0", // FYT
-     "Uniswap V2",                     // Underlying
+     "90D-Beefy-mooMaiUSDC-miMATIC",    // PT
+     "90D-Beefy-mooMaiUSDC-miMATIC-0",  // FYT
+     "Uniswap V2",                      // Underlying
      18},
 };

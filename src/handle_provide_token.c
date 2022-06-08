@@ -62,8 +62,7 @@ void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
 void handle_provide_token(void *parameters) {
     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
-    PRINTF("1INCH plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
-    
+
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
         case SWAP_EXACT_AMOUNT_OUT:

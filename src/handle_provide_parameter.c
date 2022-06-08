@@ -30,32 +30,28 @@ static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_param
     printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
 }
 
-static void handle_array_length(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
+static void handle_array_length(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     context->array_len = msg->parameter[PARAMETER_LENGTH - 1];
     PRINTF("LIST LEN: %d\n", context->array_len);
 }
 
-static void handle_pair_path_first(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
+static void handle_pair_path_first(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     context->pair_path_first = msg->parameter[PARAMETER_LENGTH - 1];
     PRINTF("FIRST PAIR: %d\n", context->pair_path_first);
 }
 
-static void handle_pair_path_last(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
+static void handle_pair_path_last(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     context->pair_path_last = msg->parameter[PARAMETER_LENGTH - 1];
     PRINTF("LAST PAIR: %d\n", context->pair_path_last);
 }
 
-static void handle_token_path_sent(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
+static void handle_token_path_sent(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     context->token_path_sent = msg->parameter[PARAMETER_LENGTH - 1];
     PRINTF("TOKEN PATH SENT: %d\n", context->token_path_sent);
 }
 
 static void handle_token_path_received(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
+                                       apwine_parameters_t *context) {
     context->token_path_received = msg->parameter[PARAMETER_LENGTH - 1];
     PRINTF("TOKEN PATH RECEIVED: %d\n", context->token_path_received);
 }
@@ -85,9 +81,9 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             handle_pair_path_first(msg, context);
 
             if (context->array_len <= 1) {
-                context->skip = 1 ;  // skip _tokenPath length
+                context->skip = 1;  // skip _tokenPath length
                 context->next_param = TOKEN_PATH_SENT;
-            } else if (context->array_len <= 2){
+            } else if (context->array_len <= 2) {
                 context->next_param = PAIR_PATH_LAST;
             } else {
                 context->skip = context->array_len - 2;  // go to last pairPath
@@ -96,7 +92,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             break;
         case PAIR_PATH_LAST:  // _pairPath[length-1]
             handle_pair_path_last(msg, context);
-            context->skip = 1 ;  // skip _tokenPath length
+            context->skip = 1;  // skip _tokenPath length
             context->next_param = TOKEN_PATH_SENT;
             break;
         case TOKEN_PATH_SENT:  // _tokenPath[0]
@@ -105,7 +101,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             if (context->array_len <= 1) {
                 context->next_param = TOKEN_PATH_RECEIVED;
             } else {
-                context->skip = (context->array_len - 1) * 2 - 1;  // go to before the last tokenPath
+                context->skip = (context->array_len - 1) * 2 - 1;  // Before the last tokenPath
                 context->next_param = TOKEN_PATH_RECEIVED;
             }
             break;
