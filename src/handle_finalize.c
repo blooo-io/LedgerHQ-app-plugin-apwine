@@ -25,6 +25,7 @@ void handle_finalize(void *parameters) {
                 msg->numScreens = 1;
                 break;
             case SWAP_EXACT_AMOUNT_IN:
+            case SWAP_EXACT_AMOUNT_OUT:
                 msg->numScreens = 4;
                 break;
             default:

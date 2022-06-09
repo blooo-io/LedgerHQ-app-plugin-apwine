@@ -36,38 +36,23 @@ void handle_init_contract(void *parameters) {
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
-            context->next_param = TOKEN_SENT;
-            break;
         case SWAP_EXACT_AMOUNT_OUT:
+        case DEPOSIT:
+        case WITHDRAW:
             context->next_param = TOKEN_SENT;
             break;
         case ADD_LIQUIDITY:
-            context->skip = 2;
-            context->next_param = AMOUNT_SENT;
-            break;
         case REMOVE_LIQUIDITY:
             context->skip = 2;
             context->next_param = AMOUNT_SENT;
-            break;
-        case DEPOSIT:
-            context->next_param = TOKEN_SENT;
-            break;
-        case WITHDRAW:
-            context->next_param = TOKEN_SENT;
             break;
         case ZAPINTOPT:
             context->skip = 1;
             context->next_param = AMOUNT_SENT;
             break;
         case REDEEM_YIELD:
-            context->next_param = AMOUNT_SENT;
-            break;
         case INCREASE_AMOUNT:
-            context->next_param = AMOUNT_SENT;
-            break;
         case CREATE_LOCK:
-            context->next_param = AMOUNT_SENT;
-            break;
         case INCERASE_UNLOCK_TIME:
             context->next_param = AMOUNT_SENT;
             break;
