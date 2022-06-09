@@ -63,6 +63,9 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+// Indicate the Ethereum chain ID
+const uint8_t ETH_CHAIN_ID[ETH_CHAIN_ID_LENGTH] = {0x01};
+
 const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION] = {
     {{0xc6, 0x1c, 0x0f, 0x49, 0x61, 0xf2, 0x09, 0x3a, 0x08, 0x3f,
       0x47, 0xa4, 0xb7, 0x83, 0xad, 0x26, 0x0d, 0xea, 0xf7, 0xea},
@@ -142,12 +145,6 @@ const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS
      "90D-Yearn-yvCurve-IronBank-0",  // FYT
      "ib3CRV",                        // Underlying
      18},
-    {{0x16, 0x04, 0xc5, 0xe9, 0xab, 0x48, 0x8d, 0x66, 0xe9, 0x83,
-      0x64, 0x43, 0x55, 0x51, 0x1d, 0xce, 0xf5, 0xc3, 0x2e, 0xdf},
-     "90D-Beefy-mooCurveATriCrypto3",    // PT
-     "90D-Beefy-mooCurveATriCrypto3-1",  // FYT
-     "Curve USD-BTC-ETH",                // Underlying
-     18},
     {{0x8a, 0x36, 0x2a, 0xa1, 0xc8, 0x1e, 0xd0, 0xee, 0x2a, 0xe6,
       0x77, 0xa8, 0xb5, 0x9e, 0x0f, 0x56, 0x3d, 0xd2, 0x90, 0xba},
      "90D-Aave-amUSDC",    // PT
@@ -184,4 +181,17 @@ const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS
      "90D-Beefy-mooMaiUSDC-miMATIC-0",  // FYT
      "Uniswap V2",                      // Underlying
      18},
+};
+
+const contract_address_ticker_polygon_eth_t
+    CONTRACT_ADDRESS_COLLECTION_2[NUM_CONTRACT_ADDRESS_COLLECTION_2] = {
+        {{0x16, 0x04, 0xc5, 0xe9, 0xab, 0x48, 0x8d, 0x66, 0xe9, 0x83,
+          0x64, 0x43, 0x55, 0x51, 0x1d, 0xce, 0xf5, 0xc3, 0x2e, 0xdf},
+         "90D-Lido-stETH",                   // Ethereum PT
+         "90D-Lido-stETH-1",                 // Ethereum FYT
+         "WETH",                             // Ethereum Underlying
+         "90D-Beefy-mooCurveATriCrypto3",    // Polygon PT
+         "90D-Beefy-mooCurveATriCrypto3-1",  // Polygon FYT
+         "Curve USD-BTC-ETH",                // Polygon Underlying
+         18},
 };

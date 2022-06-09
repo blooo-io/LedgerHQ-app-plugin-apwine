@@ -20,6 +20,8 @@
 // Ticker needed for APWine plugin
 #define APWINE_MAX_TICKER_LEN 40
 
+#define ETH_CHAIN_ID_LENGTH 1
+
 // apwine uses `0xeeeee` as a dummy address to represent ETH.
 extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 
@@ -27,6 +29,8 @@ extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
 extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
+
+extern const uint8_t ETH_CHAIN_ID[ETH_CHAIN_ID_LENGTH];
 
 // Returns 1 if corresponding address is the apwine address for the chain token (ETH, BNB, MATIC,
 // etc.. are 0xeeeee...).
@@ -69,6 +73,21 @@ typedef struct contract_address_ticker {
     uint8_t decimal;
 } contract_address_ticker_t;
 extern const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION];
+
+#define NUM_CONTRACT_ADDRESS_COLLECTION_2 1
+
+typedef struct contract_address_ticker_polygon_eth {
+    uint8_t _amm[ADDRESS_LENGTH];
+    char ticker_eth_pt[APWINE_MAX_TICKER_LEN];
+    char ticker_eth_fyt[APWINE_MAX_TICKER_LEN];
+    char ticker_eth_underlying[APWINE_MAX_TICKER_LEN];
+    char ticker_polygon_pt[APWINE_MAX_TICKER_LEN];
+    char ticker_polygon_fyt[APWINE_MAX_TICKER_LEN];
+    char ticker_polygon_underlying[APWINE_MAX_TICKER_LEN];
+    uint8_t decimal;
+} contract_address_ticker_polygon_eth_t;
+extern const contract_address_ticker_polygon_eth_t
+    CONTRACT_ADDRESS_COLLECTION_2[NUM_CONTRACT_ADDRESS_COLLECTION_2];
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
