@@ -14,7 +14,9 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     contract_address_ticker_polygon_eth_t *currentToken2 = 
         (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-        if (memcmp(msg->pluginSharedRO->txContent->chainID.value, ETH_CHAIN_ID, ETH_CHAIN_ID_LENGTH) == 0){
+        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
+                   ETH_CHAIN_ID,
+                   ETH_CHAIN_ID_LENGTH) == 0) {
             if (context->pair_path_first == 0) {
                 if (context->token_path_sent == 0) {
                     strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);
@@ -82,7 +84,7 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
         if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
                    ETH_CHAIN_ID,
-                   ETH_CHAIN_ID_LENGTH) == 0){
+                   ETH_CHAIN_ID_LENGTH) == 0) {
             if (context->array_len <= 1) {
                 if (context->pair_path_first == 0) {
                     if (context->token_path_received == 0) {
