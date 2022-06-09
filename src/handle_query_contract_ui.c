@@ -11,7 +11,7 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
-    contract_address_ticker_polygon_eth_t *currentToken2 = 
+    contract_address_ticker_polygon_eth_t *currentToken2 =
         (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
         if (memcmp(msg->pluginSharedRO->txContent->chainID.value,

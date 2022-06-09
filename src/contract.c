@@ -187,11 +187,11 @@ const contract_address_ticker_polygon_eth_t
     CONTRACT_ADDRESS_COLLECTION_2[NUM_CONTRACT_ADDRESS_COLLECTION_2] = {
         {{0x16, 0x04, 0xc5, 0xe9, 0xab, 0x48, 0x8d, 0x66, 0xe9, 0x83,
           0x64, 0x43, 0x55, 0x51, 0x1d, 0xce, 0xf5, 0xc3, 0x2e, 0xdf},
-        "90D-Lido-stETH",                   // Ethereum PT
-        "90D-Lido-stETH-1",                 // Ethereum FYT
-        "WETH",                             // Ethereum Underlying
-        "90D-Beefy-mooCurveATriCrypto3",    // Polygon PT
-        "90D-Beefy-mooCurveATriCrypto3-1",  // Polygon FYT
-        "Curve USD-BTC-ETH",                // Polygon Underlying
-        18},
+          "90D-Lido-stETH",                   // Ethereum PT
+          "90D-Lido-stETH-1",                 // Ethereum FYT
+          "WETH",                             // Ethereum Underlying
+          "90D-Beefy-mooCurveATriCrypto3",    // Polygon PT
+          "90D-Beefy-mooCurveATriCrypto3-1",  // Polygon FYT
+          "Curve USD-BTC-ETH",                // Polygon Underlying
+          18},
 };

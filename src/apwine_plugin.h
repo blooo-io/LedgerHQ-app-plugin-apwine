@@ -86,7 +86,7 @@ typedef struct contract_address_ticker_polygon_eth {
     char ticker_polygon_underlying[APWINE_MAX_TICKER_LEN];
     uint8_t decimal;
 } contract_address_ticker_polygon_eth_t;
-extern const contract_address_ticker_polygon_eth_t 
+extern const contract_address_ticker_polygon_eth_t
     CONTRACT_ADDRESS_COLLECTION_2[NUM_CONTRACT_ADDRESS_COLLECTION_2];
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
