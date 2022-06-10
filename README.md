@@ -102,6 +102,9 @@ To test the plugin go to the tests folder from the "LedgerHQ-app-plugin-apwine" 
 cd LedgerHQ-app-plugin-apwine/tests       # go to the tests folder in LedgerHQ-app-plugin-apwine
 yarn test                                 # run the script test
 ```
+
+## Graphics & Icons
+[icons](docs/Ledger%20Manager%20icon%20template.ai)
 ## Continuous Integration
 
 
