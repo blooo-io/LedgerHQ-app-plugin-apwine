@@ -68,6 +68,37 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     }
 }
 
+static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+    switch (context->selectorIndex) {
+        case ZAPINTOPT:
+            strlcpy(msg->title, "Token Send", msg->titleLength);
+            break;
+        default:
+            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
+    contract_address_ticker_polygon_eth_t *currentToken2 =
+        (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
+    if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
+                   ETH_CHAIN_ID,
+                   ETH_CHAIN_ID_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken2->ticker_eth_underlying, msg->msgLength);
+        } else {
+            strlcpy(msg->msg, currentToken2->ticker_polygon_underlying, msg->msgLength);
+        }
+    }
+
+    contract_address_ticker_t *currentToken = NULL;
+    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
+        currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
+        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken->ticker_underlying, msg->msgLength);
+        }
+    }
+}
+
 static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
@@ -144,6 +175,30 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
                     }
                 }
             }
+        }
+    }
+}
+
+static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+    switch (context->selectorIndex) {
+        case ZAPINTOPT:
+            strlcpy(msg->title, "Token Receive", msg->titleLength);
+            break;
+        default:
+            PRINTF("Unhandled selector Index: %d\n", &context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
+    contract_address_ticker_polygon_eth_t *currentToken2 =
+        (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
+    if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
+                   ETH_CHAIN_ID,
+                   ETH_CHAIN_ID_LENGTH) == 0) {
+            
+            strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);    
+        } else {
+            strlcpy(msg->msg, currentToken2->ticker_polygon_pt, msg->msgLength);
         }
     }
 
@@ -292,6 +347,21 @@ uint8_t swap_exact_amount_screen(uint8_t index) {
     }
 }
 
+uint8_t swap_zapintopt_screen(uint8_t index) {
+    switch (index) {
+        case 0:
+            return SEND_UNDERLYING_SCREEN;
+        case 1:
+            return SEND_SCREEN;
+        case 2:
+            return RECEIVE_PT_SCREEN;
+        case 3:
+            return RECEIVE_SCREEN;
+        default:
+            return ERROR;
+    }
+}
+
 uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
     bool token_sent_found = context->tokens_found & TOKEN_SENT_FOUND;
     bool token_received_found = context->tokens_found & TOKEN_RECEIVED_FOUND;
@@ -361,6 +431,8 @@ static screens_t get_screen(ethQueryContractUI_t *msg,
         case SWAP_EXACT_AMOUNT_IN:
         case SWAP_EXACT_AMOUNT_OUT:
             return swap_exact_amount_screen(index);
+        case ZAPINTOPT:
+            return swap_zapintopt_screen(index);
         default:
             return default_screen(index, context);
     }
@@ -381,6 +453,9 @@ void handle_query_contract_ui(void *parameters) {
         case SEND_TICKER_SCREEN:
             set_send_ticker_ui(msg, context);
             break;
+        case SEND_UNDERLYING_SCREEN:
+            set_send_underlying_ui(msg, context);
+            break;
         case SEND_SCREEN:
             set_send_amount_ui(msg, context);
             break;
@@ -389,6 +464,9 @@ void handle_query_contract_ui(void *parameters) {
             break;
         case RECEIVE_TICKER_SCREEN:
             set_receive_ticker_ui(msg, context);
+            break;
+        case RECEIVE_PT_SCREEN:
+            set_receive_pt_ui(msg, context);
             break;
         case RECEIVE_SCREEN:
             set_receive_amount_ui(msg, context);

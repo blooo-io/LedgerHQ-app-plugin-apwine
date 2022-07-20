@@ -26,6 +26,7 @@ void handle_finalize(void *parameters) {
                 break;
             case SWAP_EXACT_AMOUNT_IN:
             case SWAP_EXACT_AMOUNT_OUT:
+            case ZAPINTOPT:
                 msg->numScreens = 4;
                 break;
             default:
