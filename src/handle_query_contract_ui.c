@@ -68,37 +68,6 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     }
 }
 
-static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
-    switch (context->selectorIndex) {
-        case ZAPINTOPT:
-            strlcpy(msg->title, "Token Send", msg->titleLength);
-            break;
-        default:
-            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
-    }
-    contract_address_ticker_polygon_eth_t *currentToken2 =
-        (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
-    if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
-                   ETH_CHAIN_ID,
-                   ETH_CHAIN_ID_LENGTH) == 0) {
-            strlcpy(msg->msg, currentToken2->ticker_eth_underlying, msg->msgLength);
-        } else {
-            strlcpy(msg->msg, currentToken2->ticker_polygon_underlying, msg->msgLength);
-        }
-    }
-
-    contract_address_ticker_t *currentToken = NULL;
-    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
-        currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
-        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-            strlcpy(msg->msg, currentToken->ticker_underlying, msg->msgLength);
-        }
-    }
-}
-
 static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
@@ -177,29 +146,6 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             }
         }
     }
-}
-
-static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
-    switch (context->selectorIndex) {
-        case ZAPINTOPT:
-            strlcpy(msg->title, "Token Receive", msg->titleLength);
-            break;
-        default:
-            PRINTF("Unhandled selector Index: %d\n", &context->selectorIndex);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
-    }
-    contract_address_ticker_polygon_eth_t *currentToken2 =
-        (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
-    if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
-        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
-                   ETH_CHAIN_ID,
-                   ETH_CHAIN_ID_LENGTH) == 0) {
-            strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);
-        } else {
-            strlcpy(msg->msg, currentToken2->ticker_polygon_pt, msg->msgLength);
-        }
-    }
 
     contract_address_ticker_t *currentToken = NULL;
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
@@ -234,6 +180,69 @@ static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *co
                     }
                 }
             }
+        }
+    }
+}
+
+
+static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+    switch (context->selectorIndex) {
+        case ZAPINTOPT:
+            strlcpy(msg->title, "Token Send", msg->titleLength);
+            break;
+        default:
+            PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
+    contract_address_ticker_polygon_eth_t *currentToken2 =
+        (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
+    if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
+                   ETH_CHAIN_ID,
+                   ETH_CHAIN_ID_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken2->ticker_eth_underlying, msg->msgLength);
+        } else {
+            strlcpy(msg->msg, currentToken2->ticker_polygon_underlying, msg->msgLength);
+        }
+    }
+
+    contract_address_ticker_t *currentToken = NULL;
+    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
+        currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
+        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken->ticker_underlying, msg->msgLength);
+        }
+    }
+}
+
+static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+    switch (context->selectorIndex) {
+        case ZAPINTOPT:
+            strlcpy(msg->title, "Token Receive", msg->titleLength);
+            break;
+        default:
+            PRINTF("Unhandled selector Index: %d\n", &context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
+    contract_address_ticker_polygon_eth_t *currentToken2 =
+        (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
+    if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+        if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
+                   ETH_CHAIN_ID,
+                   ETH_CHAIN_ID_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);
+        } else {
+            strlcpy(msg->msg, currentToken2->ticker_polygon_pt, msg->msgLength);
+        }
+    }
+
+    contract_address_ticker_t *currentToken = NULL;
+    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
+        currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
+        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+            strlcpy(msg->msg, currentToken->ticker_pt, msg->msgLength);
         }
     }
 }
