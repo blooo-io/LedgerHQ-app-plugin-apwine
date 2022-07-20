@@ -195,7 +195,7 @@ static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *co
         if (memcmp(msg->pluginSharedRO->txContent->chainID.value,
                    ETH_CHAIN_ID,
                    ETH_CHAIN_ID_LENGTH) == 0) {
-            strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);    
+            strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);
         } else {
             strlcpy(msg->msg, currentToken2->ticker_polygon_pt, msg->msgLength);
         }
