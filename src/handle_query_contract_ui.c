@@ -184,7 +184,6 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
     }
 }
 
-
 static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case ZAPINTOPT:
