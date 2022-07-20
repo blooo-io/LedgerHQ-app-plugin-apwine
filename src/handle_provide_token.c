@@ -66,6 +66,7 @@ void handle_provide_token(void *parameters) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
         case SWAP_EXACT_AMOUNT_OUT:
+        case ZAPINTOPT:
             handle_swap_exact_tokens(context);
             break;
         default:

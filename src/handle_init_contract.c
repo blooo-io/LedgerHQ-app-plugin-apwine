@@ -47,8 +47,7 @@ void handle_init_contract(void *parameters) {
             context->next_param = AMOUNT_SENT;
             break;
         case ZAPINTOPT:
-            context->skip = 1;
-            context->next_param = AMOUNT_SENT;
+            context->next_param = TOKEN_SENT;
             break;
         case REDEEM_YIELD:
         case INCREASE_AMOUNT:
