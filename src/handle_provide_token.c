@@ -25,6 +25,21 @@ void handle_swap_exact_tokens(apwine_parameters_t *context) {
     }
 }
 
+void handle_future_vault_tokens(apwine_parameters_t *context) {
+    contract_address_future_vault_t *currentToken = NULL;
+    for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_FUTURE_VAULT; i++) {
+        currentToken = (contract_address_future_vault_t *) PIC(&CONTRACT_ADDRESS_FUTURE_VAULT[i]);
+        if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
+            context->decimals_sent = currentToken->decimal;
+            context->decimals_received = currentToken->decimal;
+            break;
+        } else {
+            context->decimals_sent = WEI_TO_ETHER;
+            context->decimals_received = WEI_TO_ETHER;
+        }
+    }
+}
+
 void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
     if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
         sent_network_token(context);
@@ -68,6 +83,10 @@ void handle_provide_token(void *parameters) {
         case SWAP_EXACT_AMOUNT_OUT:
         case ZAPINTOPT:
             handle_swap_exact_tokens(context);
+            break;
+        case DEPOSIT:
+        case WITHDRAW:
+            handle_future_vault_tokens(context);
             break;
         default:
             handle_token(msg, context);

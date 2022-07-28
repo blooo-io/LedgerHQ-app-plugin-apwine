@@ -57,6 +57,8 @@ typedef enum {
     RECEIVE_TICKER_SCREEN,
     SEND_UNDERLYING_SCREEN,
     RECEIVE_PT_SCREEN,
+    TOKEN_FUTURE_VAULT_SCREEN,
+    WITHDRAW_FUTURE_VAULT_SCREEN,
     SEND_SCREEN,
     RECEIVE_SCREEN,
     BENEFICIARY_SCREEN,
@@ -90,6 +92,20 @@ typedef struct contract_address_ticker_polygon_eth {
 } contract_address_ticker_polygon_eth_t;
 extern const contract_address_ticker_polygon_eth_t
     CONTRACT_ADDRESS_COLLECTION_2[NUM_CONTRACT_ADDRESS_COLLECTION_2];
+
+#define NUM_CONTRACT_ADDRESS_FUTURE_VAULT 20
+
+typedef struct contract_address_future_vault {
+    uint8_t _amm[ADDRESS_LENGTH];
+    char deposit_ticker_eth[APWINE_MAX_TICKER_LEN];
+    char withdraw_ticker_eth[APWINE_MAX_TICKER_LEN];
+    char deposit_ticker_polygon[APWINE_MAX_TICKER_LEN];
+    char withdraw_ticker_polygon[APWINE_MAX_TICKER_LEN];
+    uint8_t decimal;
+} contract_address_future_vault_t;
+
+extern const contract_address_future_vault_t
+    CONTRACT_ADDRESS_FUTURE_VAULT[NUM_CONTRACT_ADDRESS_FUTURE_VAULT];
 
 // Would've loved to make this an enum but we don't have enough room because enums are `int` and not
 // `uint8_t`.
