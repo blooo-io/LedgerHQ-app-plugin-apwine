@@ -246,8 +246,8 @@ static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *co
     }
 }
 
-
-static void set_future_vault_token_deposit_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+static void set_future_vault_token_deposit_ui(ethQueryContractUI_t *msg,
+                                              apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case DEPOSIT:
             strlcpy(msg->title, "Token Send", msg->titleLength);
@@ -275,7 +275,8 @@ static void set_future_vault_token_deposit_ui(ethQueryContractUI_t *msg, apwine_
     }
 }
 
-static void set_future_vault_token_withdraw_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
+static void set_future_vault_token_withdraw_ui(ethQueryContractUI_t *msg,
+                                               apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case WITHDRAW:
             strlcpy(msg->title, "Token Send", msg->titleLength);
