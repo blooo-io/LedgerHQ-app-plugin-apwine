@@ -18,8 +18,6 @@ void handle_finalize(void *parameters) {
             case REDEEM_YIELD:
                 msg->numScreens = 0;
                 break;
-            case DEPOSIT:
-            case WITHDRAW:
             case INCREASE_AMOUNT:
             case INCERASE_UNLOCK_TIME:
                 msg->numScreens = 1;
