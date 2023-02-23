@@ -142,20 +142,23 @@ typedef struct apwine_parameters_t {
 
     uint16_t offset;
     uint16_t checkpoint;
+    uint16_t array_len;
     uint8_t next_param;
     uint8_t tokens_found;
-    uint8_t valid;
     uint8_t decimals_sent;
     uint8_t decimals_received;
     uint8_t selectorIndex;
-    uint8_t array_len;
     uint8_t pair_path_first;
     uint8_t pair_path_last;
     uint8_t token_path_sent;
     uint8_t token_path_received;
     uint8_t skip;
-    // 12 * 1b + 2 * 2b == 12 + 4 == 16 bytes. There are 32 - 16 == 16 byte left.
+    // 11 * 1b + 2 * 2b == 12 + 4 == 16 bytes. There are 32 - 15 == 17 byte left.
 } apwine_parameters_t;
+
+// Piece of code that will check that the above structure is not bigger than 5 * 32. Do not remove
+// this check.
+_Static_assert(sizeof(apwine_parameters_t) <= 5 * 32, "Structure of parameters too big.");
 
 void handle_provide_parameter(void *parameters);
 void handle_query_contract_ui(void *parameters);

@@ -15,23 +15,21 @@ static void handle_amount_received(ethPluginProvideParameter_t *msg, apwine_para
 }
 
 static void handle_token_sent(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    memset(context->contract_address_sent, 0, sizeof(context->contract_address_sent));
-    memcpy(context->contract_address_sent,
-           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-           ADDRESS_LENGTH);
+    copy_address(context->contract_address_sent,
+                 msg->parameter,
+                 sizeof(context->contract_address_sent));
     printf_hex_array("TOKEN SENT: ", ADDRESS_LENGTH, context->contract_address_sent);
 }
 
 static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    memset(context->contract_address_received, 0, sizeof(context->contract_address_received));
-    memcpy(context->contract_address_received,
-           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-           ADDRESS_LENGTH);
+    copy_address(context->contract_address_received,
+                 msg->parameter,
+                 sizeof(context->contract_address_received));
     printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
 }
 
 static void handle_array_length(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    context->array_len = msg->parameter[PARAMETER_LENGTH - 1];
+    U2BE_from_parameter(msg->parameter, &(context->array_len));
     PRINTF("LIST LEN: %d\n", context->array_len);
 }
 
@@ -85,9 +83,6 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                 context->next_param = TOKEN_PATH_SENT;
             } else if (context->array_len <= 2) {
                 context->next_param = PAIR_PATH_LAST;
-            } else {
-                context->skip = context->array_len - 2;  // go to last pairPath
-                context->next_param = PAIR_PATH_LAST;
             }
             break;
         case PAIR_PATH_LAST:  // _pairPath[length-1]
@@ -131,9 +126,6 @@ static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
             handle_amount_received(msg, context);
             // We call the handle_token method to print "Unknown Token"
             handle_token_received(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
             break;
         default:
             PRINTF("Param not supported\n");
