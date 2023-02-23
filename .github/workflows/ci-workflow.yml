@@ -1,12 +1,15 @@
 name: Compilation & tests
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+      - develop
   pull_request:
     branches:
       - main
+      - develop
 
 jobs:
   job_build_debug:
@@ -22,11 +25,11 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build APWine plugin
+      - name: Build plugin
         run: |
           make DEBUG=1
 
-      - name: Upload APWine binary
+      - name: Upload binary
         uses: actions/upload-artifact@v2
         with:
           name: apwine-app-debug
@@ -67,6 +70,7 @@ jobs:
 
       - name: Build with cov-build
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           cov-build --dir cov-int make default
       - name: Submit the result to Coverity Scan
@@ -89,11 +93,18 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Clone SDK
+        uses: actions/checkout@v3
+        with:
+          repository: LedgerHQ/ethereum-plugin-sdk
+          path: ethereum-plugin-sdk
+          ref: develop
       - name: Build plugin for Nano S
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           make BOLOS_SDK=$NANOS_SDK
       - name: Move binary to test directory
@@ -101,7 +112,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/apwine_nanos.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/apwine_nanos.elf
@@ -113,11 +124,18 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Clone SDK
+        uses: actions/checkout@v3
+        with:
+          repository: LedgerHQ/ethereum-plugin-sdk
+          path: ethereum-plugin-sdk
+          ref: develop
       - name: Build plugin for Nano S+
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           make BOLOS_SDK=$NANOSP_SDK
       - name: Move binary to test directory
@@ -125,7 +143,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/apwine_nanosp.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/apwine_nanosp.elf
@@ -137,11 +155,18 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Clone
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+      - name: Clone SDK
+        uses: actions/checkout@v3
+        with:
+          repository: LedgerHQ/ethereum-plugin-sdk
+          path: ethereum-plugin-sdk
+          ref: develop
       - name: Build plugin for Nano X
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           make BOLOS_SDK=$NANOX_SDK
       - name: Move binary to test directory
@@ -149,7 +174,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/apwine_nanox.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/apwine_nanox.elf
@@ -161,13 +186,14 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Checkout app-ethereum
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          ref: develop
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOS_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -175,7 +201,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/ethereum_nanos.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/ethereum_nanos.elf
@@ -187,13 +213,14 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Checkout app-ethereum
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          ref: develop
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOSP_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -201,7 +228,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/ethereum_nanosp.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/ethereum_nanosp.elf
@@ -213,13 +240,14 @@ jobs:
       image: ghcr.io/ledgerhq/ledger-app-builder/ledger-app-builder:latest
     steps:
       - name: Checkout app-ethereum
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: LedgerHQ/app-ethereum
-          ref: ${{ ((github.base_ref || github.ref_name) == 'main' && 'master') || (github.base_ref || github.ref_name) }}
+          ref: develop
           submodules: recursive
       - name: Build ethereum
         run: |
+          git config --global --add safe.directory /__w/LedgerHQ-app-plugin-apwine/LedgerHQ-app-plugin-apwine
           make clean
           make -j DEBUG=1 BYPASS_SIGNATURES=1 BOLOS_SDK=$NANOX_SDK CHAIN=ethereum ALLOW_DATA=1
       - name: Move binary to test directory
@@ -227,7 +255,7 @@ jobs:
           mkdir -p ./tests/elfs/
           mv bin/app.elf ./tests/elfs/ethereum_nanox.elf
       - name: Upload plugin binary
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: binaries
           path: tests/elfs/ethereum_nanox.elf
@@ -248,9 +276,9 @@ jobs:
           echo $HOME
           echo $DISPLAY
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download built binaries
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: binaries
           path: tests/elfs/
@@ -258,9 +286,9 @@ jobs:
         run: ls -lh ./tests/elfs
       - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
       - name: Install node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "16.4.0"
+          node-version: "14.18.1"
       - name: Install yarn
         run: |
           npm install -g yarn
@@ -269,4 +297,4 @@ jobs:
           cd tests && yarn install
       - name: Run zemu tests
         run: |
-          cd tests && yarn test
+          cd tests && docker pull zondax/builder-zemu@sha256:8d7b06cedf2d018b9464f4af4b7a8357c3fbb180f3ab153f8cb8f138defb22a4 && yarn test

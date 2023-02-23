@@ -15,7 +15,11 @@ const simuOptions = {
     logging: true,
     X11: false,
     startDelay: 15000,
-    startText: 'is ready',
+    startText: "Ready",
+    approveKeyword: "APPROVE",
+    rejectKeyword: "REJECT",
+    custom: "",
+    caseSensitive: false,
 };
 
 const Resolve = require('path').resolve;
@@ -41,6 +45,8 @@ const genericTx = {
 let config;
 
 const TIMEOUT = 2000000;
+
+jest.setTimeout(TIMEOUT);
 
 /**
  * Generates a serializedTransaction from a rawHexTransaction copy pasted from etherscan.
@@ -84,7 +90,6 @@ function txFromEtherscan(rawTx) {
  */
 function zemu(device, func, testNetwork, signed = false) {
     return async () => {
-        jest.setTimeout(TIMEOUT);
         let ethPath;
         let plugin;
         const simOptions = simuOptions;

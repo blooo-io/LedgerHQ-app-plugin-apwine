@@ -16,7 +16,6 @@ void handle_init_contract(void *parameters) {
 
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
     memset(context, 0, sizeof(*context));
-    context->valid = 1;
 
     // Determine a function to call
     size_t i;
