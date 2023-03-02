@@ -29,7 +29,9 @@ static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_param
 }
 
 static void handle_array_length(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    U2BE_from_parameter(msg->parameter, &(context->array_len));
+    if (!U2BE_from_parameter(msg->parameter, &(context->array_len))) {
+        msg->result = ETH_PLUGIN_RESULT_ERROR;
+    }
     PRINTF("LIST LEN: %d\n", context->array_len);
 }
 
@@ -102,9 +104,9 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             break;
         case TOKEN_PATH_RECEIVED:  // _tokenPath[length-2]
             handle_token_path_received(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -126,6 +128,9 @@ static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
             handle_amount_received(msg, context);
             // We call the handle_token method to print "Unknown Token"
             handle_token_received(msg, context);
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -146,9 +151,9 @@ static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parame
             handle_amount_received(msg, context);
             // We call the handle_token method to print "Unknown Token"
             handle_token_received(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -166,9 +171,9 @@ static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg,
             break;
         case AMOUNT_SENT:  // _amount
             handle_amount_sent(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -190,9 +195,9 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
             break;
         case AMOUNT_RECEIVED:  // _inputs[0]
             handle_amount_received(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -207,9 +212,9 @@ static void handle_increase_amount(ethPluginProvideParameter_t *msg, apwine_para
             handle_amount_sent(msg, context);
             // We call the handle_token method to print "Unknown Token"
             handle_token_sent(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -228,9 +233,9 @@ static void handle_create_lock(ethPluginProvideParameter_t *msg, apwine_paramete
             break;
         case AMOUNT_RECEIVED:  // _unlock_time
             handle_amount_received(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -244,9 +249,9 @@ static void handle_increase_unlock_time(ethPluginProvideParameter_t *msg,
     switch (context->next_param) {
         case AMOUNT_SENT:  // _unlock_time
             handle_amount_sent(msg, context);
-            context->next_param = NONE;
-            break;
-        case NONE:
+
+            //When all parameters are parsed
+            context->valid = 1;
             break;
         default:
             PRINTF("Param not supported\n");
