@@ -105,7 +105,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
         case TOKEN_PATH_RECEIVED:  // _tokenPath[length-2]
             handle_token_path_received(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -129,7 +129,7 @@ static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
             // We call the handle_token method to print "Unknown Token"
             handle_token_received(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -152,7 +152,7 @@ static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parame
             // We call the handle_token method to print "Unknown Token"
             handle_token_received(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -172,7 +172,7 @@ static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg,
         case AMOUNT_SENT:  // _amount
             handle_amount_sent(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -196,7 +196,7 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
         case AMOUNT_RECEIVED:  // _inputs[0]
             handle_amount_received(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -213,7 +213,7 @@ static void handle_increase_amount(ethPluginProvideParameter_t *msg, apwine_para
             // We call the handle_token method to print "Unknown Token"
             handle_token_sent(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -234,7 +234,7 @@ static void handle_create_lock(ethPluginProvideParameter_t *msg, apwine_paramete
         case AMOUNT_RECEIVED:  // _unlock_time
             handle_amount_received(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
@@ -250,7 +250,7 @@ static void handle_increase_unlock_time(ethPluginProvideParameter_t *msg,
         case AMOUNT_SENT:  // _unlock_time
             handle_amount_sent(msg, context);
 
-            //When all parameters are parsed
+            // When all parameters are parsed
             context->valid = 1;
             break;
         default:
