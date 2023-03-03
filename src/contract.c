@@ -64,7 +64,7 @@ const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH] = {0x00, 0x00, 0x00, 0x00, 0x00, 
                                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 // Indicate the Ethereum chain ID
-const uint8_t ETH_CHAIN_ID[ETH_CHAIN_ID_LENGTH] = {0x01};
+const char network_ticker[MAX_TICKER_LEN] = "ETH";
 
 const contract_address_ticker_t CONTRACT_ADDRESS_COLLECTION[NUM_CONTRACT_ADDRESS_COLLECTION] = {
     {{0xc6, 0x1c, 0x0f, 0x49, 0x61, 0xf2, 0x09, 0x3a, 0x08, 0x3f,

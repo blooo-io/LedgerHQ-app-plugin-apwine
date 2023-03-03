@@ -30,7 +30,7 @@ extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
 extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
-extern const uint8_t ETH_CHAIN_ID[ETH_CHAIN_ID_LENGTH];
+extern const char network_ticker[MAX_TICKER_LEN];
 
 // Returns 1 if corresponding address is the apwine address for the chain token (ETH, BNB, MATIC,
 // etc.. are 0xeeeee...).
