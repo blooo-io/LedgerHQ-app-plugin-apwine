@@ -137,12 +137,13 @@ typedef struct apwine_parameters_t {
     char ticker_sent[MAX_TICKER_LEN];
     char ticker_received[MAX_TICKER_LEN];
 
-    // 32 * 2 + 20 * 2 + 12 * 2 == 64 + 40 + 24 == 128
-    // 32 * 5 == 160 bytes so there are 160 - 128 == 32 bytes left.
+    // 32 * 2 + 20 * 2 + 11 * 2 == 64 + 40 + 22 == 126
+    // 32 * 5 == 160 bytes so there are 160 - 126 == 34 bytes left.
 
     uint16_t offset;
     uint16_t checkpoint;
     uint16_t array_len;
+    uint8_t valid;
     uint8_t next_param;
     uint8_t tokens_found;
     uint8_t decimals_sent;
@@ -153,7 +154,7 @@ typedef struct apwine_parameters_t {
     uint8_t token_path_sent;
     uint8_t token_path_received;
     uint8_t skip;
-    // 11 * 1b + 2 * 2b == 12 + 4 == 16 bytes. There are 32 - 15 == 17 byte left.
+    // 11 * 1b + 3 * 2b == 11 + 6 == 17 bytes. There are 34 - 17 == 17 byte left.
 } apwine_parameters_t;
 
 // Piece of code that will check that the above structure is not bigger than 5 * 32. Do not remove
