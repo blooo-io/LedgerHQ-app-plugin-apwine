@@ -120,7 +120,6 @@ extern const contract_address_future_vault_t
 #define PAIR_PATH_LAST      8
 #define TOKEN_PATH_SENT     9
 #define TOKEN_PATH_RECEIVED 10
-#define NONE                11
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER

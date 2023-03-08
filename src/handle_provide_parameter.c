@@ -191,6 +191,7 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
             break;
         case AMOUNT_RECEIVED:  // _inputs[0]
             handle_amount_received(msg, context);
+            context->skip++;  // skip _inputs[1]
             // When all parameters are parsed
             context->valid = 1;
             break;
