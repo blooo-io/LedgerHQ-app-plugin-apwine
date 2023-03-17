@@ -21,6 +21,13 @@ static void handle_token_sent(ethPluginProvideParameter_t *msg, apwine_parameter
     printf_hex_array("TOKEN SENT: ", ADDRESS_LENGTH, context->contract_address_sent);
 }
 
+static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+    copy_address(context->contract_address_received,
+                 msg->parameter,
+                 sizeof(context->contract_address_received));
+    printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
+}
+
 static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                                      apwine_parameters_t *context) {
     switch (context->next_param) {
