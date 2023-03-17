@@ -112,6 +112,8 @@ static void handle_liquidity(ethPluginProvideParameter_t *msg, apwine_parameters
             break;
         case AMOUNT_RECEIVED:  // _minAmountsIn[1]
             handle_amount_received(msg, context);
+            // We call the handle_token method to print "Unknown Token"
+            handle_token_received(msg, context);
             // When all parameters are parsed
             context->valid = 1;
             break;
