@@ -58,7 +58,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             if (context->tmp_len == 0) {
                 context->next_param = TOKEN_PATH_LENGTH;
             } else {
-                context->skip = context->tmp_len - 1; // PAS SUR
+                context->skip = context->tmp_len - 1;
                 context->next_param = PAIR_PATH_LAST;
             }
             break;
