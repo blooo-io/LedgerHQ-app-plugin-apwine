@@ -21,41 +21,6 @@ static void handle_token_sent(ethPluginProvideParameter_t *msg, apwine_parameter
     printf_hex_array("TOKEN SENT: ", ADDRESS_LENGTH, context->contract_address_sent);
 }
 
-static void handle_token_received(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    copy_address(context->contract_address_received,
-                 msg->parameter,
-                 sizeof(context->contract_address_received));
-    printf_hex_array("TOKEN RECEIVED: ", ADDRESS_LENGTH, context->contract_address_received);
-}
-
-static void handle_array_length(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    if (!U2BE_from_parameter(msg->parameter, &(context->array_len))) {
-        msg->result = ETH_PLUGIN_RESULT_ERROR;
-    }
-    PRINTF("LIST LEN: %d\n", context->array_len);
-}
-
-static void handle_pair_path_first(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    context->pair_path_first = msg->parameter[PARAMETER_LENGTH - 1];
-    PRINTF("FIRST PAIR: %d\n", context->pair_path_first);
-}
-
-static void handle_pair_path_last(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    context->pair_path_last = msg->parameter[PARAMETER_LENGTH - 1];
-    PRINTF("LAST PAIR: %d\n", context->pair_path_last);
-}
-
-static void handle_token_path_sent(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
-    context->token_path_sent = msg->parameter[PARAMETER_LENGTH - 1];
-    PRINTF("TOKEN PATH SENT: %d\n", context->token_path_sent);
-}
-
-static void handle_token_path_received(ethPluginProvideParameter_t *msg,
-                                       apwine_parameters_t *context) {
-    context->token_path_received = msg->parameter[PARAMETER_LENGTH - 1];
-    PRINTF("TOKEN PATH RECEIVED: %d\n", context->token_path_received);
-}
-
 static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                                      apwine_parameters_t *context) {
     switch (context->next_param) {
@@ -74,37 +39,60 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
             context->skip = 3;  // skip _to, _deadline and _referralRecipient
             break;
         case PAIR_PATH_LENGTH:  // _pairPath length
-            handle_array_length(msg, context);
+            if (!U2BE_from_parameter(msg->parameter, &(context->array_len)) &&
+                context->array_len == 0) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
+            context->tmp_len = context->array_len;
             context->next_param = PAIR_PATH_FIRST;
             break;
         case PAIR_PATH_FIRST:  // _pairPath[0]
-            handle_pair_path_first(msg, context);
+            context->tmp_len--;
 
-            if (context->array_len <= 1) {
-                context->skip = 1;  // skip _tokenPath length
-                context->next_param = TOKEN_PATH_SENT;
+            if (!U2BE_from_parameter(msg->parameter, &context->pair_path_first)) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
+
+            if (context->tmp_len == 0) {
+                context->next_param = TOKEN_PATH_LENGTH;
             } else {
+                context->skip = context->tmp_len - 1; // PAS SUR
                 context->next_param = PAIR_PATH_LAST;
             }
             break;
-        case PAIR_PATH_LAST:  // _pairPath[length-1]
-            handle_pair_path_last(msg, context);
-            context->skip = 1;  // skip _tokenPath length
+
+        case PAIR_PATH_LAST:  // _pairPath[-1]
+            if (!U2BE_from_parameter(msg->parameter, &context->pair_path_last)) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
+            context->next_param = TOKEN_PATH_LENGTH;
+            break;
+
+        case TOKEN_PATH_LENGTH:
+            if (!U2BE_from_parameter(msg->parameter, &(context->tmp_len)) &&
+                context->tmp_len * 2 != context->array_len) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
             context->next_param = TOKEN_PATH_SENT;
             break;
         case TOKEN_PATH_SENT:  // _tokenPath[0]
-            handle_token_path_sent(msg, context);
-
-            if (context->array_len <= 1) {
-                context->next_param = TOKEN_PATH_RECEIVED;
-            } else {
-                context->skip = (context->array_len - 1) * 2 - 1;  // Before the last tokenPath
-                context->next_param = TOKEN_PATH_RECEIVED;
+            if (!U2BE_from_parameter(msg->parameter, &(context->token_path_sent))) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
             }
+            context->skip = context->tmp_len - 2;
+            context->next_param = TOKEN_PATH_RECEIVED;
             break;
-        case TOKEN_PATH_RECEIVED:  // _tokenPath[length-2]
-            handle_token_path_received(msg, context);
-            // When all parameters are parsed
+
+        case TOKEN_PATH_RECEIVED:  // _tokenPath[-1]
+            if (!U2BE_from_parameter(msg->parameter, &(context->token_path_received))) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
             context->valid = 1;
             break;
         default:
@@ -114,30 +102,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
     }
 }
 
-static void handle_remove_liquidity(ethPluginProvideParameter_t *msg,
-                                    apwine_parameters_t *context) {
-    switch (context->next_param) {
-        case AMOUNT_SENT:  // _minAmountsOut[0] will be copied in AMOUNT_SENT
-            handle_amount_sent(msg, context);
-            // We call the handle_token method to print "Unknown Token"
-            handle_token_sent(msg, context);
-            context->next_param = AMOUNT_RECEIVED;
-            break;
-        case AMOUNT_RECEIVED:  // _minAmountsOut[1]
-            handle_amount_received(msg, context);
-            // We call the handle_token method to print "Unknown Token"
-            handle_token_received(msg, context);
-            // When all parameters are parsed
-            context->valid = 1;
-            break;
-        default:
-            PRINTF("Param not supported\n");
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            break;
-    }
-}
-
-static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
+static void handle_liquidity(ethPluginProvideParameter_t *msg, apwine_parameters_t *context) {
     switch (context->next_param) {
         case AMOUNT_SENT:  // _minAmountsIn[0] will be copied in AMOUNT_SENT
             handle_amount_sent(msg, context);
@@ -147,8 +112,6 @@ static void handle_add_liquidity(ethPluginProvideParameter_t *msg, apwine_parame
             break;
         case AMOUNT_RECEIVED:  // _minAmountsIn[1]
             handle_amount_received(msg, context);
-            // We call the handle_token method to print "Unknown Token"
-            handle_token_received(msg, context);
             // When all parameters are parsed
             context->valid = 1;
             break;
@@ -186,12 +149,24 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
             break;
         case AMOUNT_SENT:  // _amount
             handle_amount_sent(msg, context);
+            context->next_param = INPUT_LENGTH;
+            context->skip = 2;
+            break;
+        case INPUT_LENGTH:  // _inputs length
+            if (!U2BE_from_parameter(msg->parameter, &(context->array_len))) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
             context->next_param = AMOUNT_RECEIVED;
-            context->skip = 3;
             break;
         case AMOUNT_RECEIVED:  // _inputs[0]
-            handle_amount_received(msg, context);
-            context->skip++;  // skip _inputs[1]
+            if (context->array_len != 0) {
+                handle_amount_received(msg, context);
+            } else {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
+            context->skip++;
             // When all parameters are parsed
             context->valid = 1;
             break;
@@ -264,25 +239,14 @@ void handle_provide_parameter(void *parameters) {
         // Skip this step, and don't forget to decrease skipping counter.
         context->skip--;
     } else {
-        if ((context->offset) && msg->parameterOffset != context->checkpoint + context->offset) {
-            PRINTF("offset: %d, checkpoint: %d, parameterOffset: %d\n",
-                   context->offset,
-                   context->checkpoint,
-                   msg->parameterOffset);
-            return;
-        }
-
-        context->offset = 0;  // Reset offset
         switch (context->selectorIndex) {
             case SWAP_EXACT_AMOUNT_IN:
             case SWAP_EXACT_AMOUNT_OUT:
                 handle_swap_exact_amount(msg, context);
                 break;
             case REMOVE_LIQUIDITY:
-                handle_remove_liquidity(msg, context);
-                break;
             case ADD_LIQUIDITY:
-                handle_add_liquidity(msg, context);
+                handle_liquidity(msg, context);
                 break;
             case DEPOSIT:
             case WITHDRAW:
