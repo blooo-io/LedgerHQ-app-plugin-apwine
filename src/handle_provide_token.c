@@ -1,41 +1,33 @@
 #include "apwine_plugin.h"
 
-static void sent_network_token(apwine_parameters_t *context) {
-    context->decimals_sent = WEI_TO_ETHER;
-    context->tokens_found |= TOKEN_SENT_FOUND;
-}
-
-static void received_network_token(apwine_parameters_t *context) {
-    context->decimals_received = WEI_TO_ETHER;
-    context->tokens_found |= TOKEN_RECEIVED_FOUND;
-}
-
 void handle_swap_exact_tokens(apwine_parameters_t *context) {
     contract_address_ticker_t *currentToken = NULL;
+
+    context->decimals_sent = WEI_TO_ETHER;
+    context->decimals_received = WEI_TO_ETHER;
+
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_COLLECTION; i++) {
         currentToken = (contract_address_ticker_t *) PIC(&CONTRACT_ADDRESS_COLLECTION[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
             context->decimals_sent = currentToken->decimal;
             context->decimals_received = currentToken->decimal;
             break;
-        } else {
-            context->decimals_sent = WEI_TO_ETHER;
-            context->decimals_received = WEI_TO_ETHER;
         }
     }
 }
 
 void handle_future_vault_tokens(apwine_parameters_t *context) {
     contract_address_future_vault_t *currentToken = NULL;
+
+    context->decimals_sent = WEI_TO_ETHER;
+    context->decimals_received = WEI_TO_ETHER;
+
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_FUTURE_VAULT; i++) {
         currentToken = (contract_address_future_vault_t *) PIC(&CONTRACT_ADDRESS_FUTURE_VAULT[i]);
         if (memcmp(currentToken->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
             context->decimals_sent = currentToken->decimal;
             context->decimals_received = currentToken->decimal;
             break;
-        } else {
-            context->decimals_sent = WEI_TO_ETHER;
-            context->decimals_received = WEI_TO_ETHER;
         }
     }
 }

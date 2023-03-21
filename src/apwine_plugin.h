@@ -120,6 +120,8 @@ extern const contract_address_future_vault_t
 #define PAIR_PATH_LAST      8
 #define TOKEN_PATH_SENT     9
 #define TOKEN_PATH_RECEIVED 10
+#define TOKEN_PATH_LENGTH   11
+#define INPUT_LENGTH        12
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
@@ -139,21 +141,20 @@ typedef struct apwine_parameters_t {
     // 32 * 2 + 20 * 2 + 11 * 2 == 64 + 40 + 22 == 126
     // 32 * 5 == 160 bytes so there are 160 - 126 == 34 bytes left.
 
-    uint16_t offset;
-    uint16_t checkpoint;
+    uint16_t tmp_len;
     uint16_t array_len;
+    uint16_t pair_path_first;
+    uint16_t pair_path_last;
+    uint16_t token_path_sent;
+    uint16_t token_path_received;
     uint8_t valid;
     uint8_t next_param;
     uint8_t tokens_found;
     uint8_t decimals_sent;
     uint8_t decimals_received;
     uint8_t selectorIndex;
-    uint8_t pair_path_first;
-    uint8_t pair_path_last;
-    uint8_t token_path_sent;
-    uint8_t token_path_received;
     uint8_t skip;
-    // 11 * 1b + 3 * 2b == 11 + 6 == 17 bytes. There are 34 - 17 == 17 byte left.
+    // 7 * 1b + 6 * 2b == 7 + 12 == 19 bytes. There are 34 - 19 == 15 byte left.
 } apwine_parameters_t;
 
 // Piece of code that will check that the above structure is not bigger than 5 * 32. Do not remove
@@ -176,4 +177,14 @@ static inline void printf_hex_array(const char *title __attribute__((unused)),
         PRINTF("%02x", data[i]);
     };
     PRINTF("\n");
+}
+
+static inline void sent_network_token(apwine_parameters_t *context) {
+    context->decimals_sent = WEI_TO_ETHER;
+    context->tokens_found |= TOKEN_SENT_FOUND;
+}
+
+static inline void received_network_token(apwine_parameters_t *context) {
+    context->decimals_received = WEI_TO_ETHER;
+    context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
