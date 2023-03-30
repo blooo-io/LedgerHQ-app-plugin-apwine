@@ -3,7 +3,8 @@
 // Set UI for retrieving the ticker.
 // The ticker is calculated based on the pair_path_first and the token_path_sent.
 // The pair 0 == (PT,Underlying) and 1 == (PT, FYT)
-// If the token path is 0, the ticker is the PT ticker, and if the token path is 1, the ticker is the Underlying or FYT ticker.
+// If the token path is 0, the ticker is the PT ticker, and if the token path is 1,
+// the ticker is the Underlying or FYT ticker.
 static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
@@ -76,7 +77,8 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
 // Set UI for retrieving the ticker.
 // The ticker is calculated based on the pair_path_last and the token_path_received.
 // The pair 0 == (PT,Underlying) and 1 == (PT, FYT)
-// If the token path is 0, the ticker is the PT ticker, and if the token path is 1, the ticker is the Underlying or FYT ticker.
+// If the token path is 0, the ticker is the PT ticker, and if the token path is 1,
+// the ticker is the Underlying or FYT ticker.
 static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
