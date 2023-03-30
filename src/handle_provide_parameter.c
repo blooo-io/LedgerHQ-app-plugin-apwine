@@ -80,7 +80,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
 
         case TOKEN_PATH_LENGTH:
             if (!U2BE_from_parameter(msg->parameter, &(context->tmp_len)) &&
-                context->tmp_len * 2 != context->array_len) {
+                context->tmp_len != context->array_len * 2) {
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
                 break;
             }

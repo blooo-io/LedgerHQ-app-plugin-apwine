@@ -1,5 +1,9 @@
 #include "apwine_plugin.h"
 
+// Set UI for retrieving the ticker.
+// The ticker is calculated based on the pair_path_first and the token_path_sent.
+// The pair 0 == (PT,Underlying) and 1 == (PT, FYT)
+// If the token path is 0, the ticker is the PT ticker, and if the token path is 1, the ticker is the Underlying or FYT ticker.
 static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
@@ -68,6 +72,11 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
     }
 }
 
+
+// Set UI for retrieving the ticker.
+// The ticker is calculated based on the pair_path_last and the token_path_received.
+// The pair 0 == (PT,Underlying) and 1 == (PT, FYT)
+// If the token path is 0, the ticker is the PT ticker, and if the token path is 1, the ticker is the Underlying or FYT ticker.
 static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case SWAP_EXACT_AMOUNT_IN:
@@ -184,6 +193,7 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
     }
 }
 
+// Set UI for retrieving the underlying ticker.
 static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case ZAPINTOPT:
@@ -215,6 +225,7 @@ static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_
     }
 }
 
+// Set UI for retrieving the PT ticker.
 static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case ZAPINTOPT:
@@ -246,6 +257,7 @@ static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *co
     }
 }
 
+// Set UI for retrieving the ticker used in deposit function.
 static void set_future_vault_token_deposit_ui(ethQueryContractUI_t *msg,
                                               apwine_parameters_t *context) {
     switch (context->selectorIndex) {
@@ -275,11 +287,12 @@ static void set_future_vault_token_deposit_ui(ethQueryContractUI_t *msg,
     }
 }
 
+// Set UI for retrieving the ticker used in withdraw function.
 static void set_future_vault_token_withdraw_ui(ethQueryContractUI_t *msg,
                                                apwine_parameters_t *context) {
     switch (context->selectorIndex) {
         case WITHDRAW:
-            strlcpy(msg->title, "Token Send", msg->titleLength);
+            strlcpy(msg->title, "Token Receive", msg->titleLength);
             break;
         default:
             PRINTF("Unhandled selector Index: %d\n", context->selectorIndex);
@@ -312,10 +325,10 @@ static void set_send_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
             strlcpy(msg->title, "Amount In", msg->titleLength);
             break;
         case ADD_LIQUIDITY:
-            strlcpy(msg->title, "Amount In 1", msg->titleLength);
+            strlcpy(msg->title, "First Amount In", msg->titleLength);
             break;
         case REMOVE_LIQUIDITY:
-            strlcpy(msg->title, "Amount Out 1", msg->titleLength);
+            strlcpy(msg->title, "First Amount Out", msg->titleLength);
             break;
         case DEPOSIT:
         case WITHDRAW:
@@ -364,10 +377,10 @@ static void set_receive_amount_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             strlcpy(msg->title, "Amount Out", msg->titleLength);
             break;
         case ADD_LIQUIDITY:
-            strlcpy(msg->title, "Amount In 2", msg->titleLength);
+            strlcpy(msg->title, "2nd Amount In", msg->titleLength);
             break;
         case REMOVE_LIQUIDITY:
-            strlcpy(msg->title, "Amount Out 2", msg->titleLength);
+            strlcpy(msg->title, "2nd Amount Out", msg->titleLength);
             break;
         case ZAPINTOPT:
             strlcpy(msg->title, "Receive Min", msg->titleLength);
@@ -483,7 +496,7 @@ uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
             }
         case 2:
             if (both_tokens_found) {
-                return BENEFICIARY_SCREEN;
+                return ERROR;
             } else if (both_tokens_not_found) {
                 return WARN_SCREEN;
             } else {
@@ -494,14 +507,6 @@ uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
                 return ERROR;
             } else if (both_tokens_not_found) {
                 return RECEIVE_SCREEN;
-            } else {
-                return BENEFICIARY_SCREEN;
-            }
-        case 4:
-            if (both_tokens_not_found) {
-                return BENEFICIARY_SCREEN;
-            } else {
-                return ERROR;
             }
         default:
             return ERROR;
@@ -509,8 +514,7 @@ uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
 }
 
 // Helper function that returns the enum corresponding to the screen that should be displayed.
-static screens_t get_screen(ethQueryContractUI_t *msg,
-                            apwine_parameters_t *context __attribute__((unused))) {
+static screens_t get_screen(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
     uint8_t index = msg->screenIndex;
     switch (context->selectorIndex) {
         case REDEEM_YIELD:
