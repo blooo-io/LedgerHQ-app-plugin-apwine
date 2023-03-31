@@ -1368,10 +1368,10 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
-"@grpc/grpc-js@^1.8.8":
-  version "1.8.10"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.10.tgz#1802adf1d7eaa31acb0e5cafe5989d75fcc892a5"
-  integrity sha512-x7QS+gJq8WaS1OJYFJkmeoX2PHhi3b5TR5TqR9a8NJv6VyedFecp3LgAUmuJSQZlwoAODpCKRtu4HzG1srNjiA==
+"@grpc/grpc-js@^1.8.12":
+  version "1.8.13"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.8.13.tgz#e775685962909b76f8d4b813833c3d123867165b"
+  integrity sha512-iY3jsdfbc0ARoCLFvbvUB8optgyb0r1XLPb142u+QtgBcKJYkCIFt3Fd/881KqjLYWjsBJF57N3b8Eop9NDfUA==
   dependencies:
     "@grpc/proto-loader" "^0.7.0"
     "@types/node" ">=12.12.47"
@@ -1687,7 +1687,7 @@
     bignumber.js "^9.1.0"
     crypto-js "^4.1.1"
 
-"@ledgerhq/hw-transport-http@^6.27.1", "@ledgerhq/hw-transport-http@^6.27.11":
+"@ledgerhq/hw-transport-http@^6.27.1", "@ledgerhq/hw-transport-http@^6.27.12":
   version "6.27.12"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-http/-/hw-transport-http-6.27.12.tgz#7121dcd50aeaa7f9aaa5f151548742c2f9e1d2f9"
   integrity sha512-4qG/de/SgYwzNy5boNYlCAvhMe5SpAMunkc/k/DMRkqsuOWJjxJ8vIQHvCCep5aGjDLjxy6v61vAm3w+/uf5gg==
@@ -1706,7 +1706,7 @@
     "@ledgerhq/hw-transport" "^6.28.1"
     "@ledgerhq/logs" "^6.10.1"
 
-"@ledgerhq/hw-transport@^6.28.0", "@ledgerhq/hw-transport@^6.28.1":
+"@ledgerhq/hw-transport@^6.28.1":
   version "6.28.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.28.1.tgz#cb22fe9bc23af4682c30f2aac7fe6f7ab13ed65a"
   integrity sha512-RaZe+abn0zBIz82cE9tp7Y7aZkHWWbEaE2yJpfxT8AhFz3fx+BU0kLYzuRN9fmA7vKueNJ1MTVUCY+Ex9/CHSQ==
@@ -1898,22 +1898,22 @@
   resolved "https://registry.yarnpkg.com/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz#e77a97fbd345b76d83245edcd17d393b1b41fb31"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
-"@zondax/zemu@^0.35.1":
-  version "0.35.1"
-  resolved "https://registry.yarnpkg.com/@zondax/zemu/-/zemu-0.35.1.tgz#5a5f083909b9699a6fe346ac0425ff3a5ba45644"
-  integrity sha512-v7JWBkmnyeZnt1RB6kD2NTc8h/Cl5aDHq/kX8a4KvV0Ay1jB+KAXsfCTtPN9jjc0hkTXB7qFMIFmp07EpM+jfg==
+"@zondax/zemu@^0.37.0":
+  version "0.37.0"
+  resolved "https://registry.yarnpkg.com/@zondax/zemu/-/zemu-0.37.0.tgz#c91bdcbed3d648cadc0beb385bff34e92458218b"
+  integrity sha512-XgcquM8RCKWF/PE8T80DRVY4wIxsZ9B1eERiQ78RmxMeYRnZO8LFH+3yLEs4knjAdQVoyJA4zjHM0HjV7QHo3w==
   dependencies:
-    "@grpc/grpc-js" "^1.8.8"
+    "@grpc/grpc-js" "^1.8.12"
     "@grpc/proto-loader" "^0.7.5"
-    "@ledgerhq/hw-transport" "^6.28.0"
-    "@ledgerhq/hw-transport-http" "^6.27.11"
-    axios "^1.3.3"
+    "@ledgerhq/hw-transport" "^6.28.1"
+    "@ledgerhq/hw-transport-http" "^6.27.12"
+    axios "^1.3.4"
     axios-retry "^3.4.0"
     dockerode "^3.3.1"
     elfy "^1.0.0"
     fs-extra "^11.0.0"
     get-port "^5.1.1"
-    pngjs "^6.0.0"
+    pngjs "^7.0.0"
     randomstring "^1.2.3"
 
 acorn-jsx@^5.3.1:
@@ -2080,7 +2080,7 @@ axios@^0.26.1:
   dependencies:
     follow-redirects "^1.14.8"
 
-axios@^1.3.3:
+axios@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.3.4.tgz#f5760cefd9cfb51fd2481acf88c05f67c4523024"
   integrity sha512-toYm+Bsyl6VC5wSkfkbbNB6ROv7KY93PEBBL6xyDczaIHasAiv4wPqQ/c4RjoQzipxRD2W5g21cOqQulZ7rHwQ==
@@ -4461,10 +4461,10 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-pngjs@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-6.0.0.tgz#ca9e5d2aa48db0228a52c419c3308e87720da821"
-  integrity sha512-TRzzuFRRmEoSW/p1KVAmiOgPco2Irlah+bGFCeNfJXxxYGwSw7YwAOAcd7X28K/m5bjBWKsC29KyoMfHbypayg==
+pngjs@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-7.0.0.tgz#a8b7446020ebbc6ac739db6c5415a65d17090e26"
+  integrity sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==
 
 postinstall-postinstall@^2.1.0:
   version "2.1.0"
