@@ -16,6 +16,10 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+
+    // set to a default value like “???” so that is displayed something is wrong to the user.
+    strlcpy(msg->msg, "???", msg->msgLength);
+
     contract_address_ticker_polygon_eth_t *currentToken2 =
         (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
@@ -74,8 +78,11 @@ static void set_send_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *c
 }
 
 // Set UI for retrieving the ticker.
-// The ticker is calculated based on the pair_path_last and the token_path_received.
+// The ticker is calculated based on the pair_path_first,pair_path_last and the token_path_received.
 // The pair 0 == (PT,Underlying) and 1 == (PT, FYT)
+// If the pair_path array length is greater than 1, it means that there are multiple swaps.
+// Therefore we will use the last pair_path to determine the ticker.
+// Otherwise, we will use the first pair_path.
 // If the token path is 0, the ticker is the PT ticker, and if the token path is 1,
 // the ticker is the Underlying or FYT ticker.
 static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t *context) {
@@ -89,6 +96,10 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+
+    // set to a default value like “???” so that is displayed something is wrong to the user.
+    strlcpy(msg->msg, "???", msg->msgLength);
+
     contract_address_ticker_polygon_eth_t *currentToken2 =
         (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
@@ -205,6 +216,10 @@ static void set_send_underlying_ui(ethQueryContractUI_t *msg, apwine_parameters_
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+
+    // set to a default value like “???” so that is displayed something is wrong to the user.
+    strlcpy(msg->msg, "???", msg->msgLength);
+
     contract_address_ticker_polygon_eth_t *currentToken2 =
         (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
@@ -237,6 +252,10 @@ static void set_receive_pt_ui(ethQueryContractUI_t *msg, apwine_parameters_t *co
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+
+    // set to a default value like “???” so that is displayed something is wrong to the user.
+    strlcpy(msg->msg, "???", msg->msgLength);
+
     contract_address_ticker_polygon_eth_t *currentToken2 =
         (contract_address_ticker_polygon_eth_t *) PIC(&CONTRACT_ADDRESS_COLLECTION_2[0]);
     if (memcmp(currentToken2->_amm, context->contract_address_sent, ADDRESS_LENGTH) == 0) {
@@ -271,6 +290,9 @@ static void set_future_vault_token_deposit_ui(ethQueryContractUI_t *msg,
             return;
     }
 
+    // set to a default value like “???” so that is displayed something is wrong to the user.
+    strlcpy(msg->msg, "???", msg->msgLength);
+
     contract_address_future_vault_t *currentToken = NULL;
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_FUTURE_VAULT; i++) {
         currentToken = (contract_address_future_vault_t *) PIC(&CONTRACT_ADDRESS_FUTURE_VAULT[i]);
@@ -300,6 +322,9 @@ static void set_future_vault_token_withdraw_ui(ethQueryContractUI_t *msg,
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+
+    // set to a default value like “???” so that is displayed something is wrong to the user.
+    strlcpy(msg->msg, "???", msg->msgLength);
 
     contract_address_future_vault_t *currentToken = NULL;
     for (uint8_t i = 0; i < NUM_CONTRACT_ADDRESS_FUTURE_VAULT; i++) {

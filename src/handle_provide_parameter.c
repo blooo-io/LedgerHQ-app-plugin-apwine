@@ -101,6 +101,7 @@ static void handle_swap_exact_amount(ethPluginProvideParameter_t *msg,
                 break;
             }
             context->valid = 1;
+            context->next_param = ERROR_PARAM;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -113,16 +114,21 @@ static void handle_liquidity(ethPluginProvideParameter_t *msg, apwine_parameters
     switch (context->next_param) {
         case AMOUNT_SENT:  // _minAmountsIn[0] will be copied in AMOUNT_SENT
             handle_amount_sent(msg, context);
-            // We call the handle_token method to print "Unknown Token"
-            handle_token_sent(msg, context);
+            if (memcmp(context->amount_sent, NULL_AMOUNT, PARAMETER_LENGTH) != 0) {
+                // We call the handle_token method to print "Unknown Token"
+                handle_token_sent(msg, context);
+            }
             context->next_param = AMOUNT_RECEIVED;
             break;
         case AMOUNT_RECEIVED:  // _minAmountsIn[1]
             handle_amount_received(msg, context);
             // We call the handle_token method to print "Unknown Token"
-            handle_token_received(msg, context);
-            // When all parameters are parsed
+            if (memcmp(context->amount_received, NULL_AMOUNT, PARAMETER_LENGTH) != 0) {
+                // We call the handle_token method to print "Unknown Token"
+                handle_token_received(msg, context);
+            }
             context->valid = 1;
+            context->next_param = ERROR_PARAM;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -142,6 +148,7 @@ static void handle_deposit_withdraw(ethPluginProvideParameter_t *msg,
             handle_amount_sent(msg, context);
             // When all parameters are parsed
             context->valid = 1;
+            context->next_param = ERROR_PARAM;
             break;
         default:
             PRINTF("Param not supported\n");
@@ -166,6 +173,10 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
                 break;
             }
+            if (context->array_len == 0) {
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+            }
             context->next_param = AMOUNT_RECEIVED;
             break;
         case AMOUNT_RECEIVED:  // _inputs[0]
@@ -175,7 +186,8 @@ static void handle_zapintopt(ethPluginProvideParameter_t *msg, apwine_parameters
                 msg->result = ETH_PLUGIN_RESULT_ERROR;
                 break;
             }
-            context->skip++;
+            context->skip = context->array_len - 1;
+            context->next_param = ERROR_PARAM;
             // When all parameters are parsed
             context->valid = 1;
             break;
@@ -190,8 +202,10 @@ static void handle_increase_amount(ethPluginProvideParameter_t *msg, apwine_para
     switch (context->next_param) {
         case AMOUNT_SENT:  // _value
             handle_amount_sent(msg, context);
-            // We call the handle_token method to print "Unknown Token"
-            handle_token_sent(msg, context);
+            if (memcmp(context->amount_sent, NULL_AMOUNT, PARAMETER_LENGTH) != 0) {
+                // We call the handle_token method to print "Unknown Token"
+                handle_token_sent(msg, context);
+            }
             // When all parameters are parsed
             context->valid = 1;
             break;
@@ -206,8 +220,10 @@ static void handle_create_lock(ethPluginProvideParameter_t *msg, apwine_paramete
     switch (context->next_param) {
         case AMOUNT_SENT:  // _value
             handle_amount_sent(msg, context);
-            // We call the handle_token method to print "Unknown Token"
-            handle_token_sent(msg, context);
+            if (memcmp(context->amount_sent, NULL_AMOUNT, PARAMETER_LENGTH) != 0) {
+                // We call the handle_token method to print "Unknown Token"
+                handle_token_sent(msg, context);
+            }
             context->next_param = AMOUNT_RECEIVED;
             break;
         case AMOUNT_RECEIVED:  // _unlock_time
@@ -227,6 +243,7 @@ static void handle_increase_unlock_time(ethPluginProvideParameter_t *msg,
     switch (context->next_param) {
         case AMOUNT_SENT:  // _unlock_time
             handle_amount_sent(msg, context);
+            context->next_param = ERROR_PARAM;
             // When all parameters are parsed
             context->valid = 1;
             break;

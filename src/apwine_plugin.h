@@ -28,6 +28,8 @@ extern const uint8_t APWINE_ETH_ADDRESS[ADDRESS_LENGTH];
 // apwine uses 0x00000 as a dummy address to reprecent ETH.
 extern const uint8_t NULL_ETH_ADDRESS[ADDRESS_LENGTH];
 
+extern const uint8_t NULL_AMOUNT[PARAMETER_LENGTH];
+
 extern const uint8_t *const APWINE_SELECTORS[NUM_APWINE_SELECTORS];
 
 extern const uint8_t ETH_CHAIN_ID[ETH_CHAIN_ID_LENGTH];
@@ -122,6 +124,7 @@ extern const contract_address_future_vault_t
 #define TOKEN_PATH_RECEIVED 10
 #define TOKEN_PATH_LENGTH   11
 #define INPUT_LENGTH        12
+#define ERROR_PARAM         13
 
 // Number of decimals used when the token wasn't found in the CAL.
 #define DEFAULT_DECIMAL WEI_TO_ETHER
