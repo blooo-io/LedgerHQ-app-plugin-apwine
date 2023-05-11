@@ -11,7 +11,7 @@ This is a plugin for the Ethereum application which helps parsing and displaying
 Clone the plugin to a new folder.
 
 ```shell
-git clone https://github.com/blooo-io/LedgerHQ-app-plugin-apwine.git
+git clone --recurse-submodules https://github.com/blooo-io/LedgerHQ-app-plugin-apwine.git
 ```
 
 Then in the same folder clone two more repositories, which is the plugin-tools and app-ethereum.
