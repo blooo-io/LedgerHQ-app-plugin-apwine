@@ -130,7 +130,7 @@ extern const contract_address_future_vault_t
 #define DEFAULT_DECIMAL WEI_TO_ETHER
 
 // Ticker used when the token wasn't found in the CAL.
-#define DEFAULT_TICKER ""
+#define DEFAULT_TICKER "?"
 
 // Shared global memory with Ethereum app. Must be at most 5 * 32 bytes.
 typedef struct apwine_parameters_t {
@@ -150,6 +150,8 @@ typedef struct apwine_parameters_t {
     uint16_t pair_path_last;
     uint16_t token_path_sent;
     uint16_t token_path_received;
+    uint8_t contract_sent_unknown;
+    uint8_t contract_received_unknown;
     uint8_t valid;
     uint8_t next_param;
     uint8_t tokens_found;
@@ -157,7 +159,7 @@ typedef struct apwine_parameters_t {
     uint8_t decimals_received;
     uint8_t selectorIndex;
     uint8_t skip;
-    // 7 * 1b + 6 * 2b == 7 + 12 == 19 bytes. There are 34 - 19 == 15 byte left.
+    // 9 * 1b + 6 * 2b == 9 + 12 == 21 bytes. There are 34 - 21 == 13 bytes left.
 } apwine_parameters_t;
 
 // Piece of code that will check that the above structure is not bigger than 5 * 32. Do not remove
@@ -190,4 +192,20 @@ static inline void sent_network_token(apwine_parameters_t *context) {
 static inline void received_network_token(apwine_parameters_t *context) {
     context->decimals_received = WEI_TO_ETHER;
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
+}
+
+static inline void default_sent_network_token(ethPluginProvideInfo_t *msg,
+                                              apwine_parameters_t *context) {
+    context->decimals_sent = DEFAULT_DECIMAL;
+    strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
+    // // We will need an additional screen to display a warning message.
+    msg->additionalScreens++;
+}
+
+static inline void default_received_network_token(ethPluginProvideInfo_t *msg,
+                                                  apwine_parameters_t *context) {
+    context->decimals_received = DEFAULT_DECIMAL;
+    strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_received));
+    // // We will need an additional screen to display a warning message.
+    msg->additionalScreens++;
 }

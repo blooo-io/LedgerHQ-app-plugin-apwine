@@ -123,15 +123,15 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             } else {
                 if (context->pair_path_last == 0) {
                     if (context->token_path_received == 0) {
-                        strlcpy(msg->msg, currentToken2->ticker_eth_underlying, msg->msgLength);
-                    } else if (context->token_path_received == 1) {
                         strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);
+                    } else if (context->token_path_received == 1) {
+                        strlcpy(msg->msg, currentToken2->ticker_eth_underlying, msg->msgLength);
                     }
                 } else {
                     if (context->token_path_received == 0) {
-                        strlcpy(msg->msg, currentToken2->ticker_eth_fyt, msg->msgLength);
-                    } else if (context->token_path_received == 1) {
                         strlcpy(msg->msg, currentToken2->ticker_eth_pt, msg->msgLength);
+                    } else if (context->token_path_received == 1) {
+                        strlcpy(msg->msg, currentToken2->ticker_eth_fyt, msg->msgLength);
                     }
                 }
             }
@@ -153,15 +153,15 @@ static void set_receive_ticker_ui(ethQueryContractUI_t *msg, apwine_parameters_t
             } else {
                 if (context->pair_path_last == 0) {
                     if (context->token_path_received == 0) {
-                        strlcpy(msg->msg, currentToken2->ticker_polygon_underlying, msg->msgLength);
-                    } else if (context->token_path_received == 1) {
                         strlcpy(msg->msg, currentToken2->ticker_polygon_pt, msg->msgLength);
+                    } else if (context->token_path_received == 1) {
+                        strlcpy(msg->msg, currentToken2->ticker_polygon_underlying, msg->msgLength);
                     }
                 } else {
                     if (context->token_path_received == 0) {
-                        strlcpy(msg->msg, currentToken2->ticker_polygon_fyt, msg->msgLength);
-                    } else if (context->token_path_received == 1) {
                         strlcpy(msg->msg, currentToken2->ticker_polygon_pt, msg->msgLength);
+                    } else if (context->token_path_received == 1) {
+                        strlcpy(msg->msg, currentToken2->ticker_polygon_fyt, msg->msgLength);
                     }
                 }
             }
