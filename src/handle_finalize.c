@@ -10,6 +10,7 @@ void handle_finalize(void *parameters) {
                 break;
             case INCREASE_AMOUNT:
             case INCERASE_UNLOCK_TIME:
+            case CREATE_LOCK:
                 msg->numScreens = 1;
                 break;
             case SWAP_EXACT_AMOUNT_IN:
@@ -23,7 +24,7 @@ void handle_finalize(void *parameters) {
         }
 
         if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent) ||
-            context->contract_received_unknown) {
+            context->contract_sent_unknown) {
             // Address is not network token (0xeee...) so we will need to look up the token in the
             // CAL.
             printf_hex_array("Setting address sent to: ",
