@@ -33,8 +33,8 @@ void handle_future_vault_tokens(apwine_parameters_t *context) {
 }
 
 void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-        sent_network_token(context);
+    if (context->contract_sent_unknown) {
+        default_sent_network_token(msg,context);
     } else if (msg->item1 != NULL) {
         context->decimals_sent = msg->item1->token.decimals;
         strlcpy(context->ticker_sent,
@@ -43,14 +43,11 @@ void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
         context->tokens_found |= TOKEN_SENT_FOUND;
     } else {
         // CAL did not find the token and token is not ETH.
-        context->decimals_sent = DEFAULT_DECIMAL;
-        strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
-        // // We will need an additional screen to display a warning message.
-        msg->additionalScreens++;
+        default_sent_network_token(msg,context);
     }
 
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-        received_network_token(context);
+    if (context->contract_received_unknown) {
+        default_received_network_token(msg,context);
     } else if (msg->item2 != NULL) {
         context->decimals_received = msg->item2->token.decimals;
         strlcpy(context->ticker_received,
@@ -59,10 +56,7 @@ void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
         context->tokens_found |= TOKEN_RECEIVED_FOUND;
     } else {
         // CAL did not find the token and token is not ETH.
-        context->decimals_received = DEFAULT_DECIMAL;
-        strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_sent));
-        // // We will need an additional screen to display a warning message.
-        msg->additionalScreens++;
+        default_received_network_token(msg,context);
     }
 }
 

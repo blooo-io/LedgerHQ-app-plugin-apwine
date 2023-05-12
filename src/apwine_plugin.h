@@ -194,7 +194,18 @@ static inline void received_network_token(apwine_parameters_t *context) {
     context->tokens_found |= TOKEN_RECEIVED_FOUND;
 }
 
-static inline void default_network_token(apwine_parameters_t *context) {
-    context->decimals_received = DEFAULT_DECIMAL;
+static inline void default_sent_network_token(ethPluginProvideInfo_t *msg,
+                                              apwine_parameters_t *context) {
+    context->decimals_sent = DEFAULT_DECIMAL;
     strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
+    // // We will need an additional screen to display a warning message.
+    msg->additionalScreens++;
+}
+
+static inline void default_received_network_token(ethPluginProvideInfo_t *msg,
+                                                  apwine_parameters_t *context) {
+    context->decimals_received = DEFAULT_DECIMAL;
+    strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_received));
+    // // We will need an additional screen to display a warning message.
+    msg->additionalScreens++;
 }
