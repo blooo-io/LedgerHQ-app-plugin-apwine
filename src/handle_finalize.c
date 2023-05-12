@@ -6,9 +6,9 @@ void handle_finalize(void *parameters) {
     if (context->valid) {
         switch (context->selectorIndex) {
             case REDEEM_YIELD:
+            case INCREASE_AMOUNT:
                 msg->numScreens = 0;
                 break;
-            case INCREASE_AMOUNT:
             case INCERASE_UNLOCK_TIME:
             case CREATE_LOCK:
                 msg->numScreens = 1;
