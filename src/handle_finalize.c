@@ -22,7 +22,8 @@ void handle_finalize(void *parameters) {
                 break;
         }
 
-        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent) || context->contract_received_unknown) {
+        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent) ||
+            context->contract_received_unknown) {
             // Address is not network token (0xeee...) so we will need to look up the token in the
             // CAL.
             printf_hex_array("Setting address sent to: ",
@@ -33,7 +34,8 @@ void handle_finalize(void *parameters) {
             sent_network_token(context);
             msg->tokenLookup1 = NULL;
         }
-        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received) || context->contract_received_unknown) {
+        if (!ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)
+            || context->contract_received_unknown) {
             // Address is not network token (0xeee...) so we will need to look up the token in the
             // CAL.
             printf_hex_array("Setting address received to: ",
