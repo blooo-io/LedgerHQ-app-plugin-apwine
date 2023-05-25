@@ -51,7 +51,7 @@ typedef enum {
     REDEEM_YIELD,
     INCREASE_AMOUNT,
     CREATE_LOCK,
-    INCERASE_UNLOCK_TIME,
+    INCREASE_UNLOCK_TIME,
 } apwineSelector_t;
 
 typedef enum {

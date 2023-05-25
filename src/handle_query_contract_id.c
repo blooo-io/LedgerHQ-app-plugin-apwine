@@ -37,7 +37,7 @@ void handle_query_contract_id(void *parameters) {
         case CREATE_LOCK:
             strlcpy(msg->version, "Create Lock", msg->versionLength);
             break;
-        case INCERASE_UNLOCK_TIME:
+        case INCREASE_UNLOCK_TIME:
             strlcpy(msg->version, "Increase Unlock Time", msg->versionLength);
             break;
         default:

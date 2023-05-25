@@ -32,7 +32,7 @@ void handle_future_vault_tokens(apwine_parameters_t *context) {
     }
 }
 
-void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
+void handle_liquidity_tokens(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
     if (context->contract_sent_unknown) {
         default_sent_network_token(msg, context);
     } else if (msg->item1 != NULL) {
@@ -60,6 +60,21 @@ void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
     }
 }
 
+void handle_token(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
+    if (context->contract_sent_unknown) {
+        default_sent_network_token(msg, context);
+    } else if (msg->item1 != NULL) {
+        context->decimals_sent = msg->item1->token.decimals;
+        strlcpy(context->ticker_sent,
+                (char *) msg->item1->token.ticker,
+                sizeof(context->ticker_sent));
+        context->tokens_found |= TOKEN_SENT_FOUND;
+    } else {
+        // CAL did not find the token and token is not ETH.
+        default_sent_network_token(msg, context);
+    }
+}
+
 void handle_provide_token(void *parameters) {
     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
     apwine_parameters_t *context = (apwine_parameters_t *) msg->pluginContext;
@@ -73,6 +88,10 @@ void handle_provide_token(void *parameters) {
         case DEPOSIT:
         case WITHDRAW:
             handle_future_vault_tokens(context);
+            break;
+        case ADD_LIQUIDITY:
+        case REMOVE_LIQUIDITY:
+            handle_liquidity_tokens(msg, context);
             break;
         default:
             handle_token(msg, context);

@@ -7,10 +7,7 @@ void handle_finalize(void *parameters) {
         switch (context->selectorIndex) {
             case REDEEM_YIELD:
             case INCREASE_AMOUNT:
-                msg->numScreens = 0;
-                break;
-            case INCERASE_UNLOCK_TIME:
-            case CREATE_LOCK:
+            case INCREASE_UNLOCK_TIME:
                 msg->numScreens = 1;
                 break;
             case SWAP_EXACT_AMOUNT_IN:
