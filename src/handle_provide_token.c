@@ -92,6 +92,7 @@ void handle_provide_token(void *parameters) {
         case ADD_LIQUIDITY:
         case REMOVE_LIQUIDITY:
             handle_liquidity_tokens(msg, context);
+            break;
         default:
             handle_token(msg, context);
             break;
