@@ -52,7 +52,7 @@ void handle_init_contract(void *parameters) {
         case REDEEM_YIELD:
         case INCREASE_AMOUNT:
         case CREATE_LOCK:
-        case INCERASE_UNLOCK_TIME:
+        case INCREASE_UNLOCK_TIME:
             context->next_param = AMOUNT_SENT;
             break;
         default:

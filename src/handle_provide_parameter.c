@@ -264,7 +264,7 @@ void handle_provide_parameter(void *parameters) {
             case CREATE_LOCK:
                 handle_create_lock(msg, context);
                 break;
-            case INCERASE_UNLOCK_TIME:
+            case INCREASE_UNLOCK_TIME:
                 handle_increase_unlock_time(msg, context);
                 break;
             case REDEEM_YIELD:
