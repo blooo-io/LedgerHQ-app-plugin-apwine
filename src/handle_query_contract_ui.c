@@ -534,6 +534,7 @@ uint8_t default_screen(uint8_t index, apwine_parameters_t *context) {
             } else if (both_tokens_not_found) {
                 return RECEIVE_SCREEN;
             }
+            return ERROR;
         default:
             return ERROR;
     }

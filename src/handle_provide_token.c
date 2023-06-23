@@ -35,28 +35,16 @@ void handle_future_vault_tokens(apwine_parameters_t *context) {
 void handle_liquidity_tokens(ethPluginProvideInfo_t *msg, apwine_parameters_t *context) {
     if (context->contract_sent_unknown) {
         default_sent_network_token(msg, context);
-    } else if (msg->item1 != NULL) {
-        context->decimals_sent = msg->item1->token.decimals;
-        strlcpy(context->ticker_sent,
-                (char *) msg->item1->token.ticker,
-                sizeof(context->ticker_sent));
-        context->tokens_found |= TOKEN_SENT_FOUND;
     } else {
-        // CAL did not find the token and token is not ETH.
-        default_sent_network_token(msg, context);
+        PRINTF("contract_sent_unknow not set\n");
+        msg->result = ETH_PLUGIN_RESULT_ERROR;
     }
 
     if (context->contract_received_unknown) {
         default_received_network_token(msg, context);
-    } else if (msg->item2 != NULL) {
-        context->decimals_received = msg->item2->token.decimals;
-        strlcpy(context->ticker_received,
-                (char *) msg->item2->token.ticker,
-                sizeof(context->ticker_received));
-        context->tokens_found |= TOKEN_RECEIVED_FOUND;
     } else {
-        // CAL did not find the token and token is not ETH.
-        default_received_network_token(msg, context);
+        PRINTF("contract_received_unknow not set\n");
+        msg->result = ETH_PLUGIN_RESULT_ERROR;
     }
 }
 

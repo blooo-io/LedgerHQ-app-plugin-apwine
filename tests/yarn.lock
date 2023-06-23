@@ -1898,10 +1898,10 @@
   resolved "https://registry.yarnpkg.com/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz#e77a97fbd345b76d83245edcd17d393b1b41fb31"
   integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
-"@zondax/zemu@^0.37.0":
-  version "0.37.0"
-  resolved "https://registry.yarnpkg.com/@zondax/zemu/-/zemu-0.37.0.tgz#c91bdcbed3d648cadc0beb385bff34e92458218b"
-  integrity sha512-XgcquM8RCKWF/PE8T80DRVY4wIxsZ9B1eERiQ78RmxMeYRnZO8LFH+3yLEs4knjAdQVoyJA4zjHM0HjV7QHo3w==
+"@zondax/zemu@^0.42.1":
+  version "0.42.1"
+  resolved "https://registry.yarnpkg.com/@zondax/zemu/-/zemu-0.42.1.tgz#b60ae867b6c5400d47c817097125e818ce11644f"
+  integrity sha512-qT4FgCeZuOL6MllGibNzaIeQy1S8OABFlBnyTNNRFOSf5BgeSAhYJsvQ15k1W/1uqC0PnhswgFcf/E7uk2IzkA==
   dependencies:
     "@grpc/grpc-js" "^1.8.12"
     "@grpc/proto-loader" "^0.7.5"
